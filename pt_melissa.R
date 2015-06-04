@@ -175,7 +175,11 @@ ptopen <- ptopen[ptopen$language!=1 & ptopen$inattentionORsuspicion!=1,]
 
 
 
-##### 5. Analyses of Open-Ended Own Emotions #####
+##### 5. Analyses of Own Emotions #####
+
+library(MASS) # for ordered logit
+
+### Prepare open-ended emotion data
 
 ## create emotion groups
 group.emot <- function(...) {
@@ -200,13 +204,53 @@ ptopen$o_tired <- with(ptopen, group.emot(drained, exhaustion, tired, fatigue, d
 ptopen$o_regret <- with(ptopen, group.emot(regret, regretful, remorse)) #8 cases
 ptopen$o_happy <- with(ptopen, group.emot(content, happy, eager, eagerness, excited, smiling)) #9 cases
 
-## logits
-# anger
+
+### Plot and analyze both open-ended and closed-ended data for each emotion
+
+## correlations among closed-ended emotion items
+cor.round <- function(...) {
+    cor.mat <- cor(..., use='complete.obs')
+    cor.mat <- round(cor.mat, digits=2)
+    return(cor.mat)
+}
+
+cor.round(subset(pt, select=happy:symp)) # in general, correlations look good; frustrated could be combined with angry and mad based on the high correlation, but will be separated for conceptual reasons
+
+
+## anger
+# open-ended plot
 with(ptopen, by(o_anger, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
-with(ptopen, prop.plot(o_anger, ptfactor, emotfactor, ylab='Anger', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
-summary(glm(o_anger~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_anger~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_anger~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
+prop.anger <- with(ptopen, prop.plot(o_anger, ptfactor, emotfactor, ylab='Proportion Angry', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
+# closed-ended plots
+pt$ang_mean <- with(pt, rowMeans(cbind(angry,mad)))
+box.anger <- with(pt, jitterbox(ang_mean, f1=ptfactor, f2=emotfactor, ylab='Anger Boxplot'))
+# plot together
+multiplot(prop.anger, box.anger)
+
+## control vs. perspective taking
+m.o_anger1 <- glm(o_anger~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
+m.ang_mean1 <- polr(factor(ang_mean)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+summary(m.o_anger1)
+summary(m.ang_mean1)
+confint(m.o_anger1)
+confint(m.ang_mean1)
+
+## objective vs. control
+m.o_anger2 <- glm(o_anger~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
+m.ang_mean2 <- polr(factor(ang_mean)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
+summary(m.o_anger2)
+summary(m.ang_mean2)
+confint(m.o_anger2)
+confint(m.ang_mean2)
+
+## perspective taking vs. control
+m.o_anger3 <- glm(o_anger~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
+m.ang_mean3 <- polr(factor(ang_mean)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
+summary(m.o_anger3)
+summary(m.ang_mean3)
+confint(m.o_anger3)
+confint(m.ang_mean3)
+
 
 # sadness
 with(ptopen, by(o_sad, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
@@ -275,21 +319,7 @@ summary(glm(o_tired~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=bino
 
 library(MASS)
 
-## Anger
-# examine boxplots for angry and mad
-with(pt, jitterbox(angry, f1=ptfactor, f2=emotfactor, ylab='Angry'))
-with(pt, jitterbox(mad, f1=ptfactor, f2=emotfactor, ylab='Mad'))
 
-pt$ang_mean <- with(pt, rowMeans(cbind(angry,mad)))
-with(pt, jitterbox(ang_mean, f1=ptfactor, f2=emotfactor, ylab='Anger'))
-
-m.angry1 <- polr(factor(angry)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-m.angry2 <- polr(factor(angry)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-m.angry3 <- polr(factor(angry)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
-summary(m.angry1)
-confint(m.angry1)
-confint(m.angry2)
-confint(m.angry3)
 
 
 

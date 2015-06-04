@@ -108,15 +108,15 @@
 ### import data
 
 #NOTE: semi-colons were substituted for commas in the data to prevent problems with using csv files
-pt <- read.csv('Dropbox/Research/Current Projects/Perspective Taking Control/Data/PTDataComplete.csv', header=TRUE) # closed-ended data
-ptopenonly <- read.csv('Dropbox/Research/Current Projects/Perspective Taking Control/Data/ptopenended.csv', header=TRUE) # open-ended data
+pt <- read.csv('PTDataComplete.csv', header=TRUE) # closed-ended data
+ptopenonly <- read.csv('ptopenended.csv', header=TRUE) # open-ended data
 
 
 ### load functions
-source('/users/joshwondra/Dropbox/Research/R Scripts/proportion-plot.R')
-source('/users/joshwondra/Dropbox/Research/R Scripts/mean-plot.R')
-source('/users/joshwondra/Dropbox/Research/R Scripts/multiplot.R')
-source('/users/joshwondra/Dropbox/Research/R Scripts/jitterbox.R')
+source('../R functions/proportion-plot.R')
+source('../R functions/mean-plot.R')
+source('../R functions/multiplot.R')
+source('../R functions/jitterbox.R')
 
 
 ##### 3. Recode Data/Compute New Variables #####

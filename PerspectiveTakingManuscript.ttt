@@ -1,0 +1,35 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+  Table 1
+
+  \textit{Subjects' Parents' Education as an Indicator of Socioeconomic Status}
+
+  \begin{tabular}{l c c}
+     \hline
+     & Mother's Education & Father's Education \\
+     \hline
+     Less than high school &
+        4 (1\%) &
+        7 (2\%) \\
+     High school diploma/GED &
+        22 (7\%) &
+        24 (7\%) \\
+     Some college &
+        30 (9\%) &
+        27 (8\%) \\
+     Associate's degree &
+        23 (7\%) &
+        8 (2\%) \\
+     Bachelor's degree &
+        137 (42\%) &
+        98 (30\%) \\
+     Postgraduate degree (e.g., Master's, PhD, JD, MD) &
+        111 (34\%) &
+        163 (50\%) \\
+     \hline
+  \end{tabular}
+
+\end{table*}
+\efloatseparator
+ 

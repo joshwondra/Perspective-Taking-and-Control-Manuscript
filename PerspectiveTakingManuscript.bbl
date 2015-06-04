@@ -1,0 +1,129 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+Batson%
+, Chang%
+, Orr%
+\BCBL {}\ \BBA {} Rowland%
+}{%
+Batson%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2002}}%
+}]{%
+Batson2002}
+\APACinsertmetastar {%
+Batson2002}%
+\begin{APACrefauthors}%
+Batson, C\BPBI D.%
+, Chang, J.%
+, Orr, R.%
+\BCBL {}\ \BBA {} Rowland, J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2002}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Empathy, attitudes, and action: Can feeling for a member
+  of a stigmatized group motivate one to help the group?} {Empathy, attitudes,
+  and action: Can feeling for a member of a stigmatized group motivate one to
+  help the group?}{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Personality and Social Psychology
+  Bulletin}{28}{}{1656--1666}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1177/014616702237647}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Batson%
+, Eklun%
+, Chermok%
+, Hoyt%
+\BCBL {}\ \BBA {} Ortiz%
+}{%
+Batson%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2007}}%
+}]{%
+Batson2007}
+\APACinsertmetastar {%
+Batson2007}%
+\begin{APACrefauthors}%
+Batson, C\BPBI D.%
+, Eklun, J\BPBI H.%
+, Chermok, V\BPBI L.%
+, Hoyt, J\BPBI L.%
+\BCBL {}\ \BBA {} Ortiz, B\BPBI G.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2007}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {An additional antecedent of empathic concern: Valuing
+  the welfare of the person in need} {An additional antecedent of empathic
+  concern: Valuing the welfare of the person in need}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Personality and Social
+  Psychology}{93}{}{65--74}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1037/0022-3514.93.1.65}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Davis%
+}{%
+Davis%
+}{%
+{\protect \APACyear {1980}}%
+}]{%
+Davis1980}
+\APACinsertmetastar {%
+Davis1980}%
+\begin{APACrefauthors}%
+Davis, M\BPBI H.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1980}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A multidimensional approach to individual differences in
+  empathy} {A multidimensional approach to individual differences in
+  empathy}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{JSAS Catalog of Selected Documents in
+  Psychology}{10}{}{85}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Davis%
+}{%
+Davis%
+}{%
+{\protect \APACyear {1983}}%
+}]{%
+Davis1983}
+\APACinsertmetastar {%
+Davis1983}%
+\begin{APACrefauthors}%
+Davis, M\BPBI H.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1983}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Measuring individual differences in empathy: Evidence
+  for a multidimensional approach} {Measuring individual differences in
+  empathy: Evidence for a multidimensional approach}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Personality and Social
+  Psychology}{44}{}{113--126}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1037/0022-3514.44.1.113}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}

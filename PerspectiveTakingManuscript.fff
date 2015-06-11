@@ -1,0 +1,27 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/SadPlot}
+
+\end{knitrout}
+\textit{Figure 1.} Subjects' sadness by condition.
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 3 rows containing non-finite values (stat\_boxplot).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/SympPlot}
+
+\end{knitrout}
+\textit{Figure 2.} Subjects' sympathy by condition.
+\end{figure*}
+\efloatseparator
+ 

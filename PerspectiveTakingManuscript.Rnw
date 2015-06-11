@@ -23,6 +23,8 @@ Contact: jdwondra@umich.edu}
 \section{Method}
 
 <<dataprep, echo=FALSE>>=
+
+#### Check number of exclusions from original data (these data will not be analyzed here)
 ptdatafull <- read.csv('/users/joshwondra/Dropbox/Research/Current Projects/Perspective Taking Control/Data/PTDataComplete.csv', header=TRUE)
 fullN <- length(ptdatafull$SubjectID)
 
@@ -30,6 +32,14 @@ fullN <- length(ptdatafull$SubjectID)
 ptdata <- ptdatafull[ptdatafull$language!=1 & ptdatafull$inattentionORsuspicion!=1,]
 usedN <- length(ptdata$SubjectID)
 exclusions <- fullN-usedN
+
+#### Load data and functions
+load('ptDataManuscript.RData')
+source('../R functions/proportion-plot.R')
+source('../R functions/mean-plot.R')
+source('../R functions/multiplot.R')
+source('../R functions/nojitterbox.R')
+
 @
 
 \subsection{Overview}
@@ -151,6 +161,52 @@ Finally, subjects completed a demographics questionnaire that included measures 
 After completing the questionnaire, subjects were debriefed and thanked for their participation. 
 
 \section{Results}
+
+\subsection{Plan for Data Analysis} We tested X hypotheses...
+
+\subsubsection{Plan for Analysis of Open-Ended Data} To analyze subjects' open-ended reports of their own emotions and their perceptions of Melissa's emotions, we created groups of emotion words that seemed to communicate similar feelings. We followed the following steps to create the emotion groups \cite{Wondrasub}: first, the first author removed subjects' experimental conditions from their open-ended responses, randomized the order of the responses, and identified each emotion word that subjects used. Second, the first author created the first set of emotion groups. Third, the second author looked at the emotoin groups and suggested changes. Fourth, we coded each group for the subjects as 1 if they mentioned at least one word in the group and 0 if they did not. 
+
+(This paragraph needs to explain what the emotion groups were) We used logistic regression to find the predicted probability that a subject listed an emotion group. To test the main hypotheses, we used contrasts to compare the three perspective taking conditions within each emotion group. 
+
+\subsubsection{Plan for Analysis of Closed-Ended Data} Preliminary analyses revealed that the data in some of the experimental groups were not normally distributed, which is an assumption of the commonly used ANOVA and t test approaches to comparing group means. Therefore, we treated the data as ordinal and ran ordered logistic regression to analyze subjects' reports of their own emotions.
+
+
+\subsection{Did Perspective Taking Affect Subjects' Emotions?}
+
+\subsection{Sadness and Sympathy} Figure 1 displays subjects' sadness and sympathy in the open-ended and closed-ended data. 
+
+\begin{figure}
+<<SadPlot, echo=FALSE>>=
+
+## Sad
+# open-ended plot
+prop.sad <- with(ptopen, prop.plot(o_sad, ptfactor, emotfactor, ylab='Proportion Sad', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
+# closed-ended plots
+box.sad <- with(pt, nojitterbox(sad, f1=ptfactor, f2=emotfactor, ylab='Sad Boxplot'))
+box.down <- with(pt, nojitterbox(down, f1=ptfactor, f2=emotfactor, ylab='Down Boxplot'))
+
+# plot together
+multiplot(prop.sad, box.sad, box.down)
+@
+\textit{Figure 1.} Subjects' sadness by condition.
+\end{figure}
+
+\begin{figure}
+<<SympPlot, echo=FALSE>>=
+
+## Sympathetic
+# open-ended plot
+prop.symp <- with(ptopen, prop.plot(o_sympathy, ptfactor, emotfactor, ylab='Proportion Sympathetic', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
+# closed-ended plots
+box.symp <- with(pt, nojitterbox(symp, f1=ptfactor, f2=emotfactor, ylab='Sympathy Boxplot'))
+box.comp <- with(pt, nojitterbox(compass, f1=ptfactor, f2=emotfactor, ylab='Compassion Boxplot'))
+
+# plot together
+multiplot(prop.symp, box.symp, box.comp)
+@
+\textit{Figure 2.} Subjects' sympathy by condition.
+\end{figure}
+
 
 \bibliography{ptreferences}
 \bibliographystyle{apacite}

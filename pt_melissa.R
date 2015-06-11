@@ -175,6 +175,7 @@ ptopen <- ptopen[ptopen$language!=1 & ptopen$inattentionORsuspicion!=1,]
 
 
 
+
 ##### 5. Analyses of Own Emotions #####
 
 library(MASS) # for ordered logit
@@ -205,6 +206,11 @@ ptopen$o_regret <- with(ptopen, group.emot(regret, regretful, remorse)) #8 cases
 ptopen$o_happy <- with(ptopen, group.emot(content, happy, eager, eagerness, excited, smiling)) #9 cases
 
 
+## save data for the .Rnw file
+
+save(pt, ptopen, file='ptDataManuscript.RData')
+
+
 ### Plot and analyze both open-ended and closed-ended data for each emotion
 
 ## correlations among closed-ended emotion items
@@ -224,8 +230,11 @@ prop.anger <- with(ptopen, prop.plot(o_anger, ptfactor, emotfactor, ylab='Propor
 # closed-ended plots
 pt$ang_mean <- with(pt, rowMeans(cbind(angry,mad)))
 box.anger <- with(pt, jitterbox(ang_mean, f1=ptfactor, f2=emotfactor, ylab='Anger Boxplot'))
+box.angry <- with(pt, jitterbox(angry, f1=ptfactor, f2=emotfactor, ylab='Angry Boxplot'))
+box.mad <- with(pt, jitterbox(mad, f1=ptfactor, f2=emotfactor, ylab='Mad Boxplot'))
 # plot together
 multiplot(prop.anger, box.anger)
+multiplot(box.angry, box.mad)
 
 ## control vs. perspective taking
 m.o_anger1 <- glm(o_anger~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)

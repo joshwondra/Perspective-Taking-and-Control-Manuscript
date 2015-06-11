@@ -17,7 +17,7 @@
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 3 rows containing non-finite values (stat\_boxplot).}}\end{kframe}
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 2 rows containing non-finite values (stat\_boxplot).}}\end{kframe}
 \includegraphics[width=\maxwidth]{figure/SympPlot}
 
 \end{knitrout}

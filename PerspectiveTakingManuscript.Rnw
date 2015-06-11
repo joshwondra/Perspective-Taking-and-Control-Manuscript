@@ -33,12 +33,32 @@ ptdata <- ptdatafull[ptdatafull$language!=1 & ptdatafull$inattentionORsuspicion!
 usedN <- length(ptdata$SubjectID)
 exclusions <- fullN-usedN
 
-#### Load data and functions
+#### Load data, packages, and functions
 load('ptDataManuscript.RData')
+library(MASS)
 source('../R functions/proportion-plot.R')
 source('../R functions/mean-plot.R')
 source('../R functions/multiplot.R')
 source('../R functions/nojitterbox.R')
+
+get.percent <- function(dv, group) {
+    result <- by(dv, group, function(x){sum(x)/length(x)})
+    result <- round(result, digits=2)
+    result <- result*100
+    return(result)
+}
+
+get.med <- function(dv, group) {
+    result <- by(dv, group, median, na.rm=TRUE)
+}
+
+get.ci <- function(object, row) {
+    lb <- round(confint(object)[row,1], digits=2)
+    ub <- round(confint(object)[row,2], digits=2)
+    result <- paste(lb, ub, sep=', ')
+    return(result)
+}
+
 
 @
 
@@ -173,7 +193,36 @@ After completing the questionnaire, subjects were debriefed and thanked for thei
 
 \subsection{Did Perspective Taking Affect Subjects' Emotions?}
 
-\subsection{Sadness and Sympathy} Figure 1 displays subjects' sadness and sympathy in the open-ended and closed-ended data. 
+\subsection{Sadness and Sympathy} 
+<<sadData, echo=FALSE>>=
+
+propsad.emotcond <- with(ptopen, get.percent(o_sad, emotfactor))
+propsad.sad <- propsad.emotcond[1]
+propsad.angry <- propsad.emotcond[2]
+
+## control vs. perspective taking
+propsad.sad.CvP <- with(ptopen, get.percent(o_sad, CvP.sad))
+m.o_sad1 <- glm(o_sad~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
+m.sad1 <- polr(factor(sad)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+m.down1 <- polr(factor(down)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+
+## objective vs. control
+m.o_sad2 <- glm(o_sad~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
+m.sad2 <- polr(factor(sad)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
+m.down2 <- polr(factor(down)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
+
+## perspective taking vs. control
+m.o_sad3 <- glm(o_sad~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
+m.sad3 <- polr(factor(sad)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
+m.down3 <- polr(factor(down)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
+
+
+
+@
+
+Figure 1 displays subjects' sadness in the open-ended and closed-ended data. 
+    Subjects were more likely to report that they felt sad when they read a sad letter from Melissa (\Sexpr{propsad.sad}\%) than when they read an angry letter from Melissa (\Sexpr{propsad.angry}\%) in their open-ended responses, 95\% CI [\Sexpr{get.ci(m.o_sad1,2)}]. They also reported feeling more sad, 95\% CI [\Sexpr{get.ci(m.sad1,1)}], and down, 95\% CI [\Sexpr{get.ci(m.down1,1)}], in the closed-ended data.
+    For subjects who read the sad letter, subjects were less likely to report that they felt sad when they remained objective (\Sexpr{}) 
 
 \begin{figure}
 <<SadPlot, echo=FALSE>>=
@@ -187,6 +236,7 @@ box.down <- with(pt, nojitterbox(down, f1=ptfactor, f2=emotfactor, ylab='Down Bo
 
 # plot together
 multiplot(prop.sad, box.sad, box.down)
+
 @
 \textit{Figure 1.} Subjects' sadness by condition.
 \end{figure}

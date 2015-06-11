@@ -191,27 +191,28 @@ After completing the questionnaire, subjects were debriefed and thanked for thei
 \subsubsection{Plan for Analysis of Closed-Ended Data} Preliminary analyses revealed that the data in some of the experimental groups were not normally distributed, which is an assumption of the commonly used ANOVA and t test approaches to comparing group means. Therefore, we treated the data as ordinal and ran ordered logistic regression to analyze subjects' reports of their own emotions.
 
 
-\subsection{Did Perspective Taking Affect Subjects' Emotions?}
+\subsection{Did Perspective Taking Make Subjects More Likely to Feel How Melissa Felt?}
 
-\subsection{Sadness and Sympathy} 
+\subsection{Sadness} 
 <<sadData, echo=FALSE>>=
 
 propsad.emotcond <- with(ptopen, get.percent(o_sad, emotfactor))
 propsad.sad <- propsad.emotcond[1]
 propsad.angry <- propsad.emotcond[2]
 
-## control vs. perspective taking
-propsad.sad.CvP <- with(ptopen, get.percent(o_sad, CvP.sad))
-m.o_sad1 <- glm(o_sad~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
+## objective vs. perspective taking
+m.o_sad1 <- glm(o_sad~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
 m.sad1 <- polr(factor(sad)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
 m.down1 <- polr(factor(down)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
 
 ## objective vs. control
+propsad.sad.OvC <- with(ptopen, get.percent(o_sad, OvC.sad))
 m.o_sad2 <- glm(o_sad~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
 m.sad2 <- polr(factor(sad)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
 m.down2 <- polr(factor(down)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
 
 ## perspective taking vs. control
+propsad.sad.CvP <- with(ptopen, get.percent(o_sad, CvP.sad))
 m.o_sad3 <- glm(o_sad~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
 m.sad3 <- polr(factor(sad)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
 m.down3 <- polr(factor(down)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
@@ -222,7 +223,11 @@ m.down3 <- polr(factor(down)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, da
 
 Figure 1 displays subjects' sadness in the open-ended and closed-ended data. 
     Subjects were more likely to report that they felt sad when they read a sad letter from Melissa (\Sexpr{propsad.sad}\%) than when they read an angry letter from Melissa (\Sexpr{propsad.angry}\%) in their open-ended responses, 95\% CI [\Sexpr{get.ci(m.o_sad1,2)}]. They also reported feeling more sad, 95\% CI [\Sexpr{get.ci(m.sad1,1)}], and down, 95\% CI [\Sexpr{get.ci(m.down1,1)}], in the closed-ended data.
-    For subjects who read the sad letter, subjects were less likely to report that they felt sad when they remained objective (\Sexpr{}) 
+    For subjects who read the sad letter, subjects were no more likely to report that they felt sad when they took Melissa's perspective (\Sexpr{propsad.sad.CvP[3]}\%) than in the control condition (\Sexpr{propsad.sad.CvP[1]}\%) in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_sad3,3)}]; they also reported feeling equally sad, 95\% CI [\Sexpr{get.ci(m.sad3,2)}], and down, 95\% CI [\Sexpr{get.ci(m.down3,2)}], in the closed-ended data. On the other hand, those who remained objective were less likely to report that they felt sad (\Sexpr{propsad.sad.OvC[1]}\%) than those in the control condition in the open-ended data. However, they did not report feeling less sad, 95\% CI [\Sexpr{get.ci(m.sad2,2)}], or down, 95\% CI [\Sexpr{get.ci(m.down2,2)}], in the closed-ended data. Those who remained objective also reported feeling less sad than those who took Melissa's perspective in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_sad1,2)}], and less sad, 95\% CI [\Sexpr{get.ci(m.sad1,2)}], and down, 95\% CI [\Sexpr{get.ci(m.sad1,2)}], than those who took Melissa's perspective in the closed-ended data.
+    In summary, there was no evidence that perspective taking caused subjects to feel sad like Melissa, but there was some evidence that remaining objective caused them to feel less sad. 
+    
+\subsection{Anger}    
+    
 
 \begin{figure}
 <<SadPlot, echo=FALSE>>=

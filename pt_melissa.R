@@ -273,11 +273,14 @@ multiplot(prop.sad, box.sad)
 
 ## control vs. perspective taking
 m.o_sad1 <- glm(o_sad~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
-m.sad_mean1 <- polr(factor(sad_mean)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+m.sad1 <- polr(factor(sad)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+m.down1 <- polr(factor(down)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
 summary(m.o_sad1)
-summary(m.sad_mean1)
+summary(m.sad1)
+summary(m.down1)
 confint(m.o_sad1)
-confint(m.sad_mean1)
+confint(m.sad1)
+confint(m.down1)
 
 ## objective vs. control
 m.o_sad2 <- glm(o_sad~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)

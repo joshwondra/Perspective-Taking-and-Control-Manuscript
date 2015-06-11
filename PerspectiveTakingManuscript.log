@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  11 JUN 2015 12:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  11 JUN 2015 13:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -478,15 +478,14 @@ Underfull \vbox (badness 7099) has occurred while \output is active []
 
 LaTeX Warning: Citation `Wondrasub' undefined on input line 160.
 
-[7]
 \openout4 = `PerspectiveTakingManuscript.fff'.
 
- (PerspectiveTakingManuscript.fff) (./PerspectiveTakingManuscript.bbl
-[8])
+(PerspectiveTakingManuscript.fff) [7] [8] (./PerspectiveTakingManuscript.bbl
+[9])
 
-Class apa6 Warning: \bibliographystyle command ignored on input line 199.
+Class apa6 Warning: \bibliographystyle command ignored on input line 220.
 
-AED endfloat: Processing end Figures and Tables [9
+AED endfloat: Processing end Figures and Tables [10
 
 ]
 (./PerspectiveTakingManuscript.ttt
@@ -521,19 +520,19 @@ Overfull \hbox (47.9429pt too wide) in paragraph at lines 8--32
 [][] 
  []
 
-[10
+[11
 
 
 ]) (./PerspectiveTakingManuscript.fff
 Package color Info: Redefining color shadecolor on input line 5.
 
-<figure/SadPlot.pdf, id=37, 505.89pt x 505.89pt>
+<figure/SadPlot.pdf, id=40, 505.89pt x 505.89pt>
 File: figure/SadPlot.pdf Graphic file (type pdf)
  <use figure/SadPlot.pdf>
 Package pdftex.def Info: figure/SadPlot.pdf used on input line 6.
 (pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
 
-[11
+[12
 
 
  <./figure/SadPlot.pdf>]
@@ -543,13 +542,24 @@ LaTeX Font Info:    Try loading font information for T1+lmtt on input line 20.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<figure/SympPlot.pdf, id=47, 505.89pt x 505.89pt>
-File: figure/SympPlot.pdf Graphic file (type pdf)
- <use figure/SympPlot.pdf>
-Package pdftex.def Info: figure/SympPlot.pdf used on input line 21.
+<figure/AngerPlot.pdf, id=50, 505.89pt x 505.89pt>
+File: figure/AngerPlot.pdf Graphic file (type pdf)
+ <use figure/AngerPlot.pdf>
+Package pdftex.def Info: figure/AngerPlot.pdf used on input line 21.
 (pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
 
-[12
+[13
+
+ <./figure/AngerPlot.pdf>]
+Package color Info: Redefining color shadecolor on input line 32.
+
+<figure/SympPlot.pdf, id=62, 505.89pt x 505.89pt>
+File: figure/SympPlot.pdf Graphic file (type pdf)
+ <use figure/SympPlot.pdf>
+Package pdftex.def Info: figure/SympPlot.pdf used on input line 36.
+(pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
+
+[14
 
  <./figure/SympPlot.pdf>]) (./PerspectiveTakingManuscript.aux)
 
@@ -557,10 +567,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 5251 strings out of 493117
- 78422 string characters out of 6135433
+ 5256 strings out of 493117
+ 78534 string characters out of 6135433
  143524 words of memory out of 5000000
- 8595 multiletter control sequences out of 15000+600000
+ 8599 multiletter control sequences out of 15000+600000
  40094 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,12n,47p,1720b,383s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -569,10 +579,10 @@ texlive/2014/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/20
 14/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2014/texmf-di
 st/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2014/texmf-dist/fonts/t
 ype1/public/lm/lmtt12.pfb>
-Output written on PerspectiveTakingManuscript.pdf (12 pages, 130991 bytes).
+Output written on PerspectiveTakingManuscript.pdf (14 pages, 138602 bytes).
 PDF statistics:
- 74 PDF objects out of 1000 (max. 8388607)
- 51 compressed objects within 1 object stream
+ 88 PDF objects out of 1000 (max. 8388607)
+ 61 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

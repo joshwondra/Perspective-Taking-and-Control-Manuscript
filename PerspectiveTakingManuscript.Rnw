@@ -225,19 +225,15 @@ Figure 1 displays subjects' sadness in the open-ended and closed-ended data.
     Subjects were more likely to report that they felt sad when they read a sad letter from Melissa (\Sexpr{propsad.sad}\%) than when they read an angry letter from Melissa (\Sexpr{propsad.angry}\%) in their open-ended responses, 95\% CI [\Sexpr{get.ci(m.o_sad1,2)}]. They also reported feeling more sad, 95\% CI [\Sexpr{get.ci(m.sad1,1)}], and down, 95\% CI [\Sexpr{get.ci(m.down1,1)}], in the closed-ended data.
     For subjects who read the sad letter, subjects were no more likely to report that they felt sad when they took Melissa's perspective (\Sexpr{propsad.sad.CvP[3]}\%) than in the control condition (\Sexpr{propsad.sad.CvP[1]}\%) in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_sad3,3)}]; they also reported feeling equally sad, 95\% CI [\Sexpr{get.ci(m.sad3,2)}], and down, 95\% CI [\Sexpr{get.ci(m.down3,2)}], in the closed-ended data. On the other hand, those who remained objective were less likely to report that they felt sad (\Sexpr{propsad.sad.OvC[1]}\%) than those in the control condition in the open-ended data. However, they did not report feeling less sad, 95\% CI [\Sexpr{get.ci(m.sad2,2)}], or down, 95\% CI [\Sexpr{get.ci(m.down2,2)}], in the closed-ended data. Those who remained objective also reported feeling less sad than those who took Melissa's perspective in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_sad1,2)}], and less sad, 95\% CI [\Sexpr{get.ci(m.sad1,2)}], and down, 95\% CI [\Sexpr{get.ci(m.sad1,2)}], than those who took Melissa's perspective in the closed-ended data.
     In summary, there was no evidence that perspective taking caused subjects to feel sad like Melissa, but there was some evidence that remaining objective caused them to feel less sad. 
-    
-\subsection{Anger}    
-    
-
 \begin{figure}
 <<SadPlot, echo=FALSE>>=
 
 ## Sad
 # open-ended plot
-prop.sad <- with(ptopen, prop.plot(o_sad, ptfactor, emotfactor, ylab='Proportion Sad', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
+prop.sad <- with(ptopen, prop.plot(o_sad, emotfactor, ptfactor, ylab='Proportion Sad', xlab="Melissa's Emotion", leglab="Perspective Taking Condition"))
 # closed-ended plots
-box.sad <- with(pt, nojitterbox(sad, f1=ptfactor, f2=emotfactor, ylab='Sad Boxplot'))
-box.down <- with(pt, nojitterbox(down, f1=ptfactor, f2=emotfactor, ylab='Down Boxplot'))
+box.sad <- with(pt, nojitterbox(sad, f1=emotfactor, f2=ptfactor, ylab='Sad Boxplot'))
+box.down <- with(pt, nojitterbox(down, f1=emotfactor, f2=ptfactor, ylab='Down Boxplot'))
 
 # plot together
 multiplot(prop.sad, box.sad, box.down)
@@ -245,6 +241,57 @@ multiplot(prop.sad, box.sad, box.down)
 @
 \textit{Figure 1.} Subjects' sadness by condition.
 \end{figure}
+
+\subsection{Anger}    
+<<angerData, echo=FALSE>>=
+
+propanger.emotcond <- with(ptopen, get.percent(o_anger, emotfactor))
+propanger.sad <- propanger.emotcond[1]
+propanger.angry <- propanger.emotcond[2]
+
+## objective vs. perspective taking
+m.o_anger1 <- glm(o_anger~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
+m.angry1 <- polr(factor(angry)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+m.mad1 <- polr(factor(mad)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+
+## objective vs. control
+propanger.angry.OvC <- with(ptopen, get.percent(o_anger, OvC.angry))
+m.o_anger2 <- glm(o_anger~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
+m.angry2 <- polr(factor(angry)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
+m.mad2 <- polr(factor(mad)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
+
+## perspective taking vs. control
+propanger.angry.CvP <- with(ptopen, get.percent(o_anger, CvP.angry))
+m.o_anger3 <- glm(o_anger~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
+m.angry3 <- polr(factor(angry)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
+m.mad3 <- polr(factor(mad)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
+
+
+
+@
+
+Figure 2 displays subjects' anger in the open-ended and closed-ended data. 
+    Subjects were more likely to report that they felt angry when they read an angry letter from Melissa (\Sexpr{propanger.angry}\%) than when they read an angry letter from Melissa (\Sexpr{propanger.sad}\%) in their open-ended responses, 95\% CI [\Sexpr{get.ci(m.o_anger1,2)}]. They also reported feeling more angry, 95\% CI [\Sexpr{get.ci(m.angry1,1)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad1,1)}], in the closed-ended data.
+    For subjects who read the angry letter, subjects were no more likely to report that they felt angry when they took Melissa's perspective (\Sexpr{propanger.angry.CvP[3]}\%) than in the control condition (\Sexpr{propanger.angry.CvP[1]}\%) in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger3,5)}]; they also reported feeling equally angry, 95\% CI [\Sexpr{get.ci(m.angry3,4)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad3,4)}], in the closed-ended data. Those who remained objective were equally likely to report that they felt angry (\Sexpr{propanger.angry.OvC[1]}\%) to those in the control condition in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger2,5)}]. However, they reported feeling less angry, 95\% CI [\Sexpr{get.ci(m.angry2,4)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad2,4)}], in the closed-ended data. Those who remained objective also reported feeling less angry than those who took Melissa's perspective in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger1,5)}], and less sad, 95\% CI [\Sexpr{get.ci(m.angry1,4)}], and down, 95\% CI [\Sexpr{get.ci(m.mad1,4)}], than those who took Melissa's perspective in the closed-ended data.
+    Once again, there was no evidence that perspective taking caused subjects to feel sad like Melissa, but there was evidence that remaining objective caused them to feel less sad.
+    
+\begin{figure}
+<<AngerPlot, echo=FALSE>>=
+
+## Anger
+# open-ended plot
+prop.anger <- with(ptopen, prop.plot(o_anger, emotfactor, ptfactor, ylab='Proportion Angry', xlab="Melissa's Emotion", leglab="Perspective Taking Condition"))
+# closed-ended plots
+box.angry <- with(pt, nojitterbox(angry, f1=emotfactor, f2=ptfactor, ylab='Angry Boxplot'))
+box.mad <- with(pt, nojitterbox(mad, f1=emotfactor, f2=ptfactor, ylab='Mad Boxplot'))
+
+# plot together
+multiplot(prop.anger, box.angry, box.mad)
+
+@
+\textit{Figure 2.} Subjects' anger by condition.
+\end{figure}
+
 
 \begin{figure}
 <<SympPlot, echo=FALSE>>=

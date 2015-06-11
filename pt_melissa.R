@@ -265,6 +265,7 @@ confint(m.ang_mean3)
 # open-ended plot
 with(ptopen, by(o_sad, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
 prop.sad <- with(ptopen, prop.plot(o_sad, ptfactor, emotfactor, ylab='Proportion Sad', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
+
 # closed-ended plots
 pt$sad_mean <- with(pt, rowMeans(cbind(sad,down)))
 box.sad <- with(pt, jitterbox(sad_mean, f1=ptfactor, f2=emotfactor, ylab='Sadness Boxplot'))
@@ -761,3 +762,8 @@ ggplot(pt, aes(y=sad, x=group, colour=female)) +
     geom_jitter(position=position_jitter(width=.2, height=.2)) + 
     scale_colour_gradient(low = 'yellow', high='dark red')
 
+
+#demo of improving graphs
+demo1 <- with(ptopen, prop.plot(o_sad, ptfactor, emotfactor, ylab='Proportion Sad', xlab='Perspective Taking Condition', leglab="Melissa's Emotion"))
+demo2 <- with(ptopen, prop.plot(o_sad, emotfactor, ptfactor, ylab='Proportion Sad', xlab="Melissa's Emotion", leglab="Perspective Taking Condition"))
+multiplot(demo1, demo2)

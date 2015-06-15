@@ -292,8 +292,41 @@ multiplot(prop.anger, box.angry, box.mad)
 \textit{Figure 2.} Subjects' anger by condition.
 \end{figure}
 
-\subsection{Sympathy}
+\subsection{Did Perspective Taking Make Subjects More Sympathetic?}
+<<sympData, echo=FALSE>>=
 
+propsymp.emotcond <- with(ptopen, get.percent(o_sympathy, emotfactor))
+propsymp.sad <- propsymp.emotcond[1]
+propsymp.angry <- propsymp.emotcond[2]
+
+## objective vs. perspective taking
+m.o_symp1 <- glm(o_sympathy~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
+m.symp1 <- polr(factor(symp)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+m.comp1 <- polr(factor(compass)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+
+## objective vs. control
+propsymp.angry.OvC <- with(ptopen, get.percent(o_sympathy, OvC.angry))
+m.o_anger2 <- glm(o_sympathy~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
+m.symp2 <- polr(factor(symp)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
+m.comp2 <- polr(factor(compass)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
+
+## perspective taking vs. control
+propsymp.angry.CvP <- with(ptopen, get.percent(o_anger, CvP.angry))
+m.o_symp3 <- glm(o_sympathy~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
+m.symp3 <- polr(factor(symp)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
+m.comp3 <- polr(factor(compass)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
+
+
+
+@
+
+Figure 3 displays subjects' sympathy in the open-ended and closed-ended data. 
+    Subjects were equally likely to report that they felt sympathetic when they read a sad letter from Melissa (\Sexpr{propsymp.angry}\%) as when they read an angry letter from Melissa (\Sexpr{propsymp.sad}\%) in their open-ended responses, 95\% CI [\Sexpr{get.ci(m.o_symp1,2)}]. They also reported feeling equaly sympathetic, 95\% CI [\Sexpr{get.ci(m.symp1,1)}], in the closed-ended data; however, those who read a sad letter felt more compassionate, 95\% CI [\Sexpr{get.ci(m.comp1,1)}].
+    
+    ## NEED TO FIX EVERYTHING AFTER THIS POINT
+    For subjects who read the angry letter, subjects were no more likely to report that they felt angry when they took Melissa's perspective (\Sexpr{propanger.angry.CvP[3]}\%) than in the control condition (\Sexpr{propanger.angry.CvP[1]}\%) in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger3,5)}]; they also reported feeling equally angry, 95\% CI [\Sexpr{get.ci(m.angry3,4)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad3,4)}], in the closed-ended data. Those who remained objective were equally likely to report that they felt angry (\Sexpr{propanger.angry.OvC[1]}\%) to those in the control condition in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger2,5)}]. However, they reported feeling less angry, 95\% CI [\Sexpr{get.ci(m.angry2,4)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad2,4)}], in the closed-ended data. Those who remained objective also reported feeling less angry than those who took Melissa's perspective in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger1,5)}], and less sad, 95\% CI [\Sexpr{get.ci(m.angry1,4)}], and down, 95\% CI [\Sexpr{get.ci(m.mad1,4)}], than those who took Melissa's perspective in the closed-ended data.
+    Once again, there was no evidence that perspective taking caused subjects to feel angry like Melissa, but there was evidence that remaining objective caused them to feel less angry.
+    
 \begin{figure}
 <<SympPlot, echo=FALSE>>=
 
@@ -307,7 +340,7 @@ box.comp <- with(pt, nojitterbox(compass, f1=emotfactor, f2=ptfactor, ylab='Comp
 # plot together
 multiplot(prop.symp, box.symp, box.comp)
 @
-\textit{Figure 2.} Subjects' sympathy by condition.
+\textit{Figure 3.} Subjects' sympathy by condition.
 \end{figure}
 
 

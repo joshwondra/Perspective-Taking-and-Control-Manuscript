@@ -117,6 +117,7 @@ source('../R functions/proportion-plot.R')
 source('../R functions/mean-plot.R')
 source('../R functions/multiplot.R')
 source('../R functions/jitterbox.R')
+source('../R functions/nojitterbox.R')
 
 
 ##### 3. Recode Data/Compute New Variables #####
@@ -306,33 +307,43 @@ with(ptopen, by(o_sympathy, list(ptfactor, emotfactor), function(x){sum(x)/lengt
 prop.symp <- with(ptopen, prop.plot(o_sympathy, ptfactor, emotfactor, ylab='Proportion Sympathetic', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
 # closed-ended plots
 pt$symp_mean <- with(pt, rowMeans(cbind(symp,compass)))
-box.symp <- with(pt, jitterbox(symp_mean, f1=ptfactor, f2=emotfactor, ylab='Anger Boxplot'))
+box.symp <- with(pt, nojitterbox(symp, f1=ptfactor, f2=emotfactor, ylab='Sympathetic Boxplot'))
+box.comp <- with(pt, nojitterbox(compass, f1=ptfactor, f2=emotfactor, ylab='Compassionate Boxplot'))
 # plot together
-multiplot(prop.symp, box.symp)
+multiplot(prop.symp, box.symp, box.comp)
 
 ## control vs. perspective taking
 m.o_symp1 <- glm(o_sympathy~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
-m.symp_mean1 <- polr(factor(symp_mean)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+m.symp1 <- polr(factor(symp)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+m.comp1 <- polr(factor(compass)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
 summary(m.o_symp1)
-summary(m.symp_mean1)
+summary(m.symp1)
+summary(m.comp1)
 confint(m.o_symp1)
-confint(m.symp_mean1)
+confint(m.symp1)
+confint(m.comp1)
 
 ## objective vs. control
 m.o_symp2 <- glm(o_sympathy~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
-m.symp_mean2 <- polr(factor(symp_mean)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
+m.symp2 <- polr(factor(symp)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
+m.comp2 <- polr(factor(compass)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
 summary(m.o_symp2)
-summary(m.symp_mean2)
+summary(m.symp2)
+summary(m.comp2)
 confint(m.o_symp2)
-confint(m.symp_mean2)
+confint(m.symp2)
+confint(m.comp2)
 
 ## perspective taking vs. control
 m.o_symp3 <- glm(o_sympathy~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
-m.symp_mean3 <- polr(factor(symp_mean)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
+m.symp3 <- polr(factor(symp)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
+m.comp3 <- polr(factor(compass)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
 summary(m.o_symp3)
-summary(m.symp_mean3)
+summary(m.symp3)
+summary(m.comp3)
 confint(m.o_symp3)
-confint(m.symp_mean3)
+confint(m.symp3)
+confint(m.comp3)
 
 # sympathy
 with(ptopen, by(o_sympathy, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))

@@ -273,7 +273,7 @@ m.mad3 <- polr(factor(mad)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data
 Figure 2 displays subjects' anger in the open-ended and closed-ended data. 
     Subjects were more likely to report that they felt angry when they read an angry letter from Melissa (\Sexpr{propanger.angry}\%) than when they read an angry letter from Melissa (\Sexpr{propanger.sad}\%) in their open-ended responses, 95\% CI [\Sexpr{get.ci(m.o_anger1,2)}]. They also reported feeling more angry, 95\% CI [\Sexpr{get.ci(m.angry1,1)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad1,1)}], in the closed-ended data.
     For subjects who read the angry letter, subjects were no more likely to report that they felt angry when they took Melissa's perspective (\Sexpr{propanger.angry.CvP[3]}\%) than in the control condition (\Sexpr{propanger.angry.CvP[1]}\%) in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger3,5)}]; they also reported feeling equally angry, 95\% CI [\Sexpr{get.ci(m.angry3,4)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad3,4)}], in the closed-ended data. Those who remained objective were equally likely to report that they felt angry (\Sexpr{propanger.angry.OvC[1]}\%) to those in the control condition in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger2,5)}]. However, they reported feeling less angry, 95\% CI [\Sexpr{get.ci(m.angry2,4)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad2,4)}], in the closed-ended data. Those who remained objective also reported feeling less angry than those who took Melissa's perspective in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger1,5)}], and less sad, 95\% CI [\Sexpr{get.ci(m.angry1,4)}], and down, 95\% CI [\Sexpr{get.ci(m.mad1,4)}], than those who took Melissa's perspective in the closed-ended data.
-    Once again, there was no evidence that perspective taking caused subjects to feel sad like Melissa, but there was evidence that remaining objective caused them to feel less sad.
+    Once again, there was no evidence that perspective taking caused subjects to feel angry like Melissa, but there was evidence that remaining objective caused them to feel less angry.
     
 \begin{figure}
 <<AngerPlot, echo=FALSE>>=
@@ -292,16 +292,17 @@ multiplot(prop.anger, box.angry, box.mad)
 \textit{Figure 2.} Subjects' anger by condition.
 \end{figure}
 
+\subsection{Sympathy}
 
 \begin{figure}
 <<SympPlot, echo=FALSE>>=
 
 ## Sympathetic
 # open-ended plot
-prop.symp <- with(ptopen, prop.plot(o_sympathy, ptfactor, emotfactor, ylab='Proportion Sympathetic', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
+prop.symp <- with(ptopen, prop.plot(o_sympathy, emotfactor, ptfactor, ylab='Proportion Sympathetic', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
 # closed-ended plots
-box.symp <- with(pt, nojitterbox(symp, f1=ptfactor, f2=emotfactor, ylab='Sympathy Boxplot'))
-box.comp <- with(pt, nojitterbox(compass, f1=ptfactor, f2=emotfactor, ylab='Compassion Boxplot'))
+box.symp <- with(pt, nojitterbox(symp, f1=emotfactor, f2=ptfactor, ylab='Sympathy Boxplot'))
+box.comp <- with(pt, nojitterbox(compass, f1=emotfactor, f2=ptfactor, ylab='Compassion Boxplot'))
 
 # plot together
 multiplot(prop.symp, box.symp, box.comp)

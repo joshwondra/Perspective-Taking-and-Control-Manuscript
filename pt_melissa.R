@@ -237,21 +237,27 @@ box.mad <- with(pt, jitterbox(mad, f1=ptfactor, f2=emotfactor, ylab='Mad Boxplot
 multiplot(prop.anger, box.anger)
 multiplot(box.angry, box.mad)
 
-## control vs. perspective taking
+## objective vs. perspective taking
 m.o_anger1 <- glm(o_anger~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
-m.ang_mean1 <- polr(factor(ang_mean)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+m.ang1 <- polr(factor(angry)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
+m.mad1 <- polr(factor(mad)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
 summary(m.o_anger1)
-summary(m.ang_mean1)
+summary(m.ang1)
+summary(m.mad1)
 confint(m.o_anger1)
-confint(m.ang_mean1)
+confint(m.ang1)
+confint(m.mad1)
 
 ## objective vs. control
 m.o_anger2 <- glm(o_anger~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
-m.ang_mean2 <- polr(factor(ang_mean)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
+m.ang2 <- polr(factor(angry)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
+m.mad2 <- polr(factor(mad)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
 summary(m.o_anger2)
-summary(m.ang_mean2)
+summary(m.ang2)
+summary(m.mad2)
 confint(m.o_anger2)
-confint(m.ang_mean2)
+confint(m.ang2)
+confint(m.mad2)
 
 ## perspective taking vs. control
 m.o_anger3 <- glm(o_anger~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
@@ -394,8 +400,86 @@ summary(glm(o_tired~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=bino
 summary(glm(o_tired~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
 
 
+## check other closed-ended emotions
+with(pt, nojitterbox(happy, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(happy~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(happy~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(happy~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
 
+with(pt, nojitterbox(amused, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(amused~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(amused~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(amused~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
 
+with(pt, nojitterbox(shocked, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(shocked~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(shocked~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(shocked~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(surprise, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(surprise~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(surprise~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(surprise~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(hopeful, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(hopeful~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(hopeful~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(hopeful~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(interest, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(interest~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(interest~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(interest~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(disgust, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(disgust~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(disgust~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(disgust~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(frustrated, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(frustrated~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(frustrated~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(frustrated~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(curious, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(curious~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(curious~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(curious~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(afraid, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(afraid~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(afraid~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(afraid~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(worried, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(worried~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(worried~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(worried~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(grateful, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(grateful~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(grateful~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(grateful~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(proud, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(proud~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(proud~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(proud~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(embarrass, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(embarrass~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(embarrass~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(embarrass~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(guilt, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(guilt~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(guilt~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(guilt~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
+
+with(pt, nojitterbox(selfanger, f1=emotfactor, f2=ptfactor, ylab='Happy'))
+confint(lm(selfanger~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
+confint(lm(selfanger~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
+confint(lm(selfanger~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
 
 
 ##### 6. Analysis of Own Appraisals #####

@@ -345,53 +345,47 @@ confint(m.o_symp3)
 confint(m.symp3)
 confint(m.comp3)
 
-# sympathy
-with(ptopen, by(o_sympathy, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
-with(ptopen, prop.plot(o_sympathy, ptfactor, emotfactor, ylab='Sympathy'))
-summary(glm(o_sympathy~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_sympathy~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_sympathy~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
 
 # frustration
 with(ptopen, by(o_frustration, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
 with(ptopen, prop.plot(o_frustration, ptfactor, emotfactor, ylab='Sadness'))
-summary(glm(o_frustration~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_frustration~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_frustration~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_frustration~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_frustration~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_frustration~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
 
 #apathy
 with(ptopen, by(o_apathetic, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
 with(ptopen, prop.plot(o_apathetic, ptfactor, emotfactor, ylab='Apathy'))
-summary(glm(o_apathetic~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_apathetic~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_apathetic~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_apathetic~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_apathetic~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_apathetic~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
 
 #surprise
 with(ptopen, by(o_surprised, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
 with(ptopen, prop.plot(o_surprised, ptfactor, emotfactor, ylab='Surprise'))
-summary(glm(o_surprised~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_surprised~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_surprised~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_surprised~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_surprised~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_surprised~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
 
 #bad
 with(ptopen, by(o_bad, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
 with(ptopen, prop.plot(o_bad, ptfactor, emotfactor, ylab='Unpleasantness'))
-summary(glm(o_bad~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_bad~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_bad~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_bad~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_bad~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_bad~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
 
 #confusion
 with(ptopen, by(o_confusion, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
 with(ptopen, prop.plot(o_confusion, ptfactor, emotfactor, ylab='Confusion'))
-summary(glm(o_confusion~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_confusion~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_confusion~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_confusion~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_confusion~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_confusion~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
 
 with(ptopen, by(o_interest, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
 with(ptopen, prop.plot(o_interest, ptfactor, emotfactor, ylab='Interest'))
-summary(glm(o_interest~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_interest~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_interest~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_interest~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_interest~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
+confint(glm(o_interest~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
 
 with(ptopen, by(o_tired, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
 with(ptopen, prop.plot(o_tired, ptfactor, emotfactor, ylab='Tired'))
@@ -399,201 +393,6 @@ summary(glm(o_tired~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=bino
 summary(glm(o_tired~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
 summary(glm(o_tired~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
 
-
-
-##### 6. Analysis of Closed-Ended Own Emotions #####
-
-library(MASS)
-
-
-
-
-
-
-# boxplots show non-normality and combining items doesn't help, so we report medians and modes 
-with(pt, by(angry, group, median, na.rm=TRUE))
-with(pt, by(angry, group, table))
-with(pt, by(mad, group, median, na.rm=TRUE))
-with(pt, by(mad, group, table))
-
-# ordered logit models with confidence intervals for the slopes
-
-## contrasts
-
-
-m.angry <- polr(factor(angry) ~ pt_cond*emot_cond, data=pt)
-summary(m.angry)
-confint(m.angry)
-confint(polr(factor(angry) ~ angerpt + ptsvang + objsvsoth, data=pt)) #difference in anger pt
-confint(polr(factor(angry) ~ sadpt + objavsad + ptangvsoth, data=pt)) #difference in sad pt
-m.mad <- polr(factor(mad) ~ pt_cond*emot_cond, data=pt)
-summary(m.mad)
-confint(m.mad)
-confint(polr(factor(mad) ~ angerpt + ptsvang + objsvsoth, data=pt)) #difference in anger pt
-confint(polr(factor(mad) ~ sadpt + objavsad + ptangvsoth, data=pt)) #difference in sad pt
-
-# linear regression (just in case)
-pt$anger <- with(pt, rowMeans(cbind(angry, mad), na.rm=TRUE))
-m.anger <- lm(anger ~ pt_cond*emot_cond, data=pt)
-summary(m.anger)
-plot(m.anger)
-confint(m.anger)
-
-
-## Sadness
-
-# examine boxplots for sad and down
-sad.plot.nojitter <- ggplot(pt, aes(y=sad, x=group)) + 
-    geom_boxplot(colour='#72524D', outlier.colour='#72524D') + 
-    labs(x='Condition', y='Sad') +
-    theme(panel.background = element_rect(fill = '#fcfbf7'), axis.title.x=element_text(colour='#72524D', size=24), axis.text.x=element_text(colour='#716F6E', size=20), axis.title.y=element_text(colour='#72524D', size=24), axis.text.y=element_text(colour='#716F6E', size=20))
-sad.plot.nojitter
-
-down.plot.nojitter <- ggplot(pt, aes(y=down, x=group)) + 
-    geom_boxplot(colour='#72524D', outlier.colour='#72524D') + 
-    labs(x='Condition', y='Down') +
-    theme(panel.background = element_rect(fill = '#fcfbf7'), axis.title.x=element_text(colour='#72524D', size=24), axis.text.x=element_text(colour='#716F6E', size=20), axis.title.y=element_text(colour='#72524D', size=24), axis.text.y=element_text(colour='#716F6E', size=20))
-down.plot.nojitter
-
-multiplot(sad.plot.nojitter, down.plot.nojitter, cols=1)
-
-# boxplots show non-normality and combining items doesn't help, so we report medians and modes 
-with(pt, by(sad, group, median, na.rm=TRUE))
-with(pt, by(sad, group, table))
-with(pt, by(down, group, median, na.rm=TRUE))
-with(pt, by(down, group, table))
-
-# ordered logit models with confidence intervals for the slopes
-m.sad <- polr(factor(sad) ~ pt_cond*emot_cond, data=pt)
-summary(m.sad)
-confint(m.sad)
-m.down <- polr(factor(down) ~ pt_cond*emot_cond, data=pt)
-summary(m.down)
-confint(m.down)
-
-# linear regression (just in case)
-pt$sadness <- with(pt, rowMeans(cbind(sad, down), na.rm=TRUE))
-m.sadness <- lm(sadness ~ pt_cond*emot_cond, data=pt)
-summary(m.sadness)
-plot(m.sadness)
-confint(m.sadness)
-
-
-## Sympathy
-
-# examine boxplots for sad and down
-symp.plot.nojitter <- ggplot(pt, aes(y=symp, x=group)) + 
-    geom_boxplot(colour='#72524D', outlier.colour='#72524D') + 
-    labs(x='Condition', y='Sympathy') +
-    theme(panel.background = element_rect(fill = '#fcfbf7'), axis.title.x=element_text(colour='#72524D', size=24), axis.text.x=element_text(colour='#716F6E', size=20), axis.title.y=element_text(colour='#72524D', size=24), axis.text.y=element_text(colour='#716F6E', size=20))
-symp.plot.nojitter
-
-comp.plot.nojitter <- ggplot(pt, aes(y=compass, x=group)) + 
-    geom_boxplot(colour='#72524D', outlier.colour='#72524D') + 
-    labs(x='Condition', y='Compassion') +
-    theme(panel.background = element_rect(fill = '#fcfbf7'), axis.title.x=element_text(colour='#72524D', size=24), axis.text.x=element_text(colour='#716F6E', size=20), axis.title.y=element_text(colour='#72524D', size=24), axis.text.y=element_text(colour='#716F6E', size=20))
-comp.plot.nojitter
-
-multiplot(symp.plot.nojitter, comp.plot.nojitter, cols=1)
-
-# boxplots show non-normality and combining items doesn't help, so we report medians and modes 
-with(pt, by(symp, group, median, na.rm=TRUE))
-with(pt, by(symp, group, table))
-with(pt, by(compass, group, median, na.rm=TRUE))
-with(pt, by(compass, group, table))
-
-# ordered logit models with confidence intervals for the slopes
-m.symp <- polr(factor(symp) ~ pt_cond*emot_cond, data=pt)
-summary(m.symp)
-confint(m.symp)
-m.comp <- polr(factor(compass) ~ pt_cond*emot_cond, data=pt)
-summary(m.comp)
-confint(m.comp)
-
-# linear regression (just in case)
-pt$sympathy <- with(pt, rowMeans(cbind(symp, compass), na.rm=TRUE))
-m.sympathy <- lm(sympathy ~ pt_cond*emot_cond, data=pt)
-summary(m.sympathy)
-plot(m.sympathy)
-confint(m.sympathy)
-
-
-## Other Emotions
-qplot(y=happy, x=group, data=pt, geom='boxplot')
-qplot(y=shocked, x=group, data=pt, geom='boxplot')
-confint(polr(factor(shocked)~group, data=pt)) #interaction
-qplot(y=hopeful, x=group, data=pt, geom='boxplot')
-qplot(y=interest, x=group, data=pt, geom='boxplot')
-confint(polr(factor(interest)~group, data=pt)) #nothing
-qplot(y=disgust, x=group, data=pt, geom='boxplot')
-confint(polr(factor(disgust)~group, data=pt)) #interaction
-qplot(y=curious, x=group, data=pt, geom='boxplot')
-qplot(y=afraid, x=group, data=pt, geom='boxplot')
-qplot(y=grateful, x=group, data=pt, geom='boxplot')
-qplot(y=proud, x=group, data=pt, geom='boxplot')
-qplot(y=surprise, x=group, data=pt, geom='boxplot')
-qplot(y=amused, x=group, data=pt, geom='boxplot')
-qplot(y=worried, x=group, data=pt, geom='boxplot')
-confint(polr(factor(worried)~group, data=pt))
-qplot(y=frustrated, x=group, data=pt, geom='boxplot')
-confint(polr(factor(worried)~group, data=pt))
-qplot(y=embarrass, x=group, data=pt, geom='boxplot')
-qplot(y=guilt, x=group, data=pt, geom='boxplot')
-qplot(y=selfanger, x=group, data=pt, geom='boxplot')
-
-confint(polr(factor(happy)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(shocked)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(hopeful)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(angry)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(compass)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(interest)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(disgust)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(mad)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(curious)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(afraid)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(grateful)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(proud)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(surprise)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(amused)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(down)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(worried)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(frustrated)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(sad)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(embarrass)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(guilt)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(selfanger)~pt_cond*emot_cond, data=pt))
-confint(polr(factor(symp)~pt_cond*emot_cond, data=pt))
-
-
-## contrast results
-a.angry <- polr(factor(angry) ~ angerpt + ptsvang + objsvsoth, data=pt) 
-s.angry <- polr(factor(angry) ~ sadpt + objavsad + ptangvsoth, data=pt) 
-a.mad <- polr(factor(mad) ~ angerpt + ptsvang + objsvsoth, data=pt)  
-s.mad <- polr(factor(mad) ~ sadpt + objavsad + ptangvsoth, data=pt)  
-a.comp <- polr(factor(compass) ~ angerpt + ptsvang + objsvsoth, data=pt) 
-s.comp <- polr(factor(compass) ~ sadpt + objavsad + ptangvsoth, data=pt) 
-a.symp <- polr(factor(symp) ~ angerpt + ptsvang + objsvsoth, data=pt) 
-s.symp <- polr(factor(symp) ~ sadpt + objavsad + ptangvsoth, data=pt) 
-a.sad <- polr(factor(sad) ~ angerpt + ptsvang + objsvsoth, data=pt) 
-s.sad <- polr(factor(sad) ~ sadpt + objavsad + ptangvsoth, data=pt) 
-a.down <- polr(factor(down) ~ angerpt + ptsvang + objsvsoth, data=pt) 
-s.down <- polr(factor(down) ~ sadpt + objavsad + ptangvsoth, data=pt) 
-
-coefs <- c(coef(s.symp)[1], coef(s.comp)[1], coef(s.sad)[1], coef(s.down)[1], coef(s.angry)[1], coef(s.mad)[1], coef(a.symp)[1], coef(a.comp)[1], coef(a.sad)[1], coef(a.down)[1], coef(a.angry)[1], coef(a.mad)[1])
-emotions <- factor(rep(c('Sympathetic', 'Compassionate', 'Sad', 'Down', 'Angry', 'Mad')), levels=rev(c('Sympathetic', 'Compassionate', 'Sad', 'Down', 'Angry', 'Mad')))
-contrast <- factor(rep(c('Sadness','Anger'), each=6), levels=c('Sadness','Anger'))
-coefs.lb <- c(confint(s.symp)[1,1], confint(s.comp)[1,1], confint(s.sad)[1,1], confint(s.down)[1,1], confint(s.angry)[1,1], confint(s.mad)[1,1], confint(a.symp)[1,1], confint(a.comp)[1,1], confint(a.sad)[1,1], confint(a.down)[1,1], confint(a.angry)[1,1], confint(a.mad)[1,1])
-coefs.ub <- c(confint(s.symp)[1,2], confint(s.comp)[1,2], confint(s.sad)[1,2], confint(s.down)[1,2], confint(s.angry)[1,2], confint(s.mad)[1,2], confint(a.symp)[1,2], confint(a.comp)[1,2], confint(a.sad)[1,2], confint(a.down)[1,2], confint(a.angry)[1,2], confint(a.mad)[1,2])
-coef.data <- data.frame(contrast, emotions, coefs, coefs.lb, coefs.ub)
-
-ggplot(coef.data, aes(y=coefs, x=emotions)) + 
-    geom_pointrange(stat='identity', aes(ymin=coefs.lb, ymax=coefs.ub), colour='#72524D') + 
-    facet_grid(contrast~.) + 
-    theme(strip.background=element_rect(fill='#fcfbf7'), strip.text.y = element_text(color = '#72524D', size=16)) + 
-    coord_flip() + 
-    ylim(-1.3,1.3) +
-    labs(x='Emotion', y='Contrast 95% CI') +
-    theme(panel.background = element_rect(fill = '#fcfbf7'), axis.title.x=element_text(colour='#72524D', size=20), axis.text.x=element_text(colour='#716F6E', size=12), axis.title.y=element_text(colour='#72524D', size=20), axis.text.y=element_text(colour='#716F6E', size=12))
 
 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  16 JUN 2015 09:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  16 JUN 2015 10:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -484,11 +484,14 @@ LaTeX Warning: Citation `Wondrasub' undefined on input line 160.
 Underfull \vbox (badness 1859) has occurred while \output is active []
 
  [9]
-(./PerspectiveTakingManuscript.bbl [10])
+Underfull \vbox (badness 1859) has occurred while \output is active []
 
-Class apa6 Warning: \bibliographystyle command ignored on input line 235.
+ [10]
+(./PerspectiveTakingManuscript.bbl [11])
 
-AED endfloat: Processing end Figures and Tables [11
+Class apa6 Warning: \bibliographystyle command ignored on input line 236.
+
+AED endfloat: Processing end Figures and Tables [12
 
 ]
 (./PerspectiveTakingManuscript.ttt
@@ -523,19 +526,19 @@ Overfull \hbox (47.9429pt too wide) in paragraph at lines 8--32
 [][] 
  []
 
-[12
+[13
 
 
 ]) (./PerspectiveTakingManuscript.fff
 Package color Info: Redefining color shadecolor on input line 5.
 
-<figure/SadPlot.pdf, id=43, 505.89pt x 505.89pt>
+<figure/SadPlot.pdf, id=47, 505.89pt x 505.89pt>
 File: figure/SadPlot.pdf Graphic file (type pdf)
  <use figure/SadPlot.pdf>
 Package pdftex.def Info: figure/SadPlot.pdf used on input line 6.
 (pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
 
-[13
+[14
 
 
  <./figure/SadPlot.pdf>]
@@ -545,24 +548,24 @@ LaTeX Font Info:    Try loading font information for T1+lmtt on input line 20.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<figure/AngerPlot.pdf, id=54, 505.89pt x 505.89pt>
+<figure/AngerPlot.pdf, id=57, 505.89pt x 505.89pt>
 File: figure/AngerPlot.pdf Graphic file (type pdf)
  <use figure/AngerPlot.pdf>
 Package pdftex.def Info: figure/AngerPlot.pdf used on input line 21.
 (pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
 
-[14
+[15
 
  <./figure/AngerPlot.pdf>]
 Package color Info: Redefining color shadecolor on input line 32.
 
-<figure/SympPlot.pdf, id=65, 505.89pt x 505.89pt>
+<figure/SympPlot.pdf, id=68, 505.89pt x 505.89pt>
 File: figure/SympPlot.pdf Graphic file (type pdf)
  <use figure/SympPlot.pdf>
 Package pdftex.def Info: figure/SympPlot.pdf used on input line 36.
 (pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
 
-[15
+[16
 
  <./figure/SympPlot.pdf>]) (./PerspectiveTakingManuscript.aux)
 
@@ -572,7 +575,7 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  5256 strings out of 493117
  78534 string characters out of 6135433
- 143524 words of memory out of 5000000
+ 144524 words of memory out of 5000000
  8599 multiletter control sequences out of 15000+600000
  40094 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -582,10 +585,10 @@ texlive/2014/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/20
 14/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2014/texmf-di
 st/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2014/texmf-dist/fonts/t
 ype1/public/lm/lmtt12.pfb>
-Output written on PerspectiveTakingManuscript.pdf (15 pages, 141280 bytes).
+Output written on PerspectiveTakingManuscript.pdf (16 pages, 142523 bytes).
 PDF statistics:
- 91 PDF objects out of 1000 (max. 8388607)
- 63 compressed objects within 1 object stream
+ 94 PDF objects out of 1000 (max. 8388607)
+ 65 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

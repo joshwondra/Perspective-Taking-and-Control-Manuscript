@@ -3,10 +3,10 @@
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/SadPlot-1}
+\includegraphics[width=\maxwidth]{figure/Figure1Sad-1}
 
 \end{knitrout}
-\textit{Figure 1.} Subjects' sadness by condition.
+\textit{Figure 1. Probability that subjects reported feeling sad by condition.}
 \end{figure*}
 \efloatseparator
  
@@ -14,14 +14,11 @@
 \ifnextchar[{\eatarg}{}
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing non-finite values (stat\_boxplot).}}\end{kframe}
-\includegraphics[width=\maxwidth]{figure/AngerPlot-1}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/Figure2Angry-1}
 
 \end{knitrout}
-\textit{Figure 2.} Subjects' anger by condition.
+\textit{Figure 2. Probability that subjects reported feeling angry by condition.}
 \end{figure*}
 \efloatseparator
  
@@ -29,14 +26,343 @@
 \ifnextchar[{\eatarg}{}
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 2 rows containing non-finite values (stat\_boxplot).}}\end{kframe}
-\includegraphics[width=\maxwidth]{figure/SympPlot-1}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/Figure3Sad-1}
 
 \end{knitrout}
-\textit{Figure 3.} Subjects' sympathy by condition.
+\textit{Figure 3. Subjects' average sadness by condition. The bars represent standard errors.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/Figure4Angry-1}
+
+\end{knitrout}
+\textit{Figure 4. Subjects' average anger by condition. The bars represent standard errors.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/Figure5CIPlotsObjectiveVSOthers-1}
+\begin{kframe}\begin{verbatim}
+##
+## Call:
+## glm(formula = open_sad ~ sad.angry + OvC.sad + PvOC.sad + OvC.angry +
+##     PvOC.angry, family = binomial(link = "logit"), data = ptdata)
+##
+## Deviance Residuals:
+##     Min       1Q   Median       3Q      Max
+## -1.5550  -1.2294   0.8421   1.1263   1.6744
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept)  0.09585    0.10545   0.909   0.3634
+## sad.angry   -0.49634    0.10545  -4.707 2.51e-06 ***
+## OvC.sad      0.33971    0.17797   1.909   0.0563 .
+## PvOC.sad     0.13112    0.10695   1.226   0.2202
+## OvC.angry    0.45782    0.18807   2.434   0.0149 *
+## PvOC.angry   0.26093    0.10339   2.524   0.0116 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance: 558.86  on 403  degrees of freedom
+## Residual deviance: 519.58  on 398  degrees of freedom
+## AIC: 531.58
+##
+## Number of Fisher Scoring iterations: 4
+##
+## Call:
+## glm(formula = open_sad ~ sad.angry + OvP.sad + CvOP.sad + OvP.angry +
+##     CvOP.angry, family = binomial(link = "logit"), data = ptdata)
+##
+## Deviance Residuals:
+##     Min       1Q   Median       3Q      Max
+## -1.5550  -1.2294   0.8421   1.1263   1.6744
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept)  0.09585    0.10545   0.909  0.36337
+## sad.angry   -0.49634    0.10545  -4.707 2.51e-06 ***
+## OvP.sad      0.36653    0.18173   2.017  0.04371 *
+## CvOP.sad     0.10430    0.10482   0.995  0.31974
+## OvP.angry    0.62030    0.18956   3.272  0.00107 **
+## CvOP.angry   0.09845    0.10247   0.961  0.33671
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance: 558.86  on 403  degrees of freedom
+## Residual deviance: 519.58  on 398  degrees of freedom
+## AIC: 531.58
+##
+## Number of Fisher Scoring iterations: 4
+##
+## Call:
+## lm(formula = sad_mean ~ sad.angry + OvC.sad + PvOC.sad + OvC.angry +
+##     PvOC.angry, data = ptdata)
+##
+## Residuals:
+##     Min      1Q  Median      3Q     Max
+## -2.0075 -0.6846 -0.1340  0.7535  3.3154
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  2.44573    0.05085  48.097  < 2e-16 ***
+## sad.angry   -0.25255    0.05085  -4.967 1.01e-06 ***
+## OvC.sad      0.20278    0.08734   2.322 0.020749 *
+## PvOC.sad     0.15459    0.05078   3.044 0.002486 **
+## OvC.angry    0.31349    0.08829   3.551 0.000430 ***
+## PvOC.angry   0.19508    0.05122   3.809 0.000162 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## Residual standard error: 1.022 on 398 degrees of freedom
+## Multiple R-squared:  0.1414, Adjusted R-squared:  0.1306
+## F-statistic: 13.11 on 5 and 398 DF,  p-value: 7.882e-12
+##
+## Call:
+## lm(formula = sad_mean ~ sad.angry + OvP.sad + CvOP.sad + OvP.angry +
+##     CvOP.angry, data = ptdata)
+##
+## Residuals:
+##     Min      1Q  Median      3Q     Max
+## -2.0075 -0.6846 -0.1340  0.7535  3.3154
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  2.44573    0.05085  48.097  < 2e-16 ***
+## sad.angry   -0.25255    0.05085  -4.967 1.01e-06 ***
+## OvP.sad      0.33328    0.08859   3.762 0.000194 ***
+## CvOP.sad     0.02410    0.05005   0.481 0.630466
+## OvP.angry    0.44936    0.08926   5.034 7.28e-07 ***
+## CvOP.angry   0.05921    0.05066   1.169 0.243177
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## Residual standard error: 1.022 on 398 degrees of freedom
+## Multiple R-squared:  0.1414, Adjusted R-squared:  0.1306
+## F-statistic: 13.11 on 5 and 398 DF,  p-value: 7.882e-12
+##
+## Call:
+## glm(formula = open_sympathy ~ sad.angry + OvC.sad + PvOC.sad +
+##     OvC.angry + PvOC.angry, family = binomial(link = "logit"),
+##     data = ptdata)
+##
+## Deviance Residuals:
+##     Min       1Q   Median       3Q      Max
+## -1.5015  -1.2825   0.8849   1.0508   1.1644
+##
+## Coefficients:
+##              Estimate Std. Error z value Pr(>|z|)
+## (Intercept)  0.432131   0.102672   4.209 2.57e-05 ***
+## sad.angry   -0.110544   0.102672  -1.077   0.2816
+## OvC.sad      0.246042   0.177357   1.387   0.1654
+## PvOC.sad     0.053010   0.104169   0.509   0.6108
+## OvC.angry    0.298919   0.177089   1.688   0.0914 .
+## PvOC.angry  -0.008103   0.101866  -0.080   0.9366
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance: 541.62  on 403  degrees of freedom
+## Residual deviance: 535.37  on 398  degrees of freedom
+## AIC: 547.37
+##
+## Number of Fisher Scoring iterations: 4
+##
+## Call:
+## glm(formula = open_sympathy ~ sad.angry + OvP.sad + CvOP.sad +
+##     OvP.angry + CvOP.angry, family = binomial(link = "logit"),
+##     data = ptdata)
+##
+## Deviance Residuals:
+##     Min       1Q   Median       3Q      Max
+## -1.5015  -1.2825   0.8849   1.0508   1.1644
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept)  0.43213    0.10267   4.209 2.57e-05 ***
+## sad.angry   -0.11054    0.10267  -1.077    0.282
+## OvP.sad      0.20254    0.17869   1.133    0.257
+## CvOP.sad     0.09652    0.10341   0.933    0.351
+## OvP.angry    0.13730    0.17577   0.781    0.435
+## CvOP.angry   0.15351    0.10262   1.496    0.135
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance: 541.62  on 403  degrees of freedom
+## Residual deviance: 535.37  on 398  degrees of freedom
+## AIC: 547.37
+##
+## Number of Fisher Scoring iterations: 4
+##
+## Call:
+## lm(formula = symp_mean ~ sad.angry + OvC.sad + PvOC.sad + OvC.angry +
+##     PvOC.angry, data = ptdata)
+##
+## Residuals:
+##      Min       1Q   Median       3Q      Max
+## -2.68939 -0.69697  0.06522  0.77692  2.27692
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  3.39025    0.04897  69.232  < 2e-16 ***
+## sad.angry   -0.08378    0.04897  -1.711   0.0879 .
+## OvC.sad      0.16937    0.08409   2.014   0.0447 *
+## PvOC.sad     0.10768    0.04902   2.197   0.0286 *
+## OvC.angry    0.35585    0.08471   4.201 3.29e-05 ***
+## PvOC.angry   0.22754    0.04939   4.607 5.53e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## Residual standard error: 0.9802 on 395 degrees of freedom
+##   (3 observations deleted due to missingness)
+## Multiple R-squared:  0.112, Adjusted R-squared:  0.1008
+## F-statistic: 9.967 on 5 and 395 DF,  p-value: 5.397e-09
+##
+## Call:
+## lm(formula = symp_mean ~ sad.angry + OvP.sad + CvOP.sad + OvP.angry +
+##     CvOP.angry, data = ptdata)
+##
+## Residuals:
+##      Min       1Q   Median       3Q      Max
+## -2.68939 -0.69697  0.06522  0.77692  2.27692
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  3.39025    0.04897  69.232  < 2e-16 ***
+## sad.angry   -0.08378    0.04897  -1.711  0.08789 .
+## OvP.sad      0.24621    0.08531   2.886  0.00412 **
+## CvOP.sad     0.03084    0.04831   0.638  0.52354
+## OvP.angry    0.51923    0.08597   6.040 3.57e-09 ***
+## CvOP.angry   0.06416    0.04867   1.318  0.18815
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## Residual standard error: 0.9802 on 395 degrees of freedom
+##   (3 observations deleted due to missingness)
+## Multiple R-squared:  0.112, Adjusted R-squared:  0.1008
+## F-statistic: 9.967 on 5 and 395 DF,  p-value: 5.397e-09
+##
+## Call:
+## glm(formula = open_anger ~ sad.angry + OvC.sad + PvOC.sad + OvC.angry +
+##     PvOC.angry, family = binomial(link = "logit"), data = ptdata)
+##
+## Deviance Residuals:
+##     Min       1Q   Median       3Q      Max
+## -1.0759  -0.6681  -0.5415  -0.4202   2.2230
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept)  -1.2837     0.1322  -9.709  < 2e-16 ***
+## sad.angry     0.6332     0.1322   4.789 1.67e-06 ***
+## OvC.sad      -0.2684     0.2787  -0.963  0.33553
+## PvOC.sad      0.1973     0.1411   1.398  0.16210
+## OvC.angry     0.5324     0.1973   2.699  0.00696 **
+## PvOC.angry    0.2034     0.1056   1.926  0.05411 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance: 447.66  on 403  degrees of freedom
+## Residual deviance: 406.16  on 398  degrees of freedom
+## AIC: 418.16
+##
+## Number of Fisher Scoring iterations: 5
+##
+## Call:
+## glm(formula = open_anger ~ sad.angry + OvP.sad + CvOP.sad + OvP.angry +
+##     CvOP.angry, family = binomial(link = "logit"), data = ptdata)
+##
+## Deviance Residuals:
+##     Min       1Q   Median       3Q      Max
+## -1.0759  -0.6681  -0.5415  -0.4202   2.2230
+##
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept)  -1.2837     0.1322  -9.709  < 2e-16 ***
+## sad.angry     0.6332     0.1322   4.789 1.67e-06 ***
+## OvP.sad       0.1617     0.2399   0.674    0.500
+## CvOP.sad     -0.2328     0.1632  -1.427    0.154
+## OvP.angry     0.5713     0.1985   2.878    0.004 **
+## CvOP.angry    0.1645     0.1048   1.569    0.117
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+##     Null deviance: 447.66  on 403  degrees of freedom
+## Residual deviance: 406.16  on 398  degrees of freedom
+## AIC: 418.16
+##
+## Number of Fisher Scoring iterations: 5
+##
+## Call:
+## lm(formula = angry_mean ~ sad.angry + OvC.sad + PvOC.sad + OvC.angry +
+##     PvOC.angry, data = ptdata)
+##
+## Residuals:
+##     Min      1Q  Median      3Q     Max
+## -1.7000 -0.7154 -0.3913  0.6087  3.3028
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  2.01075    0.05372  37.428  < 2e-16 ***
+## sad.angry    0.25815    0.05372   4.805 2.20e-06 ***
+## OvC.sad      0.13647    0.09204   1.483 0.138932
+## PvOC.sad     0.19188    0.05378   3.568 0.000404 ***
+## OvC.angry    0.33796    0.09304   3.632 0.000318 ***
+## PvOC.angry   0.21555    0.05425   3.973 8.42e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## Residual standard error: 1.077 on 396 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.1441, Adjusted R-squared:  0.1333
+## F-statistic: 13.33 on 5 and 396 DF,  p-value: 5.046e-12
+##
+## Call:
+## lm(formula = angry_mean ~ sad.angry + OvP.sad + CvOP.sad + OvP.angry +
+##     CvOP.angry, data = ptdata)
+##
+## Residuals:
+##     Min      1Q  Median      3Q     Max
+## -1.7000 -0.7154 -0.3913  0.6087  3.3028
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  2.01075    0.05372  37.428  < 2e-16 ***
+## sad.angry    0.25815    0.05372   4.805 2.20e-06 ***
+## OvP.sad      0.35606    0.09370   3.800 0.000167 ***
+## CvOP.sad    -0.02771    0.05281  -0.525 0.600148
+## OvP.angry    0.49231    0.09442   5.214 2.98e-07 ***
+## CvOP.angry   0.06120    0.05345   1.145 0.252869
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##
+## Residual standard error: 1.077 on 396 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.1441, Adjusted R-squared:  0.1333
+## F-statistic: 13.33 on 5 and 396 DF,  p-value: 5.046e-12
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\textit{Figure 5. 95\% confidence intervals for the difference in subjects' emotions by condition. Positive values indicate that subjects felt stronger emotions in the control and perspective taking conditions than in the objective condition.}
 \end{figure*}
 \efloatseparator
  

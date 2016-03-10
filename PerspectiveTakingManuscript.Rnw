@@ -20,22 +20,42 @@ Contact: jdwondra@umich.edu}
 
 \maketitle
 
+When someone is experiencing an emotional event, people are often told that they should take that person's perspective. The hope is that taking the other's perspective will make them understand and feel how the other person feels; it will make them empathize. And indeed, many studies have used perspective taking as a way to induce empathy (CITATIONS). But does perspective taking make people empathize with specific emotions, so that they feel whatever the other person feels?
+
+Existing research on perspective taking is surprisingly limited when it comes to answering this question. There are two reasons for this. First, the target of perspective taking typically feels sad, distressed, or anxious, all of which involve appraisals that bad circumstances are to blame for a misfortune or that the situation is out of anyone's control (CITE ATTRIBUTION AND APPRAISAL LITERATURE, POSSIBLY TIE ATTRIBUTION LIT TO SYMPATHY). This leaves open the possiblity that perspective taking has a unique effect on emotions that are felt in uncontrollable circumstances. Specifically, perspective taking might decrease actor-observer bias, which involves the tendency to make more dispositional attributions for others and situational attributions for oneself (CITATIONS). In this case, perspective taking might increase empathy with emotions that involve appraisals that impersonal circumstances are in control, such as sadness, but not empathy with emotions that involve appraisals that some human agent caused a misfortune, such as anger.
+
+The second limit of existing research is the comparison condition to perspective taking. The most common control condition in research that uses perspective taking to induce empathy is to tell subjects to remain objective while they are exposed to a target's emotional experience. The problem is that these instructions are not a neutral control condition (CITATIONS). Instead, they instruct subject to down-regulate their vicarious emotions, which calls into question whether the observed effects are due to increased empathy from perspective taking, decreased empathy from remaining objective, or both.
+
+In this study, I addressed the limitations of existing research by first, exposing subjects to someone who felt either sad or angry about a misfortune, and second, adding a neutral control condition as well as the typical perspective taking and objective conditions. I tested three hypotheses. First, I tested whether perspective taking would increase empathy with specific emotions, meaning that subjects who take a target's perspective should feel sadder when the target is sad and angrier when the target is angry. Second, I tested whether perspective taking would increase empathy only with emotions that involve appraisals of situational control, meaning that it should make subjects feel sadder when the target is sad, but not angrier when the target is angry. Third, I tested whether remaining objective decreased empathic emotions compared to the control condition. 
+
+
 \section{Method}
 
 <<dataprep, echo=FALSE>>=
 
 #### Check number of exclusions from original data (these data will not be analyzed here)
-ptdatafull <- read.csv('/users/joshwondra/Dropbox/Research/Current Projects/Perspective Taking Control/Data/PTDataComplete.csv', header=TRUE)
-fullN <- length(ptdatafull$SubjectID)
+ptclose <- read.csv('Data/ptdata.csv', header=TRUE)
+ptopen <- read.csv('Data/ptownopen-Master.csv', header=TRUE)
+ptdata <- merge(ptclose, ptopen, by='SubjectID')
+fullN <- length(ptdata$SubjectID)
+suspicious <- sum(ptdata$suspicious)
+language <- sum(ptdata[ptdata$suspicious!=1,'language'])
+inattention <- sum(ptdata[ptdata$suspicious!=1 & ptdata$language!=1,'inattention'])
+concussion <- sum(ptdata$concussion)
+exp.error <- sum(ptdata$experimentererror)
+
 
 ## exclude problem cases
-ptdata <- ptdatafull[ptdatafull$language!=1 & ptdatafull$inattentionORsuspicion!=1,]
+ptdata <- ptdata[ptdata$suspicious!=1 & ptdata$concussion!=1 & ptdata$language!=1 & ptdata$inattention!=1 & ptdata$experimentererror!=1,]
 usedN <- length(ptdata$SubjectID)
 exclusions <- fullN-usedN
+prop.exclusions <- round(exclusions/fullN*100, digits=0)
 
 #### Load data, packages, and functions
 load('ptDataManuscript.RData')
 library(MASS)
+library(car)
+library(ggplot2)
 source('../R functions/proportion-plot.R')
 source('../R functions/mean-plot.R')
 source('../R functions/multiplot.R')
@@ -60,6 +80,22 @@ get.ci <- function(object, row) {
 }
 
 
+#### Code conditions into factors for plotting
+ptdata$ptfactor <- factor(ptdata$pt_cond, levels=c(1,0,2), labels=c('objective','control','perspective taking'))
+ptdata$emotfactor <- factor(ptdata$emot_cond, levels=c(1,2), labels=c('sad','angry'))
+
+
+#### Compute open-ended variables
+
+group.emot <- function(...) {
+    vars <- cbind(...)
+    code <- (rowSums(vars)>0)*1
+    return(code)
+}
+
+ptdata$open_anger <- with(ptdata, group.emot(o_aggravation, o_agitated, o_anger, o_angry, o_annoyance, o_annoyed, o_bitter, o_furious, o_indignance, o_irritation, o_mad, o_outraged, o_pissed))
+ptdata$open_sad <- with(ptdata, group.emot(o_defeat, o_depressed, o_depression, o_despair, o_disappointed, o_disappointing, o_disappointment, o_disheartened, o_down, o_heartbroken, o_helpless, o_helplessness, o_hopeless, o_let_down, o_melancholy, o_sad, o_saddened, o_sadness, o_solemn, o_sorrow, o_want_to_cry))
+ptdata$open_sympathy <- with(ptdata, group.emot(o_apologetic, o_caring, o_compassion, o_compassionate, o_concern, o_concerned, o_consoling, o_empathetic, o_empathic, o_empathy, o_pity, o_sorriness, o_sorry, o_sympathetic, o_sympathy, o_wish_i_could_help)) #245 cases
 @
 
 \subsection{Overview}
@@ -72,11 +108,12 @@ get.ci <- function(object, row) {
 #gender
 fem <- sum(ptdata$female==1, na.rm=TRUE)
 mal <- sum(ptdata$female==0, na.rm=TRUE)
-gend.na <- sum(is.na(ptdata$female))
+trans <- 'one'
+gend.na <- 'three'
 
 #age
 minage <- min(ptdata$age, na.rm=TRUE)
-maxage <- min(ptdata$age, na.rm=TRUE)
+maxage <- max(ptdata$age, na.rm=TRUE)
 medage <- median(ptdata$age, na.rm=TRUE)
 
 #race/ethnicity
@@ -84,7 +121,7 @@ nwhite <- sum(ptdata$white, na.rm=TRUE)
 nblack <- sum(ptdata$black, na.rm=TRUE)
 nasian <- sum(ptdata$asian, na.rm=TRUE)
 nlatino <- sum(ptdata$latino, na.rm=TRUE)
-nother <- sum(ptdata$other, na.rm=TRUE)
+nother <- sum(ptdata$other_race, na.rm=TRUE)
 nmideast <- sum(ptdata$mideast, na.rm=TRUE)
 nnatam <- sum(ptdata$natam, na.rm=TRUE)
 npacisl <- sum(ptdata$pacisl, na.rm=TRUE)
@@ -106,7 +143,7 @@ dadad <- as.numeric(DadEd[4])
 dadbd <- as.numeric(DadEd[5])
 dadpgd <- as.numeric(DadEd[6])
 @
-    Subjects were \Sexpr{usedN} (\Sexpr{fem} women, \Sexpr{mal} men, \Sexpr{gend.na} did not report gender) undergraduate students and community members who participated for course credit or \$5. Data from an additional \Sexpr{exclusions} subjects were excluded because they were non-native English speakers, they were inattentive, or they suspected that the letter they read was not real. Subjects ages ranged from \Sexpr{minage} to \Sexpr{maxage} (Median = \Sexpr{medage}). There were \Sexpr{nwhite} who identified as European American or White, \Sexpr{nasian} who identified as Asian or Asian American, \Sexpr{nblack} who identified as African American or Black, \Sexpr{nmideast} who identified as Middle Eastern, \Sexpr{nlatino} who identified as Latino or Hispanic, \Sexpr{nnatam} who identified as Native American or Alaska Native, \Sexpr{npacisl} who identified as Native Hawaiian or Other Pacific Islander, and \Sexpr{nother} who identified as having another racial or ethnic heritage. To indicate socieconomic status, subjects reported their parents' highest forms of education completed (see Table 1).
+    Subjects were \Sexpr{usedN} (\Sexpr{fem} women, \Sexpr{mal} men, \Sexpr{trans} transgender, \Sexpr{gend.na} did not report gender) undergraduate students and community members who participated for course credit or \$5. Data from an additional \Sexpr{exclusions} subjects were excluded; \Sexpr{suspicious} subjects suspected that the letter they read was not real, \Sexpr{inattention} were inattentive, four were non-native English speakers, one reported that he had a concussion, and one learned which experimental condition he was in due to experimenter error. Subjects' ages ranged from \Sexpr{minage} to \Sexpr{maxage} (Median = \Sexpr{medage}). There were \Sexpr{nwhite} who identified as European American or White, \Sexpr{nasian} who identified as Asian or Asian American, \Sexpr{nblack} who identified as African American or Black, \Sexpr{nmideast} who identified as Middle Eastern, \Sexpr{nlatino} who identified as Latino or Hispanic, \Sexpr{nnatam} who identified as Native American or Alaska Native, \Sexpr{npacisl} who identified as Native Hawaiian or Other Pacific Islander, and \Sexpr{nother} who identified as having another racial or ethnic heritage. To indicate socieconomic status, subjects reported their parents' highest forms of education completed (see Table 1).
     
 \begin{table}
   Table 1
@@ -182,6 +219,31 @@ After completing the questionnaire, subjects were debriefed and thanked for thei
 
 \section{Results}
 
+<<CreateContrasts, echo=FALSE>>=
+# create orthogonal sets of contrasts that compare the perspective taking conditions separately for anger and sadness
+ptdata$group.numbers <- recode(interaction(ptdata$ptfactor, ptdata$emotfactor), as.factor.result=FALSE, "'objective.sad'=1;'control.sad'=2;'perspective taking.sad'=3;'objective.angry'=4;'control.angry'=5;'perspective taking.angry'=6")
+# sad vs. angry total
+ptdata$sad.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1:3=-1;4:6=1')
+
+# compare objective and perspective taking conditions
+ptdata$OvP.sad <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=-1;2=0;3=1;4=0;5=0;6=0')
+ptdata$CvOP.sad <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=-1;2=2;3=-1;4=0;5=0;6=0')
+ptdata$OvP.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=0;6=1')
+ptdata$CvOP.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=2;6=-1')
+
+# compare control and perspective taking conditions
+ptdata$CvP.sad <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=-1;3=1;4=0;5=0;6=0')
+ptdata$OvCP.sad <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=2;2=-1;3=-1;4=0;5=0;6=0')
+ptdata$CvP.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=0;5=-1;6=1')
+ptdata$OvCP.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=2;5=-1;6=-1')
+
+# compare objective and control conditions
+ptdata$OvC.sad <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=-1;2=1;3=0;4=0;5=0;6=0')
+ptdata$PvOC.sad <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=-1;2=-1;3=2;4=0;5=0;6=0')
+ptdata$OvC.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=1;6=0')
+ptdata$PvOC.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=-1;6=2')
+@
+
 \subsection{Plan for Data Analysis} We tested X hypotheses...
 
 \subsubsection{Plan for Analysis of Open-Ended Data} To analyze subjects' open-ended reports of their own emotions and their perceptions of Melissa's emotions, we created groups of emotion words that seemed to communicate similar feelings. We followed the following steps to create the emotion groups \cite{Wondrasub}: first, the first author removed subjects' experimental conditions from their open-ended responses, randomized the order of the responses, and identified each emotion word that subjects used. Second, the first author created the first set of emotion groups. Third, the second author looked at the emotoin groups and suggested changes. Fourth, we coded each group for the subjects as 1 if they mentioned at least one word in the group and 0 if they did not. 
@@ -193,169 +255,329 @@ After completing the questionnaire, subjects were debriefed and thanked for thei
 
 \subsection{Did Perspective Taking Make Subjects More Likely to Feel How Melissa Felt?}
 
-\subsection{Sadness} 
-<<sadData, echo=FALSE>>=
+If perspective taking makes people feel the same emotions that others feel, then when subjects were in the perspective taking condition they should have felt sadder when Melissa felt sad and angrier when Melissa felt angry. If, on the other hand, perspective taking affects vicarious emotions by reducing actor-observer bias, then when subjects were in the perspective taking condition they should have felt sadder when Melissa felt sad, but not angrier when Melissa felt angry.
 
-propsad.emotcond <- with(ptopen, get.percent(o_sad, emotfactor))
-propsad.sad <- propsad.emotcond[1]
-propsad.angry <- propsad.emotcond[2]
+\subsubsection{Open-ended data}
 
-## objective vs. perspective taking
-m.o_sad1 <- glm(o_sad~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
-m.sad1 <- polr(factor(sad)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-m.down1 <- polr(factor(down)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-
-## objective vs. control
-propsad.sad.OvC <- with(ptopen, get.percent(o_sad, OvC.sad))
-m.o_sad2 <- glm(o_sad~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
-m.sad2 <- polr(factor(sad)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-m.down2 <- polr(factor(down)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-
-## perspective taking vs. control
-propsad.sad.CvP <- with(ptopen, get.percent(o_sad, CvP.sad))
-m.o_sad3 <- glm(o_sad~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
-m.sad3 <- polr(factor(sad)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
-m.down3 <- polr(factor(down)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
-
-
-
-@
-
-Figure 1 displays subjects' sadness in the open-ended and closed-ended data. 
-    Subjects were more likely to report that they felt sad when they read a sad letter from Melissa (\Sexpr{propsad.sad}\%) than when they read an angry letter from Melissa (\Sexpr{propsad.angry}\%) in their open-ended responses, 95\% CI [\Sexpr{get.ci(m.o_sad1,2)}]. They also reported feeling more sad, 95\% CI [\Sexpr{get.ci(m.sad1,1)}], and down, 95\% CI [\Sexpr{get.ci(m.down1,1)}], in the closed-ended data.
-    For subjects who read the sad letter, subjects were no more likely to report that they felt sad when they took Melissa's perspective (\Sexpr{propsad.sad.CvP[3]}\%) than in the control condition (\Sexpr{propsad.sad.CvP[1]}\%) in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_sad3,3)}]; they also reported feeling equally sad, 95\% CI [\Sexpr{get.ci(m.sad3,2)}], and down, 95\% CI [\Sexpr{get.ci(m.down3,2)}], in the closed-ended data. On the other hand, those who remained objective were less likely to report that they felt sad (\Sexpr{propsad.sad.OvC[1]}\%) than those in the control condition in the open-ended data. However, they did not report feeling less sad, 95\% CI [\Sexpr{get.ci(m.sad2,2)}], or down, 95\% CI [\Sexpr{get.ci(m.down2,2)}], in the closed-ended data. Those who remained objective also reported feeling less sad than those who took Melissa's perspective in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_sad1,2)}], and less sad, 95\% CI [\Sexpr{get.ci(m.sad1,2)}], and down, 95\% CI [\Sexpr{get.ci(m.sad1,2)}], than those who took Melissa's perspective in the closed-ended data.
-    In summary, there was no evidence that perspective taking caused subjects to feel sad like Melissa, but there was some evidence that remaining objective caused them to feel less sad. 
 \begin{figure}
-<<SadPlot, echo=FALSE>>=
+<<Figure1Sad, echo=FALSE, fig=TRUE, width=8>>=
+pt.condition <- factor(rep(c('objective','control','perspective taking'), times=2), levels=c('objective','control','perspective taking'))
+emot.condition <- factor(rep(c('sad','angry'), each=3), levels=c('sad','angry'))
 
-## Sad
-# open-ended plot
-prop.sad <- with(ptopen, prop.plot(o_sad, emotfactor, ptfactor, ylab='Proportion Sad', xlab="Melissa's Emotion", leglab="Perspective Taking Condition"))
-# closed-ended plots
-box.sad <- with(pt, nojitterbox(sad, f1=emotfactor, f2=ptfactor, ylab='Sad Boxplot'))
-box.down <- with(pt, nojitterbox(down, f1=emotfactor, f2=ptfactor, ylab='Down Boxplot'))
+open_sad_props <- c(with(ptdata, by(open_sad, list(ptfactor, emotfactor), function(x){
+    prop <- sum(x)/length(x)
+    percent <- round(prop*100, digits=0)
+    return(percent)})))
 
-# plot together
-multiplot(prop.sad, box.sad, box.down)
+osad.plot.data <- data.frame(pt.condition, emot.condition, open_sad_props)
 
+ggplot(osad.plot.data, aes(y=open_sad_props, x=emot.condition, fill=pt.condition)) +
+    geom_bar(stat='identity', position='dodge', col='black') + 
+    scale_fill_manual(values=c('black','light grey','white')) +
+    labs(y='Sadness', x="Melissa's Emotion") +
+    coord_cartesian(ylim=c(0,100)) + 
+    theme_bw() +
+    theme(text=element_text(size=12))
 @
-\textit{Figure 1.} Subjects' sadness by condition.
+\textit{Figure 1. Probability that subjects reported feeling sad by condition.}
 \end{figure}
 
-\subsection{Anger}    
-<<angerData, echo=FALSE>>=
 
-propanger.emotcond <- with(ptopen, get.percent(o_anger, emotfactor))
-propanger.sad <- propanger.emotcond[1]
-propanger.angry <- propanger.emotcond[2]
-
-## objective vs. perspective taking
-m.o_anger1 <- glm(o_anger~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
-m.angry1 <- polr(factor(angry)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-m.mad1 <- polr(factor(mad)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-
-## objective vs. control
-propanger.angry.OvC <- with(ptopen, get.percent(o_anger, OvC.angry))
-m.o_anger2 <- glm(o_anger~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
-m.angry2 <- polr(factor(angry)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-m.mad2 <- polr(factor(mad)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-
-## perspective taking vs. control
-propanger.angry.CvP <- with(ptopen, get.percent(o_anger, CvP.angry))
-m.o_anger3 <- glm(o_anger~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
-m.angry3 <- polr(factor(angry)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
-m.mad3 <- polr(factor(mad)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
-
-
-
-@
-
-Figure 2 displays subjects' anger in the open-ended and closed-ended data. 
-    Subjects were more likely to report that they felt angry when they read an angry letter from Melissa (\Sexpr{propanger.angry}\%) than when they read an angry letter from Melissa (\Sexpr{propanger.sad}\%) in their open-ended responses, 95\% CI [\Sexpr{get.ci(m.o_anger1,2)}]. They also reported feeling more angry, 95\% CI [\Sexpr{get.ci(m.angry1,1)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad1,1)}], in the closed-ended data.
-    For subjects who read the angry letter, subjects were no more likely to report that they felt angry when they took Melissa's perspective (\Sexpr{propanger.angry.CvP[3]}\%) than in the control condition (\Sexpr{propanger.angry.CvP[1]}\%) in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger3,5)}]; they also reported feeling equally angry, 95\% CI [\Sexpr{get.ci(m.angry3,4)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad3,4)}], in the closed-ended data. Those who remained objective were equally likely to report that they felt angry (\Sexpr{propanger.angry.OvC[1]}\%) to those in the control condition in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger2,5)}]. However, they reported feeling less angry, 95\% CI [\Sexpr{get.ci(m.angry2,4)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad2,4)}], in the closed-ended data. Those who remained objective also reported feeling less angry than those who took Melissa's perspective in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger1,5)}], and less sad, 95\% CI [\Sexpr{get.ci(m.angry1,4)}], and down, 95\% CI [\Sexpr{get.ci(m.mad1,4)}], than those who took Melissa's perspective in the closed-ended data.
-    Once again, there was no evidence that perspective taking caused subjects to feel angry like Melissa, but there was evidence that remaining objective caused them to feel less angry.
-    
 \begin{figure}
-<<AngerPlot, echo=FALSE>>=
+<<Figure2Angry, echo=FALSE, fig=TRUE, width=8>>=
+open_angry_props <- c(with(ptdata, by(open_anger, list(ptfactor, emotfactor), function(x){
+    prop <- sum(x)/length(x)
+    percent <- round(prop*100, digits=0)
+    return(percent)})))
 
-## Anger
-# open-ended plot
-prop.anger <- with(ptopen, prop.plot(o_anger, emotfactor, ptfactor, ylab='Proportion Angry', xlab="Melissa's Emotion", leglab="Perspective Taking Condition"))
-# closed-ended plots
-box.angry <- with(pt, nojitterbox(angry, f1=emotfactor, f2=ptfactor, ylab='Angry Boxplot'))
-box.mad <- with(pt, nojitterbox(mad, f1=emotfactor, f2=ptfactor, ylab='Mad Boxplot'))
+oangry.plot.data <- data.frame(pt.condition, emot.condition, open_angry_props)
 
-# plot together
-multiplot(prop.anger, box.angry, box.mad)
-
+ggplot(oangry.plot.data, aes(y=open_angry_props, x=emot.condition, fill=pt.condition)) +
+    geom_bar(stat='identity', position='dodge', col='black') + 
+    scale_fill_manual(values=c('black','light grey','white')) +
+    labs(y='Anger', x="Melissa's Emotion") +
+    coord_cartesian(ylim=c(0,100)) + 
+    theme_bw() +
+    theme(text=element_text(size=12))
 @
-\textit{Figure 2.} Subjects' anger by condition.
+\textit{Figure 2. Probability that subjects reported feeling angry by condition.}
 \end{figure}
 
-\subsection{Did Perspective Taking Make Subjects More Likely to Feel Emotions that Melissa Did Not Feel?}
-<<contraEmotions, echo=FALSE>>=
-propsad.angry.CvP <- with(ptopen, get.percent(o_sad, CvP.angry))
-propsad.angry.OvC <- with(ptopen, get.percent(o_sad, OvC.angry))
-propangry.sad.CvP <- with(ptopen, get.percent(o_anger, CvP.sad))
-propangry.sad.OvC <- with(ptopen, get.percent(o_anger, OvC.sad))
-@
-Another way to understand whether perspective taking makes people feel how the target of perspective taking feels is to see if the effects are emotion-specific. In other words, if there are differences in anger across conditions, do those differences only occur when the other person is angry? We examined differences in sadness when subjects read an angry letter and differences in anger when subject read a sad letter.
-    For subjects who read an angry letter, they were as likely to report feeling sad when they took Melissa's perspective (\Sexpr{propsad.angry.CvP[3]}\%) as in the control condition (\Sexpr{propsad.angry.CvP[1]}\%) in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_sad3,5)}], and they were equally likely to report feeling sad, 95\% CI [\Sexpr{get.ci(m.sad3,4)}], and down, 95\% CI [\Sexpr{get.ci(m.down3,5)}]. However, they were less likely to report feeling sad when they remained objective (\Sexpr{propsad.angry.OvC[1]}\%) than in the control condition in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_sad2,5)}], and they reported feeling less sad, 95\% CI [\Sexpr{get.ci(m.sad2,4)}], and less down 95\% CI [\Sexpr{get.ci(m.down2,4)}], in the closed-ended data. Those who remained objective also reported feeling less sad than those who took Melissa's perspective in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_sad1,5)}], and less sad, 95\% CI [\Sexpr{get.ci(m.sad1,4)}], and less down, 95\% CI [\Sexpr{get.ci(m.down1,4)}], in the closed-ended data.
-    For subjects who read a sad letter, they were as likely to report feeling angry when they took Melissa's perspective (\Sexpr{propangry.sad.CvP[3]}\%) as in the control condition (\Sexpr{propangry.sad.CvP[1]}\%) in the open-ended data, 95\% CI [\Sexpr{get.ci(m.o_anger3,5)}], and they were equally likely to report feeling angry, 95\% CI [\Sexpr{get.ci(m.angry3,4)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad3,4)}]. They were also as likely to report feeling angry when they remained objective (\Sexpr{propangry.sad.OvC[1]}\%) as when they took Melissa's perspective, 95\% CI [\Sexpr{get.ci(m.o_anger1,3)}], or were in the control condition, 95\% CI [\Sexpr{get.ci(m.o_anger2,3)}] in the open-ended data. They were also equally likely to report feeling angry, 95\% CI [\Sexpr{get.ci(m.angry2,4)}], and mad, 95\% CI [\Sexpr{get.ci(m.mad2,4)}], as those in the control condition in the closed-ended data; however, they felt less angry, 95\% CI [\Sexpr{get.ci(m.angry1,4)}], and less mad, 95\% CI [\Sexpr{get.ci(m.mad1,4)}], than those in the perspective taking condition.
-    In summary, there was some evidence that those who remained objective not only felt what Melissa felt less than those in the perspective taking and control conditions, but they also felt the opposite emotion less, though the results were more consistent for subjects' sadness after reading an angry letter than for subjects' anger after reading a sad letter. 
+<<OpenEndedSadAngryPTvC, echo=FALSE>>=
 
-\subsection{Did Perspective Taking Make Subjects More Sympathetic?}
-<<sympData, echo=FALSE>>=
+## logit for sadness
+## PT vs. control
+m.osad.PvC <- glm(open_sad ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+sadprop.pt.Msad <- osad.plot.data[osad.plot.data$pt.condition=='perspective taking' & osad.plot.data$emot.condition=='sad','open_sad_props']
+sadprop.control.Msad <- osad.plot.data[osad.plot.data$pt.condition=='control' & osad.plot.data$emot.condition=='sad','open_sad_props']
+PvC.osad.Msad.coef <- round(summary(m.osad.PvC)$coefficients[,1]['CvP.sad'], digits=2)
+PvC.osad.Msad.se <- round(summary(m.osad.PvC)$coefficients[,2]['CvP.sad'], digits=2)
+PvC.osad.Msad.Z <- round(summary(m.osad.PvC)$coefficients[,3]['CvP.sad'], digits=2)
+PvC.osad.Msad.p <- round(summary(m.osad.PvC)$coefficients[,4]['CvP.sad'], digits=2)
+PvC.osad.Msad.lb <- round(suppressMessages(confint(m.osad.PvC)['CvP.sad',1]), digits=2)
+PvC.osad.Msad.ub <- round(suppressMessages(confint(m.osad.PvC)['CvP.sad',2]), digits=2)
 
-propsymp.emotcond <- with(ptopen, get.percent(o_sympathy, emotfactor))
-propsymp.sad <- propsymp.emotcond[1]
-propsymp.angry <- propsymp.emotcond[2]
-
-## objective vs. perspective taking
-propsymp.angry.OvP <- with(ptopen, get.percent(o_sympathy, OvP.angry))
-propsymp.sad.OvP <- with(ptopen, get.percent(o_sympathy, OvP.sad))
-m.o_symp1 <- glm(o_sympathy~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
-m.symp1 <- polr(factor(symp)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-m.comp1 <- polr(factor(compass)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-
-## objective vs. control
-propsymp.angry.OvC <- with(ptopen, get.percent(o_sympathy, OvC.angry))
-propsymp.sad.OvC <- with(ptopen, get.percent(o_sympathy, OvC.sad))
-m.o_symp2 <- glm(o_sympathy~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
-m.symp2 <- polr(factor(symp)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-m.comp2 <- polr(factor(compass)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-
-## perspective taking vs. control
-propsymp.angry.CvP <- with(ptopen, get.percent(o_sympathy, CvP.angry))
-propsymp.sad.CvP <- with(ptopen, get.percent(o_sympathy, CvP.sad))
-m.o_symp3 <- glm(o_sympathy~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
-m.symp3 <- polr(factor(symp)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
-m.comp3 <- polr(factor(compass)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
-
+## logit for anger
+## PT vs. control
+m.oangry.PvC <- glm(open_anger ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+angryprop.pt.Mangry <- oangry.plot.data[oangry.plot.data$pt.condition=='perspective taking' & oangry.plot.data$emot.condition=='angry','open_angry_props']
+angryprop.control.Mangry <- oangry.plot.data[oangry.plot.data$pt.condition=='control' & oangry.plot.data$emot.condition=='angry','open_angry_props']
+PvC.oangry.Mangry.coef <- round(summary(m.oangry.PvC)$coefficients[,1]['CvP.angry'], digits=2)
+PvC.oangry.Mangry.se <- round(summary(m.oangry.PvC)$coefficients[,2]['CvP.angry'], digits=2)
+PvC.oangry.Mangry.Z <- round(summary(m.oangry.PvC)$coefficients[,3]['CvP.angry'], digits=2)
+PvC.oangry.Mangry.p <- round(summary(m.oangry.PvC)$coefficients[,4]['CvP.angry'], digits=2)
+PvC.oangry.Mangry.lb <- round(suppressMessages(confint(m.oangry.PvC)['CvP.angry',1]), digits=2)
+PvC.oangry.Mangry.ub <- round(suppressMessages(confint(m.oangry.PvC)['CvP.angry',2]), digits=2)
 @
 
-    Although some theories have proposed that perspective taking makes people more empathetic, meaning they feel what the perspective taking target feels, a lot of empirical research has focused on feelings of sympathy-concern for the perspective taking target that is not necessarily the same emotion as what the target feels. Even though we found no evidence that perspective taking increased empathy, might it increase subjects' sympathy?
-    Figure 3 displays subjects' sympathy in the open-ended and closed-ended data. Overall, subjects were equally likely to say that they felt sympathetic when they read a sad letter (\Sexpr{propsymp.emotcond[2]}\%) and when they read an angry letter (\Sexpr{propsymp.emotcond[1]}) in their open-ended responses. They also reported feeling equally sympathetic in the closed-ended data, 95\% CI [\Sexpr{get.ci(m.symp1,1)}]; however, those read a sad letter felt more compassionate than those who read an angry letter, 95\% CI [\Sexpr{get.ci(m.comp1,1)}].
-    For subjects who read a sad letter, subjects were equally likely to say that they felt sympathetic when they took Melissa's perspective (\Sexpr{propsymp.sad.CvP[3]}\%) and when they were in the control condition (\Sexpr{propsymp.sad.CvP[1]}\%) in their open-ended responses, 95\% CI [\Sexpr{get.ci(m.o_symp3, 3)}]. Similarly, they were equally likely to feel sympathetic, 95\% CI [\Sexpr{get.ci(m.symp3,2)}], and compassionate, 95\% CI [\Sexpr{get.ci(m.comp3,2)}], in their closed-ended responses. They were also as likely to say that they felt sympathetic when they remained objective (\Sexpr{propsymp.sad.OvC[1]}\%) as those who took Melissa's perspective, 95\% CI [\Sexpr{get.ci(m.o_symp1,3)}], or were in the control condition, 95\% CI [\Sexpr{get.ci(m.o_symp2,3)}]. They also reported feeling as compassionate as those in the control condition, 95\% CI [\Sexpr{get.ci(m.comp2,2)}], in the closed-ended data. However, those who remained objective felt less compassionate than subjects who took Melissa's perspective, 95\% CI [\Sexpr{get.ci(m.comp1,2)}], and they felt less sympathetic than those who took Melissa's perspective, 95\% CI [\Sexpr{get.ci(m.symp1,2)}], and those who were in the control condition, 95\% CI [\Sexpr{get.ci(m.symp2,2)}].
-    For subjects who read an angry letter, subjects were equally likely to say that they felt sympathetic when they took Melissa's perspective (\Sexpr{propsymp.angry.CvP[3]}\%) and when they were in the control condition (\Sexpr{propsymp.angry.CvP[1]}\%) in their open-ended responses, 95\% CI [\Sexpr{get.ci(m.o_symp3, 5)}]. Similarly, they were equally likely to feel sympathetic, 95\% CI [\Sexpr{get.ci(m.symp3,4)}], and compassionate, 95\% CI [\Sexpr{get.ci(m.comp3,4)}], in their closed-ended responses. They were also as likely to say that they felt sympathetic when they remained objective (\Sexpr{propsymp.angry.OvC[1]}\%) as those who took Melissa's perspective, 95\% CI [\Sexpr{get.ci(m.o_symp1,5)}], in their open-ended responses; however, those who remained objective were less likely to feel sympathetic than those in the control condition, 95\% CI [\Sexpr{get.ci(m.o_symp2,5)}]. Those who remained objective also reported feeling less sympathetic than those who took Melissa's perspective, 95\% CI [\Sexpr{get.ci(m.comp1,4)}], or were in the control condition, 95\% CI [\Sexpr{get.ci(m.symp2,4)}], and they felt less compassionate than those who took Melissa's perspective, 95\% CI [\Sexpr{get.ci(m.comp1,4)}], and those who were in the control condition, 95\% CI [\Sexpr{get.ci(m.comp2,4)}].
-    Once again, there was little evidence that perspective taking increased sympathy, but more evidence that remaining objective decreased it.
+Figure 1 displays the probability that subjects reported feeling sad by condition and Figure 2 displays the probability that subjects reported feeling angry by condition. When Melissa was sad, subjects were just as likely to report feeling sad when they took her perspective (\Sexpr{sadprop.pt.Msad}\%) as when they received no instructions (\Sexpr{sadprop.control.Msad}\%), \textit{B} = \Sexpr{PvC.osad.Msad.coef}, \textit{SE} = \Sexpr{PvC.osad.Msad.se}, \textit{Z} = \Sexpr{PvC.osad.Msad.Z}, \textit{p} = \Sexpr{PvC.osad.Msad.p}, 95\% CI [\Sexpr{PvC.osad.Msad.lb}, \Sexpr{PvC.osad.Msad.ub}]. Similarly, when Melissa was angry, subjects were just as likely to report feeling angry when they took her perspective (\Sexpr{angryprop.pt.Mangry}\%) as when they received no instructions (\Sexpr{angryprop.control.Mangry}\%), \textit{B} = \Sexpr{PvC.oangry.Mangry.coef}, \textit{SE} = \Sexpr{PvC.oangry.Mangry.se}, \textit{Z} = \Sexpr{PvC.oangry.Mangry.Z}, \textit{p} = \Sexpr{PvC.oangry.Mangry.p}, 95\% CI [\Sexpr{PvC.oangry.Mangry.lb}, \Sexpr{PvC.oangry.Mangry.ub}]. Overall, there was no evidence that perspective taking made subjects feel how Melissa felt.
 
-    
+\subsubsection{Closed-ended data}
+
 \begin{figure}
-<<SympPlot, echo=FALSE>>=
+<<Figure3Sad, echo=FALSE, fig=TRUE>>=
+ptdata$sad_mean <- rowMeans(ptdata[,c('down','sad')])
 
-## Sympathetic
-# open-ended plot
-prop.symp <- with(ptopen, prop.plot(o_sympathy, emotfactor, ptfactor, ylab='Proportion Sympathetic', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
-# closed-ended plots
-box.symp <- with(pt, nojitterbox(symp, f1=emotfactor, f2=ptfactor, ylab='Sympathy Boxplot'))
-box.comp <- with(pt, nojitterbox(compass, f1=emotfactor, f2=ptfactor, ylab='Compassion Boxplot'))
+closed_sad_means <- c(with(ptdata, by(sad_mean, list(ptfactor, emotfactor), mean)))
+closed_sad_sds <- c(with(ptdata, by(sad_mean, list(ptfactor, emotfactor), sd)))
+closed_sad_ses <- c(with(ptdata, by(sad_mean, list(ptfactor, emotfactor), function(x){sd(x)/sqrt(length(x))})))
 
-# plot together
-multiplot(prop.symp, box.symp, box.comp)
+csad.plot.data <- data.frame(pt.condition, emot.condition, closed_sad_means, closed_sad_sds, closed_sad_ses)
+
+ggplot(csad.plot.data, aes(y=closed_sad_means, x=emot.condition, fill=pt.condition)) +
+    geom_bar(stat='identity', position='dodge', col='black') + 
+    geom_errorbar(stat='identity',position='dodge',aes(ymin=closed_sad_means-closed_sad_ses, ymax=closed_sad_means+closed_sad_ses)) +
+    scale_fill_manual(values=c('black','light grey','white')) +
+    labs(y='Sadness', x="Melissa's Emotion") +
+    coord_cartesian(ylim=c(1,5)) + 
+    theme_bw() +
+    theme(text=element_text(size=12))
 @
-\textit{Figure 3.} Subjects' sympathy by condition.
+\textit{Figure 3. Subjects' average sadness by condition. The bars represent standard errors.}
 \end{figure}
+
+
+\begin{figure}
+<<Figure4Angry, echo=FALSE, fig=TRUE>>=
+ptdata$angry_mean <- rowMeans(ptdata[,c('mad','angry')])
+
+closed_angry_means <- c(with(ptdata, by(angry_mean, list(ptfactor, emotfactor), mean, na.rm=TRUE)))
+closed_angry_sds <- c(with(ptdata, by(angry_mean, list(ptfactor, emotfactor), sd, na.rm=TRUE)))
+closed_angry_ses <- c(with(ptdata, by(angry_mean, list(ptfactor, emotfactor), function(x){sd(x, na.rm=TRUE)/sqrt(length(x[which(!is.na(x))]))})))
+
+cangry.plot.data <- data.frame(pt.condition, emot.condition, closed_angry_means, closed_angry_sds, closed_angry_ses)
+
+ggplot(cangry.plot.data, aes(y=closed_angry_means, x=emot.condition, fill=pt.condition)) +
+    geom_bar(stat='identity', position='dodge', col='black') + 
+    geom_errorbar(stat='identity',position='dodge',aes(ymin=closed_angry_means-closed_angry_ses, ymax=closed_angry_means+closed_angry_ses)) +
+    scale_fill_manual(values=c('black','light grey','white')) +
+    labs(y='Anger', x="Melissa's Emotion") +
+    coord_cartesian(ylim=c(1,5)) + 
+    theme_bw() +
+    theme(text=element_text(size=12))
+@
+\textit{Figure 4. Subjects' average anger by condition. The bars represent standard errors.}
+\end{figure}
+
+<<ClosedEndedSadAngryPTvC, echo=FALSE>>=
+
+## lm for sadness
+## PT vs. control
+m.sad.PvC <- lm(sad_mean ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=ptdata)
+sadmean.pt.Msad <- round(csad.plot.data[csad.plot.data$pt.condition=='perspective taking' & csad.plot.data$emot.condition=='sad','closed_sad_means'], digits=2)
+sadsd.pt.Msad <- round(csad.plot.data[csad.plot.data$pt.condition=='perspective taking' & csad.plot.data$emot.condition=='sad','closed_sad_sds'], digits=2)
+sadmean.control.Msad <- round(csad.plot.data[csad.plot.data$pt.condition=='control' & csad.plot.data$emot.condition=='sad','closed_sad_means'], digits=2)
+sadsd.control.Msad <- round(csad.plot.data[csad.plot.data$pt.condition=='control' & csad.plot.data$emot.condition=='sad','closed_sad_sds'], digits=2)
+PvC.csad.Msad.coef <- round(summary(m.sad.PvC)$coefficients[,1]['CvP.sad'], digits=2)
+PvC.csad.Msad.se <- round(summary(m.sad.PvC)$coefficients[,2]['CvP.sad'], digits=2)
+PvC.csad.Msad.t <- round(summary(m.sad.PvC)$coefficients[,3]['CvP.sad'], digits=2)
+PvC.csad.Msad.df <- m.sad.PvC$df.residual
+PvC.csad.Msad.p <- round(summary(m.sad.PvC)$coefficients[,4]['CvP.sad'], digits=2)
+PvC.csad.Msad.lb <- round(suppressMessages(confint(m.sad.PvC)['CvP.sad',1]), digits=2)
+PvC.csad.Msad.ub <- round(suppressMessages(confint(m.sad.PvC)['CvP.sad',2]), digits=2)
+
+## lm for anger
+## PT vs. control
+m.angry.PvC <- lm(angry_mean ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=ptdata)
+angrymean.pt.Mangry <- round(cangry.plot.data[cangry.plot.data$pt.condition=='perspective taking' & cangry.plot.data$emot.condition=='angry','closed_angry_means'], digits=2)
+angrysd.pt.Mangry <- round(cangry.plot.data[cangry.plot.data$pt.condition=='perspective taking' & cangry.plot.data$emot.condition=='angry','closed_angry_sds'], digits=2)
+angrymean.control.Mangry <- round(cangry.plot.data[cangry.plot.data$pt.condition=='control' & cangry.plot.data$emot.condition=='angry','closed_angry_means'], digits=2)
+angrysd.control.Mangry <- round(cangry.plot.data[cangry.plot.data$pt.condition=='control' & cangry.plot.data$emot.condition=='angry','closed_angry_sds'], digits=2)
+PvC.cangry.Mangry.coef <- round(summary(m.angry.PvC)$coefficients[,1]['CvP.angry'], digits=2)
+PvC.cangry.Mangry.se <- round(summary(m.angry.PvC)$coefficients[,2]['CvP.angry'], digits=2)
+PvC.cangry.Mangry.t <- round(summary(m.angry.PvC)$coefficients[,3]['CvP.angry'], digits=2)
+PvC.cangry.Mangry.df <- m.angry.PvC$df.residual
+PvC.cangry.Mangry.p <- round(summary(m.angry.PvC)$coefficients[,4]['CvP.angry'], digits=3)
+PvC.cangry.Mangry.lb <- round(suppressMessages(confint(m.angry.PvC)['CvP.angry',1]), digits=2)
+PvC.cangry.Mangry.ub <- round(suppressMessages(confint(m.angry.PvC)['CvP.angry',2]), digits=2)
+@
+
+Figure 3 displays the average sadness that subjects reported feeling by condition and Figure 4 displays the average anger that subjects reported feeling by condition. When Melissa was sad, subjects felt as sad when they took her perspective (\textit{M} = \Sexpr{sadmean.pt.Msad}, \textit{SD} = \Sexpr{sadsd.pt.Msad}) as when they received no instructions (\textit{M} = \Sexpr{sadmean.control.Msad}, \textit{SD} = \Sexpr{sadsd.control.Msad}), \textit{B} = \Sexpr{PvC.csad.Msad.coef}, \textit{SE} = \Sexpr{PvC.csad.Msad.se}, \textit{t}(\Sexpr{PvC.csad.Msad.df}) = \Sexpr{PvC.csad.Msad.t}, \textit{p} = \Sexpr{PvC.csad.Msad.p}, 95\% CI [\Sexpr{PvC.csad.Msad.lb}, \Sexpr{PvC.csad.Msad.ub}]. When Melissa was angry, there was a non-significant trend for subjects to feel angrier when they took her perspective (\textit{M} = \Sexpr{angrymean.pt.Mangry}, \textit{SD} = \Sexpr{angrysd.pt.Mangry}) than when they received no instructions (\textit{M} = \Sexpr{angrymean.control.Mangry}, \textit{SD} = \Sexpr{angrysd.control.Mangry}), \textit{B} = \Sexpr{PvC.cangry.Mangry.coef}, \textit{SE} = \Sexpr{PvC.cangry.Mangry.se}, \textit{t}(\Sexpr{PvC.cangry.Mangry.df}) = \Sexpr{PvC.cangry.Mangry.t}, \textit{p} = \Sexpr{PvC.cangry.Mangry.p}, 95\% CI [\Sexpr{PvC.cangry.Mangry.lb}, \Sexpr{PvC.cangry.Mangry.ub}]. Once again, there was little evidence that perspective taking made subjects feel how Melissa felt.
+
+\subsection{Did Perspective Taking Make Subjects Feel More Sympathetic?}
+
+Aside from feeling how someone else feels, much research has focused on the effects of perspective taking on feeling sympathy, or empathic concern. Although perspective taking didn't seem to make subjects feel what Melissa felt, it might have made them more sympathetic.
+
+\subsubsection{Open-ended data}
+<<OpenEndedSympathyPTvC, echo=FALSE>>=
+
+## logit for sympathy
+## PT vs. control
+m.osymp.PvC <- glm(open_sympathy ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+
+open_symp_props <- c(with(ptdata, by(open_sympathy, list(ptfactor, emotfactor), function(x){
+    prop <- sum(x)/length(x)
+    percent <- round(prop*100, digits=0)
+    return(percent)})))
+osymp.props.data <- data.frame(pt.condition, emot.condition, open_symp_props)
+
+sympprop.pt.Msad <- osymp.props.data[osymp.props.data$pt.condition=='perspective taking' & osymp.props.data$emot.condition=='sad','open_symp_props']
+sympprop.control.Msad <- osymp.props.data[osymp.props.data$pt.condition=='control' & osymp.props.data$emot.condition=='sad','open_symp_props']
+PvC.osymp.Msad.coef <- round(summary(m.osymp.PvC)$coefficients[,1]['CvP.sad'], digits=2)
+PvC.osymp.Msad.se <- round(summary(m.osymp.PvC)$coefficients[,2]['CvP.sad'], digits=2)
+PvC.osymp.Msad.Z <- round(summary(m.osymp.PvC)$coefficients[,3]['CvP.sad'], digits=2)
+PvC.osymp.Msad.p <- round(summary(m.osymp.PvC)$coefficients[,4]['CvP.sad'], digits=2)
+PvC.osymp.Msad.lb <- round(suppressMessages(confint(m.osymp.PvC)['CvP.sad',1]), digits=2)
+PvC.osymp.Msad.ub <- round(suppressMessages(confint(m.osymp.PvC)['CvP.sad',2]), digits=2)
+
+sympprop.pt.Mangry <- osymp.props.data[osymp.props.data$pt.condition=='perspective taking' & osymp.props.data$emot.condition=='angry','open_symp_props']
+sympprop.control.Mangry <- osymp.props.data[osymp.props.data$pt.condition=='control' & osymp.props.data$emot.condition=='angry','open_symp_props']
+PvC.osymp.Mangry.coef <- round(summary(m.osymp.PvC)$coefficients[,1]['CvP.angry'], digits=2)
+PvC.osymp.Mangry.se <- round(summary(m.osymp.PvC)$coefficients[,2]['CvP.angry'], digits=2)
+PvC.osymp.Mangry.Z <- round(summary(m.osymp.PvC)$coefficients[,3]['CvP.angry'], digits=2)
+PvC.osymp.Mangry.p <- round(summary(m.osymp.PvC)$coefficients[,4]['CvP.angry'], digits=2)
+PvC.osymp.Mangry.lb <- round(suppressMessages(confint(m.osymp.PvC)['CvP.angry',1]), digits=2)
+PvC.osymp.Mangry.ub <- round(suppressMessages(confint(m.osymp.PvC)['CvP.angry',2]), digits=2)
+
+@
+
+When Melissa was sad, subjects were just as likely to report feeling sympathetic when they took her perspective (\Sexpr{sympprop.pt.Msad}\%) as when they received no instructions (\Sexpr{sympprop.control.Msad}\%), \textit{B} = \Sexpr{PvC.osymp.Msad.coef}, \textit{SE} = \Sexpr{PvC.osymp.Msad.se}, \textit{Z} = \Sexpr{PvC.osymp.Msad.Z}, \textit{p} = \Sexpr{PvC.osymp.Msad.p}, 95\% CI [\Sexpr{PvC.osymp.Msad.lb}, \Sexpr{PvC.osymp.Msad.ub}]. Similarly, when Melissa was angry, subjects were just as likely to report feeling angry when they took her perspective (\Sexpr{angryprop.pt.Mangry}\%) as when they received no instructions (\Sexpr{angryprop.control.Mangry}\%), \textit{B} = \Sexpr{PvC.osymp.Mangry.coef}, \textit{SE} = \Sexpr{PvC.osymp.Mangry.se}, \textit{Z} = \Sexpr{PvC.osymp.Mangry.Z}, \textit{p} = \Sexpr{PvC.osymp.Mangry.p}, 95\% CI [\Sexpr{PvC.osymp.Mangry.lb}, \Sexpr{PvC.osymp.Mangry.ub}]. Overall, there was no evidence that perspective taking made subjects feel sympathetic for Melissa.
+
+\subsubsection{Closed-ended data}
+
+<<ClosedEndedSympathyPTvC, echo=FALSE>>=
+
+ptdata$symp_mean <- rowMeans(ptdata[,c('symp','comp')])
+
+closed_symp_means <- c(with(ptdata, by(symp_mean, list(ptfactor, emotfactor), mean, na.rm=TRUE)))
+closed_symp_sds <- c(with(ptdata, by(symp_mean, list(ptfactor, emotfactor), sd, na.rm=TRUE)))
+closed_symp_ses <- c(with(ptdata, by(symp_mean, list(ptfactor, emotfactor), function(x){sd(x, na.rm=TRUE)/sqrt(length(x[which(!is.na(x))]))})))
+
+csymp.plot.data <- data.frame(pt.condition, emot.condition, closed_symp_means, closed_symp_sds, closed_symp_ses)
+
+## lm for sympathy when Melissa is sad
+## PT vs. control
+m.symp.PvC <- lm(symp_mean ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=ptdata)
+sympmean.pt.Msad <- round(csymp.plot.data[csymp.plot.data$pt.condition=='perspective taking' & csymp.plot.data$emot.condition=='sad','closed_symp_means'], digits=2)
+sympsd.pt.Msad <- round(csymp.plot.data[csymp.plot.data$pt.condition=='perspective taking' & csymp.plot.data$emot.condition=='sad','closed_symp_sds'], digits=2)
+sympmean.control.Msad <- round(csymp.plot.data[csymp.plot.data$pt.condition=='control' & csymp.plot.data$emot.condition=='sad','closed_symp_means'], digits=2)
+sympsd.control.Msad <- round(csymp.plot.data[csymp.plot.data$pt.condition=='control' & csymp.plot.data$emot.condition=='sad','closed_symp_sds'], digits=2)
+PvC.csymp.Msad.coef <- round(summary(m.symp.PvC)$coefficients[,1]['CvP.sad'], digits=2)
+PvC.csymp.Msad.se <- round(summary(m.symp.PvC)$coefficients[,2]['CvP.sad'], digits=2)
+PvC.csymp.Msad.t <- round(summary(m.symp.PvC)$coefficients[,3]['CvP.sad'], digits=2)
+PvC.csymp.Msad.df <- m.symp.PvC$df.residual
+PvC.csymp.Msad.p <- round(summary(m.symp.PvC)$coefficients[,4]['CvP.sad'], digits=2)
+PvC.csymp.Msad.lb <- round(suppressMessages(confint(m.symp.PvC)['CvP.sad',1]), digits=2)
+PvC.csymp.Msad.ub <- round(suppressMessages(confint(m.symp.PvC)['CvP.sad',2]), digits=2)
+
+## lm for sympathy when Melissa is angry
+## PT vs. control
+m.symp.PvC <- lm(symp_mean ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=ptdata)
+sympmean.pt.Mangry <- round(csymp.plot.data[csymp.plot.data$pt.condition=='perspective taking' & csymp.plot.data$emot.condition=='angry','closed_symp_means'], digits=2)
+sympsd.pt.Mangry <- round(csymp.plot.data[csymp.plot.data$pt.condition=='perspective taking' & csymp.plot.data$emot.condition=='angry','closed_symp_sds'], digits=2)
+sympmean.control.Mangry <- round(csymp.plot.data[csymp.plot.data$pt.condition=='control' & csymp.plot.data$emot.condition=='angry','closed_symp_means'], digits=2)
+sympsd.control.Mangry <- round(csymp.plot.data[csymp.plot.data$pt.condition=='control' & csymp.plot.data$emot.condition=='angry','closed_symp_sds'], digits=2)
+PvC.csymp.Mangry.coef <- round(summary(m.symp.PvC)$coefficients[,1]['CvP.angry'], digits=2)
+PvC.csymp.Mangry.se <- round(summary(m.symp.PvC)$coefficients[,2]['CvP.angry'], digits=2)
+PvC.csymp.Mangry.t <- round(summary(m.symp.PvC)$coefficients[,3]['CvP.angry'], digits=2)
+PvC.csymp.Mangry.df <- m.symp.PvC$df.residual
+PvC.csymp.Mangry.p <- round(summary(m.symp.PvC)$coefficients[,4]['CvP.angry'], digits=3)
+PvC.csymp.Mangry.lb <- round(suppressMessages(confint(m.symp.PvC)['CvP.angry',1]), digits=3)
+PvC.csymp.Mangry.ub <- round(suppressMessages(confint(m.symp.PvC)['CvP.angry',2]), digits=2)
+@
+
+When Melissa was sad, subjects felt as sympathetic when they took her perspective (\textit{M} = \Sexpr{sympmean.pt.Msad}, \textit{SD} = \Sexpr{sympsd.pt.Msad}) as when they received no instructions (\textit{M} = \Sexpr{sympmean.control.Msad}, \textit{SD} = \Sexpr{sympsd.control.Msad}), \textit{B} = \Sexpr{PvC.csymp.Msad.coef}, \textit{SE} = \Sexpr{PvC.csymp.Msad.se}, \textit{t}(\Sexpr{PvC.csymp.Msad.df}) = \Sexpr{PvC.csymp.Msad.t}, \textit{p} = \Sexpr{PvC.csymp.Msad.p}, 95\% CI [\Sexpr{PvC.csymp.Msad.lb}, \Sexpr{PvC.csymp.Msad.ub}]. When Melissa was angry, there was a non-significant trend for subjects to feel more sympathetic when they took her perspective (\textit{M} = \Sexpr{sympmean.pt.Mangry}, \textit{SD} = \Sexpr{sympsd.pt.Mangry}) than when they received no instructions (\textit{M} = \Sexpr{sympmean.control.Mangry}, \textit{SD} = \Sexpr{sympsd.control.Mangry}), \textit{B} = \Sexpr{PvC.csymp.Mangry.coef}, \textit{SE} = \Sexpr{PvC.csymp.Mangry.se}, \textit{t}(\Sexpr{PvC.csymp.Mangry.df}) = \Sexpr{PvC.csymp.Mangry.t}, \textit{p} = \Sexpr{PvC.csymp.Mangry.p}, 95\% CI [\Sexpr{PvC.csymp.Mangry.lb}, \Sexpr{PvC.csymp.Mangry.ub}]. Once again, there was little evidence that perspective taking made subjects feel more sympathy for Melissa.
+
+\subsection{Did Remaining Objective Make Subjects Feel Less Empathy?}
+
+\begin{figure}
+<<Figure5CIPlotsObjectiveVSOthers, echo=FALSE, fig=TRUE>>=
+
+## open-ended
+m.osad.OvC <- glm(open_sad ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
+m.oanger.OvC <- glm(open_anger ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
+m.osymp.OvC <- glm(open_sympathy ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
+m.osad.OvP <- glm(open_sad ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
+m.oanger.OvP <- glm(open_anger ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
+m.osymp.OvP <- glm(open_sympathy ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
+
+## closed-ended
+m.sad.OvC <- lm(sad_mean ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=ptdata)
+m.angry.OvC <- lm(angry_mean ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=ptdata)
+m.symp.OvC <- lm(symp_mean ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=ptdata)
+m.sad.OvP <- lm(sad_mean ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=ptdata)
+m.angry.OvP <- lm(angry_mean ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=ptdata)
+m.symp.OvP <- lm(symp_mean ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=ptdata)
+
+ci.plot <- function(ptcond, emocond, emotions, i, ...){
+    ptcond <- factor(rep(ptcond, length(list(...))), )
+    emocond <- factor(rep(emocond, length(list(...))), )
+    emotions <- factor(emotions)
+    point.est <- unlist(lapply(list(...), function(x){coef(x)[i]}))
+    lb <- unlist(lapply(list(...), function(x){suppressMessages(confint(x))[i,1]}))
+    ub <- unlist(lapply(list(...), function(x){suppressMessages(confint(x))[i,2]}))
+    result <- data.frame(ptcond=ptcond, letter=emocond, emotions=emotions, point.est=point.est, lb=lb, ub=ub)
+    return(result)
+}
+
+OvC.sad <- ci.plot('objective vs. control','sad letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=3, m.osad.OvC, m.sad.OvC, m.oanger.OvC, m.angry.OvC, m.osymp.OvC, m.symp.OvC)
+OvC.anger <- ci.plot('objective vs. control','angry letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=5, m.osad.OvC, m.sad.OvC, m.oanger.OvC, m.angry.OvC, m.osymp.OvC, m.symp.OvC)
+OvP.sad <- ci.plot('objective vs. perspective taking','sad letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=3, m.osad.OvP, m.sad.OvP, m.oanger.OvP, m.angry.OvP, m.osymp.OvP, m.symp.OvP)
+OvP.anger <- ci.plot('objective vs. perspective taking','angry letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=5, m.osad.OvP, m.sad.OvP, m.oanger.OvP, m.angry.OvP, m.osymp.OvP, m.symp.OvP)
+
+ci.plot.data <- rbind(OvC.sad, OvC.anger, OvP.sad, OvP.anger)
+ci.plot.data$emotions <- factor(ci.plot.data$emotions, levels=rev(c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy')))
+
+ggplot(ci.plot.data, aes(y=point.est, x=emotions, ymin=lb, ymax=ub)) +
+    geom_pointrange(stat='identity',position='dodge') +
+    facet_wrap(~letter*ptcond) + 
+    coord_flip() +
+    theme_classic() +
+    geom_hline(y=0, color='grey') +
+    labs(x="Subjects' Emotions", y=NULL)
+
+summary(m.osad.OvC)
+summary(m.osad.OvP)
+summary(m.sad.OvC)
+summary(m.sad.OvP)
+summary(m.osymp.OvC)
+summary(m.osymp.OvP)
+summary(m.symp.OvC)
+summary(m.symp.OvP)
+summary(m.oanger.OvC)
+summary(m.oanger.OvP)
+summary(m.angry.OvC)
+summary(m.angry.OvP)
+@
+\textit{Figure 5. 95\% confidence intervals for the difference in subjects' emotions by condition. Positive values indicate that subjects felt stronger emotions in the control and perspective taking conditions than in the objective condition.}
+\end{figure}
+
+There was little evidence that perspective taking made subjects feel how Melissa felt or made them feel sadder or more sympathetic by reducing actor-observer bias. However, remaining objective might have decreased vicarious emotions. Figure 5 displays 95\% confidence intervals for the difference in subjects' emotions between the objective condition and the control and perspective taking conditions. 
+
+When Melissa was sad, subjects were less likely to report feeling sad in the objective condition than in the control and perspective taking conditions, though the comparison between the objective and control conditions in the open-ended data was marginally significant (\textit{p} = .056). Subjects who remained objective also reported feeling less sympathetic than those in the other two conditions in their closed-ended responses. Although the pattern was in the same direction, there were no significant differences in subjects' open-ended reports of sympathy. 
+
+When Melissa was angry, subjects were less likely to report feeling angry int he objective condition than in the control and perspective taking conditions. They also reported feeling less sympathetic than those in the other two conditions in their closed-ended responses, although once again this pattern was not significant in the open-ended emotion reports. 
+
+Although there was some variability in the magnitude of the differences, Figure 5 shows that with only one exception, subjects felt weaker vicarious emotions when they remained objective than in the other two conditions. In contrast there was little evidence that subjects felt stronger vicarious emotions when they took Melissa's perspective than when they received no instructions. 
+
+
+
+
+\section{Discussion}
+
+In this study, remaining objective is what was effortful. It wasn't a neutral control, but active down-regulation. Informally, many subjects described what sounds like common emotion regulation strategies. One said he tried to imagine it was a novel he didn't care about (reappraisal). Another said she imagined looking down from above (self-distancing). Several said it was hard to remain objective, meaning that empathizing required little active effort, but what did require active effort was down-regulating that empathic response. 
+
+Perspective taking is emotional up-regulation and it's only likely to matter when empathizing is hard.
 
 
 \bibliography{ptreferences}

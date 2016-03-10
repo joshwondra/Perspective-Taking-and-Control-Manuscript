@@ -108,16 +108,18 @@
 ### import data
 
 #NOTE: semi-colons were substituted for commas in the data to prevent problems with using csv files
-pt <- read.csv('pttotal.csv', header=TRUE) # closed-ended data
-ptopenonly <- read.csv('ptopenended.csv', header=TRUE) # open-ended data
+ptclose <- read.csv('Data/ptdata.csv', header=TRUE) # closed-ended data
+ptopen <- read.csv('Data/ptownopen-Master.csv', header=TRUE) # open-ended data
+ptdata <- merge(ptclose,ptopen,by='SubjectID')
+
+## Exclude problem subjects
+ptdata <- ptdata[ptdata$suspicious!=1 & ptdata$concussion!=1 & ptdata$language!=1 & ptdata$inattention!=1 & ptdata$experimentererror!=1,]
 
 
 ### load functions
 source('../R functions/proportion-plot.R')
 source('../R functions/mean-plot.R')
 source('../R functions/multiplot.R')
-source('../R functions/jitterbox.R')
-source('../R functions/nojitterbox.R')
 source('../R functions/tcontrast.R')
 
 
@@ -126,61 +128,38 @@ source('../R functions/tcontrast.R')
 library(car)
 
 # turn experimental conditions into factors
-pt$ptfactor <- factor(pt$pt_cond, levels=c(1,0,2), labels=c('objective','control','perspective taking'))
-pt$emotfactor <- factor(pt$emot_cond, levels=c(1,2), labels=c('sad','angry'))
+ptdata$ptfactor <- factor(ptdata$pt_cond, levels=c(1,0,2), labels=c('objective','control','perspective taking'))
+ptdata$emotfactor <- factor(ptdata$emot_cond, levels=c(1,2), labels=c('sad','angry'))
 
-# create contrasts for perspective taking condition
-pt$OvP <- recode(pt$pt_cond, as.factor.result=FALSE, '1=-1;2=1;3=0')
-pt$CvOP <- recode(pt$pt_cond, as.factor.result=FALSE, '1=-1;2=-1;3=2')
-pt$OvC <- recode(pt$pt_cond, as.factor.result=FALSE, '1=-1;2=0;3=1')
-pt$PvOC <- recode(pt$pt_cond, as.factor.result=FALSE, '1=-1;2=2;3=-1')
-pt$PvC <- recode(pt$pt_cond, as.factor.result=FALSE, '1=0;2=1;3=-1')
-pt$OvPC <- recode(pt$pt_cond, as.factor.result=FALSE, '1=-2;2=1;3=1')
 
-# create contrasts for emotion condition (centered)
-pt$emot_cont <- recode(pt$emot_cond, '1=-1;2=1')
-pt$emot_cont <- pt$emot_cont-mean(pt$emot_cont, na.rm=TRUE)
-
-# create orthogonal sets of contrasts that compare the perspective taking conditions separately for anger and sadness
-pt$group.numbers <- recode(interaction(pt$ptfactor, pt$emotfactor), as.factor.result=FALSE, "'objective.sad'=1;'control.sad'=2;'perspective taking.sad'=3;'objective.angry'=4;'control.angry'=5;'perspective taking.angry'=6")
+## create orthogonal sets of contrasts that compare the perspective taking conditions separately for anger and sadness
+ptdata$group.numbers <- recode(interaction(ptdata$ptfactor, ptdata$emotfactor), as.factor.result=FALSE, "'objective.sad'=1;'control.sad'=2;'perspective taking.sad'=3;'objective.angry'=4;'control.angry'=5;'perspective taking.angry'=6")
 # sad vs. angry total
-pt$sad.angry <- recode(pt$group.numbers, as.factor.result=FALSE, '1:3=-1;4:6=1')
+ptdata$sad.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1:3=-1;4:6=1')
 
 # compare objective and perspective taking conditions
-pt$OvP.sad <- recode(pt$group.numbers, as.factor.result=FALSE, '1=-1;2=0;3=1;4=0;5=0;6=0')
-pt$CvOP.sad <- recode(pt$group.numbers, as.factor.result=FALSE, '1=-1;2=2;3=-1;4=0;5=0;6=0')
-pt$OvP.angry <- recode(pt$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=0;6=1')
-pt$CvOP.angry <- recode(pt$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=2;6=-1')
+ptdata$OvP.sad <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=-1;2=0;3=1;4=0;5=0;6=0')
+ptdata$CvOP.sad <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=-1;2=2;3=-1;4=0;5=0;6=0')
+ptdata$OvP.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=0;6=1')
+ptdata$CvOP.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=2;6=-1')
 
 # compare control and perspective taking conditions
-pt$CvP.sad <- recode(pt$group.numbers, as.factor.result=FALSE, '1=0;2=-1;3=1;4=0;5=0;6=0')
-pt$OvCP.sad <- recode(pt$group.numbers, as.factor.result=FALSE, '1=2;2=-1;3=-1;4=0;5=0;6=0')
-pt$CvP.angry <- recode(pt$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=0;5=-1;6=1')
-pt$OvCP.angry <- recode(pt$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=2;5=-1;6=-1')
+ptdata$CvP.sad <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=-1;3=1;4=0;5=0;6=0')
+ptdata$OvCP.sad <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=2;2=-1;3=-1;4=0;5=0;6=0')
+ptdata$CvP.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=0;5=-1;6=1')
+ptdata$OvCP.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=2;5=-1;6=-1')
 
 # compare objective and control conditions
-pt$OvC.sad <- recode(pt$group.numbers, as.factor.result=FALSE, '1=-1;2=1;3=0;4=0;5=0;6=0')
-pt$PvOC.sad <- recode(pt$group.numbers, as.factor.result=FALSE, '1=-1;2=-1;3=2;4=0;5=0;6=0')
-pt$OvC.angry <- recode(pt$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=1;6=0')
-pt$PvOC.angry <- recode(pt$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=-1;6=2')
-
-
-##### 4. Merge Data, Exclusions #####
-
-# add variables from the closed ended data to the open-ended data
-pt.merge <- pt[,c(1:4, 79:length(pt))]
-ptopen <- merge(pt.merge, ptopenonly, by='SubjectID')
-
-## exclusions
-pt <- pt[pt$language!=1 & pt$suspicious!=1 & pt$concussion!=1 & pt$experimentererror!=1,]
-ptopen <- ptopen[ptopen$language!=1 & ptopen$inattentionORsuspicion!=1,]
+ptdata$OvC.sad <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=-1;2=1;3=0;4=0;5=0;6=0')
+ptdata$PvOC.sad <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=-1;2=-1;3=2;4=0;5=0;6=0')
+ptdata$OvC.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=1;6=0')
+ptdata$PvOC.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=-1;6=2')
 
 
 
 
-##### 5. Analyses of Own Emotions #####
 
-library(MASS) # for ordered logit
+##### 4. Analyses of Own Emotions - Open-Ended Data #####
 
 ### Prepare open-ended emotion data
 
@@ -192,306 +171,208 @@ group.emot <- function(...) {
     return(code)
 }
 
-ptopen$o_anger <- with(ptopen, group.emot(aggravation, agitated, anger, angry, annoyance, annoyed, furious, indignance, irritation, mad, pissed, bitter, outraged)) #83 cases
-ptopen$o_sad <- with(ptopen, group.emot(depressed, despair, hopeless, sad, saddened, sadness, sorrow, want_to_cry, disappointment, disappointed, disheartened, dismay, let_down, defeat, helplessness, solemn, disappointing, down, heartbroken, helpless, melancholy)) #181 cases
-ptopen$o_sympathy <- with(ptopen, group.emot(compassion, compassionate, concern, concerned, consoling, empathetic, empathic, empathy, pity, sorry, sympathetic, sympathy, wish_i_could_help, understanding, caring)) #214 cases
-ptopen$o_apathetic <- with(ptopen, group.emot(apathetic, apathy, detached, disinterest, indifference, indifferent, neutral, nonchalant, normal, not_interested, objective, unmoved, bored, boredom)) #32 cases
-ptopen$o_surprised <- with(ptopen, group.emot(astonished, astonishment, astounded, bewilderment, disbelief, shocked, surprised, surprisement, shock, surprise)) #20 cases
-ptopen$o_bad <- with(ptopen, group.emot(awful, bad, bummed, distress, distressed, hurt, stress, stressed, uncomfortable, unhappiness, unhappy, upset, overwhelmed, unfortunate, discomfort)) #67 cases
-ptopen$o_confusion <- with(ptopen, group.emot(confused, confusion, bemused)) #21 cases
-ptopen$o_interest <- with(ptopen, group.emot(curiosity, curious, engaged, interested, interest, intrigued, intrigue, want_to_know_more)) #36 cases
-ptopen$o_frustration <- with(ptopen, group.emot(frustration, frustrated)) #41 cases
-ptopen$o_tired <- with(ptopen, group.emot(drained, exhaustion, tired, fatigue, drowsy, sleepy, deflated, exhausted, tiredness)) #17 cases
-
-# fewer than 10 cases after exclusions
-ptopen$o_regret <- with(ptopen, group.emot(regret, regretful, remorse)) #8 cases
-ptopen$o_happy <- with(ptopen, group.emot(content, happy, eager, eagerness, excited, smiling)) #9 cases
+ptdata$open_anger <- with(ptdata, group.emot(o_aggravation, o_agitated, o_anger, o_angry, o_annoyance, o_annoyed, o_bitter, o_furious, o_indignance, o_irritation, o_mad, o_outraged, o_pissed)) #98 cases
+ptdata$open_sad <- with(ptdata, group.emot(o_defeat, o_depressed, o_depression, o_despair, o_disappointed, o_disappointing, o_disappointment, o_disheartened, o_down, o_heartbroken, o_helpless, o_helplessness, o_hopeless, o_let_down, o_melancholy, o_sad, o_saddened, o_sadness, o_solemn, o_sorrow, o_want_to_cry)) #213 cases
+ptdata$open_sympathy <- with(ptdata, group.emot(o_apologetic, o_caring, o_compassion, o_compassionate, o_concern, o_concerned, o_consoling, o_empathetic, o_empathic, o_empathy, o_pity, o_sorriness, o_sorry, o_sympathetic, o_sympathy, o_wish_i_could_help)) #245 cases
+ptdata$open_apathetic <- with(ptdata, group.emot(o_apathetic, o_apathy, o_bored, o_boredom, o_detached, o_disinterest, o_indifference, o_indifferent, o_neutral, o_nonchalant, o_not_interesting, o_unemotional, o_unmoved)) #36 cases
+ptdata$open_surprised <- with(ptdata, group.emot(o_astonished, o_astonishment, o_astounded, o_disbelief, o_shock, o_shocked, o_surprise, o_surprised, o_surprisement)) #23 cases
+ptdata$open_unpleasant <- with(ptdata, group.emot(o_awful, o_bad, o_badly, o_bummed, o_consternation, o_discomfort, o_dislike, o_dismay, o_distress, o_distressed, o_horribly, o_hurt, o_overwhelmed, o_stress, o_stressed, o_uncomfortable, o_unfortunate, o_unhappiness, o_unhappy, o_unlucky, o_upset)) #120 cases
+ptdata$open_confusion <- with(ptdata, group.emot(o_baffled, o_bemused, o_bewilderment, o_confused, o_confusion)) #29 cases
+ptdata$open_interest <- with(ptdata, group.emot(o_curiosity, o_curious, o_engaged, o_interest, o_interested, o_intrigue, o_intrigued, o_want_to_know_more)) #41 cases
+ptdata$open_frustration <- with(ptdata, group.emot(o_frustrated, o_frustration)) #49 cases
 
 
-## save data for the .Rnw file
 
-save(pt, ptopen, file='ptDataManuscript.RData')
+##  Anger
+
+# open-ended plot
+with(ptdata, by(open_anger, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
+prop.anger <- with(ptdata, prop.plot(open_anger, ptfactor, emotfactor, ylab='Proportion Angry', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
+prop.anger
+
+# logits with contrasts
+# Objective vs. PT
+m.oanger.OvP <- glm(open_anger ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.oanger.OvP)
+## Objective vs. control
+m.oanger.OvC <- glm(open_anger ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.oanger.OvC)
+## PT vs. control
+m.oanger.PvC <- glm(open_anger ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.oanger.PvC)
 
 
-### Plot and analyze both open-ended and closed-ended data for each emotion
+##  Sadness
 
-## correlations among closed-ended emotion items
-cor.round <- function(...) {
-    cor.mat <- cor(..., use='complete.obs')
-    cor.mat <- round(cor.mat, digits=2)
-    return(cor.mat)
+# open-ended plot
+with(ptdata, by(open_sad, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
+prop.sad <- with(ptdata, prop.plot(open_sad, ptfactor, emotfactor, ylab='Proportion Sad', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
+prop.sad
+
+# logits with contrasts
+# Objective vs. PT
+m.osad.OvP <- glm(open_sad ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.osad.OvP)
+## Objective vs. control
+m.osad.OvC <- glm(open_sad ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.osad.OvC)
+## PT vs. control
+m.osad.PvC <- glm(open_sad ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.osad.PvC)
+
+
+##  Sympathy
+
+# open-ended plot
+with(ptdata, by(open_sympathy, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
+prop.symp <- with(ptdata, prop.plot(open_sympathy, ptfactor, emotfactor, ylab='Proportion Sympathy', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
+prop.symp
+
+# logits with contrasts
+# Objective vs. PT
+m.osymp.OvP <- glm(open_sympathy ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.osymp.OvP)
+## Objective vs. control
+m.osymp.OvC <- glm(open_sympathy ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.osymp.OvC)
+## PT vs. control
+m.osymp.PvC <- glm(open_sympathy ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.osymp.PvC)
+
+## Check for differences in other emotions
+
+## apathy
+# Objective vs. PT
+m.oapathetic.OvP <- glm(open_apathetic ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.oapathetic.OvP)
+## Objective vs. control
+m.oapathetic.OvC <- glm(open_apathetic ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.oapathetic.OvC)
+## PT vs. control
+m.oapathetic.PvC <- glm(open_apathetic ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.oapathetic.PvC)
+
+## surprise
+m.osurprised.OvP <- glm(open_surprised ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.osurprised.OvP)
+## Objective vs. control
+m.osurprised.OvC <- glm(open_surprised ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.osurprised.OvC)
+## PT vs. control
+m.osurprised.PvC <- glm(open_surprised ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.osurprised.PvC)
+
+## unpleasantness
+m.ounpleasant.OvP <- glm(open_unpleasant ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.ounpleasant.OvP)
+## Objective vs. control
+m.ounpleasant.OvC <- glm(open_unpleasant ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.ounpleasant.OvC)
+## PT vs. control
+m.ounpleasant.PvC <- glm(open_unpleasant ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.ounpleasant.PvC)
+
+## confusion
+m.oconfusion.OvP <- glm(open_confusion ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.oconfusion.OvP)
+## Objective vs. control
+m.oconfusion.OvC <- glm(open_confusion ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.oconfusion.OvC)
+## PT vs. control
+m.oconfusion.PvC <- glm(open_confusion ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.oconfusion.PvC)
+
+## interest
+m.ointerest.OvP <- glm(open_interest ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.ointerest.OvP)
+## Objective vs. control
+m.ointerest.OvC <- glm(open_interest ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.ointerest.OvC)
+## PT vs. control
+m.ointerest.PvC <- glm(open_interest ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.ointerest.PvC)
+
+## frustration
+m.ofrustration.OvP <- glm(open_frustration ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.ofrustration.OvP)
+## Objective vs. control
+m.ofrustration.OvC <- glm(open_frustration ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.ofrustration.OvC)
+## PT vs. control
+m.ofrustration.PvC <- glm(open_frustration ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+summary(m.ofrustration.PvC)
+
+
+
+
+##### 5. Analyses of Own Emotions - Closed-Ended Data #####
+
+round(cor(ptdata[,c('happy','shocked','hope','angry','comp','interest','disgust','mad','curious','afraid','grateful','proud','surprise','amused','down','worried','frust','sad','embarrass','guilty','selfanger','symp')], use='complete.obs'), digits=2)
+
+sad_mean <- rowMeans(ptdata[,c('sad','down')])
+angry_mean <- rowMeans(ptdata[,c('angry','mad')])
+symp_mean <- rowMeans(ptdata[,c('symp','comp')])
+
+m.sad.PvC <- lm(sad_mean ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=ptdata)
+summary(m.sad.PvC)
+m.sad.OvP <- lm(sad_mean ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=ptdata)
+summary(m.sad.OvP)
+m.sad.OvC <- lm(sad_mean ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=ptdata)
+summary(m.sad.OvC)
+
+m.angry.PvC <- lm(angry_mean ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=ptdata)
+summary(m.sad.PvC)
+m.angry.OvP <- lm(angry_mean ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=ptdata)
+summary(m.sad.OvP)
+m.angry.OvC <- lm(angry_mean ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=ptdata)
+summary(m.sad.OvC)
+
+m.symp.PvC <- lm(symp_mean ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=ptdata)
+summary(m.symp.PvC)
+m.symp.OvP <- lm(symp_mean ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=ptdata)
+summary(m.symp.OvP)
+m.symp.OvC <- lm(symp_mean ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=ptdata)
+summary(m.symp.OvC)
+
+
+
+
+
+
+
+##### 6. Plots of CIs for objective vs. PT and objective vs. control #####
+
+# ad hoc function
+ci.plot <- function(ptcond, emocond, emotions, i, ...){
+    ptcond <- factor(rep(ptcond, length(list(...))), )
+    emocond <- factor(rep(emocond, length(list(...))), )
+    emotions <- factor(emotions)
+    point.est <- unlist(lapply(list(...), function(x){coef(x)[i]}))
+    lb <- unlist(lapply(list(...), function(x){suppressMessages(confint(x))[i,1]}))
+    ub <- unlist(lapply(list(...), function(x){suppressMessages(confint(x))[i,2]}))
+    result <- data.frame(ptcond=ptcond, letter=emocond, emotions=emotions, point.est=point.est, lb=lb, ub=ub)
+    return(result)
 }
 
-cor.round(subset(pt, select=happy:symp)) # in general, correlations look good; frustrated could be combined with angry and mad based on the high correlation, but will be separated for conceptual reasons
+OvC.sad <- ci.plot('objective vs. control','sad letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=3, m.osad.OvC, m.sad.OvC, m.oangry.OvC, m.angry.OvC, m.osymp.OvC, m.symp.OvC)
+OvC.anger <- ci.plot('objective vs. control','angry letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=5, m.osad.OvC, m.sad.OvC, m.oanger.OvC, m.angry.OvC, m.osymp.OvC, m.symp.OvC)
+OvP.sad <- ci.plot('objective vs. perspective taking','sad letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=3, m.osad.OvP, m.sad.OvP, m.oanger.OvP, m.angry.OvP, m.osymp.OvP, m.symp.OvP)
+OvP.anger <- ci.plot('objective vs. perspective taking','angry letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=5, m.osad.OvP, m.sad.OvP, m.oanger.OvP, m.angry.OvP, m.osymp.OvP, m.symp.OvP)
+
+ci.plot.data <- rbind(OvC.sad, OvC.anger, OvP.sad, OvP.anger)
+ci.plot.data$emotions <- factor(ci.plot.data$emotions, levels=c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'))
+
+ggplot(test, aes(y=point.est, x=emotions, ymin=lb, ymax=ub)) +
+    geom_pointrange(stat='identity',position='dodge',aes(color=emotions)) +
+    facet_wrap(~letter*ptcond) + 
+    coord_flip() +
+    theme_classic() +
+    geom_hline(y=0, color='grey')
 
 
-## anger
-# open-ended plot
-with(ptopen, by(o_anger, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
-prop.anger <- with(ptopen, prop.plot(o_anger, ptfactor, emotfactor, ylab='Proportion Angry', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
-# closed-ended plots
-pt$ang_mean <- with(pt, rowMeans(cbind(angry,mad)))
-box.anger <- with(pt, jitterbox(ang_mean, f1=ptfactor, f2=emotfactor, ylab='Anger Boxplot'))
-box.angry <- with(pt, jitterbox(angry, f1=ptfactor, f2=emotfactor, ylab='Angry Boxplot'))
-box.mad <- with(pt, jitterbox(mad, f1=ptfactor, f2=emotfactor, ylab='Mad Boxplot'))
-# plot together
-multiplot(prop.anger, box.anger)
-multiplot(box.angry, box.mad)
-
-## objective vs. perspective taking
-boxplot(ang_mean ~ ptfactor*emotfactor, data=pt)
-## Objective vs. PT
-m.anger <- lm(ang_mean ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-summary(m.anger)
-## Objective vs. control
-m.anger <- lm(ang_mean ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-summary(m.anger)
-## PT vs. control
-m.anger <- lm(ang_mean ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
-summary(m.anger)
-
-m.o_anger1 <- glm(o_anger~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
-m.ang1 <- polr(factor(angry)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-m.mad1 <- polr(factor(mad)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-summary(m.o_anger1)
-summary(m.ang1)
-summary(m.mad1)
-confint(m.o_anger1)
-confint(m.ang1)
-confint(m.mad1)
-
-## objective vs. control
-m.o_anger2 <- glm(o_anger~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
-m.ang2 <- polr(factor(angry)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-m.mad2 <- polr(factor(mad)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-summary(m.o_anger2)
-summary(m.ang2)
-summary(m.mad2)
-confint(m.o_anger2)
-confint(m.ang2)
-confint(m.mad2)
-
-## perspective taking vs. control
-m.o_anger3 <- glm(o_anger~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
-m.ang_mean3 <- polr(factor(ang_mean)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
-summary(m.o_anger3)
-summary(m.ang_mean3)
-confint(m.o_anger3)
-confint(m.ang_mean3)
 
 
-## sadness
-# open-ended plot
-with(ptopen, by(o_sad, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
-prop.sad <- with(ptopen, prop.plot(o_sad, ptfactor, emotfactor, ylab='Proportion Sad', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
 
-# closed-ended plots
-pt$sad_mean <- with(pt, rowMeans(cbind(sad,down)))
-box.sad <- with(pt, jitterbox(sad_mean, f1=ptfactor, f2=emotfactor, ylab='Sadness Boxplot'))
-# plot together
-multiplot(prop.sad, box.sad)
-
-## control vs. perspective taking
-m.o_sad1 <- glm(o_sad~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
-m.sad1 <- polr(factor(sad)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-m.down1 <- polr(factor(down)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-summary(m.o_sad1)
-summary(m.sad1)
-summary(m.down1)
-confint(m.o_sad1)
-confint(m.sad1)
-confint(m.down1)
-
-## objective vs. control
-m.o_sad2 <- glm(o_sad~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
-m.sad_mean2 <- polr(factor(sad_mean)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-summary(m.o_sad2)
-summary(m.sad_mean2)
-confint(m.o_sad2)
-confint(m.sad_mean2)
-
-## perspective taking vs. control
-m.o_sad3 <- glm(o_sad~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
-m.sad_mean3 <- polr(factor(sad_mean)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
-summary(m.o_sad3)
-summary(m.sad_mean3)
-confint(m.o_sad3)
-confint(m.sad_mean3)
-
-
-## sympathy
-# open-ended plot
-with(ptopen, by(o_sympathy, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
-prop.symp <- with(ptopen, prop.plot(o_sympathy, ptfactor, emotfactor, ylab='Proportion Sympathetic', xlab='Perspective Taking Condition', leglab="Target's Emotion"))
-# closed-ended plots
-pt$symp_mean <- with(pt, rowMeans(cbind(symp,comp)))
-box.symp <- with(pt, nojitterbox(symp, f1=ptfactor, f2=emotfactor, ylab='Sympathetic Boxplot'))
-box.comp <- with(pt, nojitterbox(compass, f1=ptfactor, f2=emotfactor, ylab='Compassionate Boxplot'))
-# plot together
-multiplot(prop.symp, box.symp, box.comp)
-
-## control vs. perspective taking
-m.o_symp1 <- glm(o_sympathy~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen)
-m.symp1 <- polr(factor(symp)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-m.comp1 <- polr(factor(compass)~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt)
-summary(m.o_symp1)
-summary(m.symp1)
-summary(m.comp1)
-confint(m.o_symp1)
-confint(m.symp1)
-confint(m.comp1)
-
-## objective vs. control
-m.o_symp2 <- glm(o_sympathy~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen)
-m.symp2 <- polr(factor(symp)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-m.comp2 <- polr(factor(compass)~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt)
-summary(m.o_symp2)
-summary(m.symp2)
-summary(m.comp2)
-confint(m.o_symp2)
-confint(m.symp2)
-confint(m.comp2)
-
-## perspective taking vs. control
-m.o_symp3 <- glm(o_sympathy~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen)
-m.symp3 <- polr(factor(symp)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
-m.comp3 <- polr(factor(compass)~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt)
-summary(m.o_symp3)
-summary(m.symp3)
-summary(m.comp3)
-confint(m.o_symp3)
-confint(m.symp3)
-confint(m.comp3)
-
-
-# frustration
-with(ptopen, by(o_frustration, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
-with(ptopen, prop.plot(o_frustration, ptfactor, emotfactor, ylab='Sadness'))
-confint(glm(o_frustration~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-confint(glm(o_frustration~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-confint(glm(o_frustration~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
-
-#apathy
-with(ptopen, by(o_apathetic, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
-with(ptopen, prop.plot(o_apathetic, ptfactor, emotfactor, ylab='Apathy'))
-confint(glm(o_apathetic~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-confint(glm(o_apathetic~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-confint(glm(o_apathetic~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
-
-#surprise
-with(ptopen, by(o_surprised, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
-with(ptopen, prop.plot(o_surprised, ptfactor, emotfactor, ylab='Surprise'))
-confint(glm(o_surprised~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-confint(glm(o_surprised~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-confint(glm(o_surprised~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
-
-#bad
-with(ptopen, by(o_bad, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
-with(ptopen, prop.plot(o_bad, ptfactor, emotfactor, ylab='Unpleasantness'))
-confint(glm(o_bad~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-confint(glm(o_bad~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-confint(glm(o_bad~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
-
-#confusion
-with(ptopen, by(o_confusion, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
-with(ptopen, prop.plot(o_confusion, ptfactor, emotfactor, ylab='Confusion'))
-confint(glm(o_confusion~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-confint(glm(o_confusion~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-confint(glm(o_confusion~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
-
-with(ptopen, by(o_interest, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
-with(ptopen, prop.plot(o_interest, ptfactor, emotfactor, ylab='Interest'))
-confint(glm(o_interest~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-confint(glm(o_interest~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-confint(glm(o_interest~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
-
-with(ptopen, by(o_tired, list(ptfactor, emotfactor), function(x){sum(x)/length(x)}))
-with(ptopen, prop.plot(o_tired, ptfactor, emotfactor, ylab='Tired'))
-summary(glm(o_tired~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_tired~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptopen))
-summary(glm(o_tired~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptopen))
-
-
-## check other closed-ended emotions
-with(pt, nojitterbox(happy, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(happy~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(happy~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(happy~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(amused, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(amused~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(amused~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(amused~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(shocked, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(shocked~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(shocked~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(shocked~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(surprise, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(surprise~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(surprise~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(surprise~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(hopeful, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(hopeful~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(hopeful~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(hopeful~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(interest, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(interest~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(interest~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(interest~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(disgust, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(disgust~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(disgust~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(disgust~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(frustrated, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(frustrated~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(frustrated~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(frustrated~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(curious, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(curious~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(curious~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(curious~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(afraid, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(afraid~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(afraid~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(afraid~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(worried, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(worried~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(worried~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(worried~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(grateful, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(grateful~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(grateful~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(grateful~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(proud, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(proud~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(proud~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(proud~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(embarrass, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(embarrass~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(embarrass~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(embarrass~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(guilt, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(guilt~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(guilt~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(guilt~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
-
-with(pt, nojitterbox(selfanger, f1=emotfactor, f2=ptfactor, ylab='Happy'))
-confint(lm(selfanger~sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, data=pt))
-confint(lm(selfanger~sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=pt))
-confint(lm(selfanger~sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=pt))
 
 
 ##### 6. Analysis of Own Appraisals #####
@@ -579,12 +460,12 @@ summary(lm(immoral~pt_cond*emot_cond, data=pt))
 
 qplot(y=selfag, x=group, data=pt, geom=c('boxplot','jitter'))
 qplot(y=selfpow, x=group, data=pt, geom=c('boxplot','jitter'))
-pt$self.agency <- with(pt, rowMeans(cbind(selfag, selfpow)))
+ptdata$self.agency <- with(pt, rowMeans(cbind(selfag, selfpow)))
 qplot(y=self.agency, x=group, data=pt, geom=c('boxplot','jitter'))
 
 qplot(y=targag, x=group, data=pt, geom=c('boxplot','jitter'))
 qplot(y=targpow, x=group, data=pt, geom=c('boxplot','jitter'))
-pt$targ.agency <- with(pt, rowMeans(cbind(targag, targpow)))
+ptdata$targ.agency <- with(pt, rowMeans(cbind(targag, targpow)))
 qplot(y=targ.agency, x=group, data=pt, geom=c('boxplot','jitter'))
 confint(polr(factor(targag)~pt_cond*emot_cond, data=pt))
 confint(polr(factor(targpow)~pt_cond*emot_cond, data=pt))
@@ -592,7 +473,7 @@ summary(lm(targ.agency~pt_cond*emot_cond, data=pt))
 
 qplot(y=otherag, x=group, data=pt, geom=c('boxplot','jitter'))
 qplot(y=othpow, x=group, data=pt, geom=c('boxplot','jitter'))
-pt$oth.agency <- with(pt, rowMeans(cbind(otherag, othpow)))
+ptdata$oth.agency <- with(pt, rowMeans(cbind(otherag, othpow)))
 qplot(y=oth.agency, x=group, data=pt, geom=c('boxplot','jitter'))
 confint(polr(factor(otherag)~pt_cond*emot_cond, data=pt))
 confint(polr(factor(othpow)~pt_cond*emot_cond, data=pt))
@@ -601,7 +482,7 @@ summary(lm(oth.agency~pt_cond*emot_cond, data=pt))
 qplot(y=mixag, x=group, data=pt, geom=c('boxplot','jitter'))
 qplot(y=noonepow, x=group, data=pt, geom=c('boxplot','jitter'))
 qplot(y=sitcont, x=group, data=pt, geom=c('boxplot','jitter'))
-pt$sit.control <- with(pt, rowMeans(cbind(noonepow, sitcont)))
+ptdata$sit.control <- with(pt, rowMeans(cbind(noonepow, sitcont)))
 qplot(y=sit.control, x=group, data=pt, geom=c('boxplot','jitter'))
 confint(polr(factor(mixag)~pt_cond*emot_cond, data=pt))
 confint(polr(factor(noonepow)~pt_cond*emot_cond, data=pt))
@@ -760,7 +641,23 @@ ci.plot <- function(ptcond, emocond, emotions, i, ...){
     return(result)
 }
 
-ci.plot('objective','sad', c('sympathy','compassion','sympathy'), i=1, m.symp1,m.comp1,m.symp3)
+CvP.sad <- ci.plot('control vs. perspective taking','sad letter', c('sympathy','anger','sadness'), i=3, m.symp.PvC,m.angry.PvC,m.sad.PvC)
+CvP.angry <- ci.plot('control vs. perspective taking','angry letter', c('sympathy','anger','sadness'), i=5, m.symp.PvC,m.angry.PvC,m.sad.PvC)
+OvC.sad <- ci.plot('objective vs. perspective taking','sad letter', c('sympathy','anger','sadness'), i=3, m.symp.OvC,m.oangry.OvC,m.osad.OvC)
+OvC.angry <- ci.plot('objective vs. perspective taking','angry letter', c('sympathy','anger','sadness'), i=5, m.symp.OvC,m.oangry.OvC,m.osad.OvC)
+oCvP.sad <- ci.plot('control vs. perspective taking','sad letter', c('open sympathy','open anger','open sadness'), i=3, m.symp.PvC,m.angry.PvC,m.sad.PvC)
+oCvP.angry <- ci.plot('control vs. perspective taking','angry letter', c('open sympathy','open anger','open sadness'), i=5, m.symp.PvC,m.angry.PvC,m.sad.PvC)
+oOvC.sad <- ci.plot('objective vs. perspective taking','sad letter', c('open sympathy','open anger','open sadness'), i=3, m.symp.OvC,m.oangry.OvC,m.osad.OvC)
+oOvC.angry <- ci.plot('objective vs. perspective taking','angry letter', c('open sympathy','open anger','open sadness'), i=5, m.symp.OvC,m.oangry.OvC,m.osad.OvC)
+test <- rbind(CvP.sad, CvP.angry, OvC.sad, OvC.angry,oCvP.sad, oCvP.angry, oOvC.sad, oOvC.angry)
+
+ggplot(test, aes(y=point.est, x=emotions, ymin=lb, ymax=ub)) +
+    geom_pointrange(stat='identity',position='dodge',aes(color=emotions)) +
+    facet_wrap(~letter*ptcond) + 
+    coord_flip() +
+    theme_classic() +
+    geom_hline(y=0, color='grey')
+    
 
 ## open-ended plots
 CvP.sad.open <- ci.plot('control vs. perspective taking', 'sad letter', c('sad','angry','sympathetic'), i=3, m.o_sad3, m.o_anger3, m.o_symp3)
@@ -812,13 +709,13 @@ ggplot(close.cis, aes(y=point.est,x=appraisals,ymin=lb, ymax=ub)) + geom_pointra
 ######### Poster for SPSP ########
 
 # code data into groups
-pt$groups <- with(pt, ifelse(ptfactor=='objective' & emotfactor=='sad', 1, ifelse(ptfactor=='control' & emotfactor=='sad', 2, ifelse(ptfactor=='perspective taking' & emotfactor=='sad', 3, ifelse(ptfactor=='objective' & emotfactor=='angry', 4, ifelse(ptfactor=='control' & emotfactor=='angry', 5, ifelse(ptfactor=='perspective taking' & emotfactor=='angry', 6, NA)))))))
+ptdata$groups <- with(pt, ifelse(ptfactor=='objective' & emotfactor=='sad', 1, ifelse(ptfactor=='control' & emotfactor=='sad', 2, ifelse(ptfactor=='perspective taking' & emotfactor=='sad', 3, ifelse(ptfactor=='objective' & emotfactor=='angry', 4, ifelse(ptfactor=='control' & emotfactor=='angry', 5, ifelse(ptfactor=='perspective taking' & emotfactor=='angry', 6, NA)))))))
 
 
 ### Plot bars - own emotions
-pt$anger_mean <- rowMeans(pt[,c('angry','mad')])
-pt$sad_mean <- rowMeans(pt[,c('sad','down')])
-pt$symp_mean <- rowMeans(pt[,c('comp','symp')])
+ptdata$anger_mean <- rowMeans(pt[,c('angry','mad')])
+ptdata$sad_mean <- rowMeans(pt[,c('sad','down')])
+ptdata$symp_mean <- rowMeans(pt[,c('comp','symp')])
 
 ## NOTE: Data for meta-analysis
 with(pt, by(symp_mean, list(ptfactor, emotfactor), mean, na.rm=TRUE))
@@ -866,55 +763,55 @@ sympplot +
 
 
 ## sad vs. angry letter
-with(pt[is.na(pt$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(-1,-1,-1,1,1,1)))
-with(pt[is.na(pt$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(-1,-1,-1,1,1,1)))
-with(pt[is.na(pt$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(-1,-1,-1,1,1,1)))
+with(pt[is.na(ptdata$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(-1,-1,-1,1,1,1)))
+with(pt[is.na(ptdata$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(-1,-1,-1,1,1,1)))
+with(pt[is.na(ptdata$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(-1,-1,-1,1,1,1)))
 
 
 ## Objective vs. PT
 
 
 # sad letter
-with(pt[is.na(pt$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(-1,0,1,0,0,0)))
-with(pt[is.na(pt$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(-1,0,1,0,0,0)))
-with(pt[is.na(pt$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(-1,0,1,0,0,0)))
+with(pt[is.na(ptdata$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(-1,0,1,0,0,0)))
+with(pt[is.na(ptdata$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(-1,0,1,0,0,0)))
+with(pt[is.na(ptdata$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(-1,0,1,0,0,0)))
 
 # angry letter
-with(pt[is.na(pt$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(0,0,0,-1,0,1)))
-with(pt[is.na(pt$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(0,0,0,-1,0,1)))
-with(pt[is.na(pt$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(0,0,0,-1,0,1)))
+with(pt[is.na(ptdata$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(0,0,0,-1,0,1)))
+with(pt[is.na(ptdata$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(0,0,0,-1,0,1)))
+with(pt[is.na(ptdata$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(0,0,0,-1,0,1)))
 
 
 ## Objective vs. control
 
 # sad letter
-with(pt[is.na(pt$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(-1,1,0,0,0,0)))
-with(pt[is.na(pt$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(-1,1,0,0,0,0)))
-with(pt[is.na(pt$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(-1,1,0,0,0,0)))
+with(pt[is.na(ptdata$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(-1,1,0,0,0,0)))
+with(pt[is.na(ptdata$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(-1,1,0,0,0,0)))
+with(pt[is.na(ptdata$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(-1,1,0,0,0,0)))
 
 # angry letter
-with(pt[is.na(pt$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(0,0,0,-1,1,0)))
-with(pt[is.na(pt$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(0,0,0,-1,1,0)))
-with(pt[is.na(pt$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(0,0,0,-1,1,0)))
+with(pt[is.na(ptdata$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(0,0,0,-1,1,0)))
+with(pt[is.na(ptdata$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(0,0,0,-1,1,0)))
+with(pt[is.na(ptdata$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(0,0,0,-1,1,0)))
 
 ## Control vs. PT
 
 # sad letter
-with(pt[is.na(pt$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(0,-1,1,0,0,0)))
-with(pt[is.na(pt$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(0,-1,1,0,0,0)))
-with(pt[is.na(pt$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(0,-1,1,0,0,0)))
+with(pt[is.na(ptdata$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(0,-1,1,0,0,0)))
+with(pt[is.na(ptdata$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(0,-1,1,0,0,0)))
+with(pt[is.na(ptdata$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(0,-1,1,0,0,0)))
 
 # angry letter
-with(pt[is.na(pt$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(0,0,0,0,-1,1)))
-with(pt[is.na(pt$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(0,0,0,0,-1,1)))
-with(pt[is.na(pt$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(0,0,0,0,-1,1)))
+with(pt[is.na(ptdata$anger_mean)==FALSE,], t.contrast(anger_mean, groups, c(0,0,0,0,-1,1)))
+with(pt[is.na(ptdata$sad_mean)==FALSE,], t.contrast(sad_mean, groups, c(0,0,0,0,-1,1)))
+with(pt[is.na(ptdata$symp_mean)==FALSE,], t.contrast(symp_mean, groups, c(0,0,0,0,-1,1)))
 
 
 
 ### Plot bars - Melissa's emotions
 
-pt$manger_mean <- rowMeans(pt[,c('mangry','mmad')])
-pt$msad_mean <- rowMeans(pt[,c('msad','mdown')])
+ptdata$manger_mean <- rowMeans(pt[,c('mangry','mmad')])
+ptdata$msad_mean <- rowMeans(pt[,c('msad','mdown')])
 
 with(pt, mean.plot(manger_mean, ptfactor, emotfactor, ylim=c(0,5)))
 with(pt, mean.plot(msad_mean, ptfactor, emotfactor, ylim=c(0,5)))
@@ -922,33 +819,33 @@ with(pt, mean.plot(msad_mean, ptfactor, emotfactor, ylim=c(0,5)))
 ## Objective vs. PT
 
 # sad letter
-with(pt[is.na(pt$manger_mean)==FALSE,], t.contrast(manger_mean, groups, c(-1,0,1,0,0,0)))
-with(pt[is.na(pt$msad_mean)==FALSE,], t.contrast(msad_mean, groups, c(-1,0,1,0,0,0)))
+with(pt[is.na(ptdata$manger_mean)==FALSE,], t.contrast(manger_mean, groups, c(-1,0,1,0,0,0)))
+with(pt[is.na(ptdata$msad_mean)==FALSE,], t.contrast(msad_mean, groups, c(-1,0,1,0,0,0)))
 
 # angry letter
-with(pt[is.na(pt$manger_mean)==FALSE,], t.contrast(manger_mean, groups, c(0,0,0,-1,0,1)))
-with(pt[is.na(pt$msad_mean)==FALSE,], t.contrast(msad_mean, groups, c(0,0,0,-1,0,1)))
+with(pt[is.na(ptdata$manger_mean)==FALSE,], t.contrast(manger_mean, groups, c(0,0,0,-1,0,1)))
+with(pt[is.na(ptdata$msad_mean)==FALSE,], t.contrast(msad_mean, groups, c(0,0,0,-1,0,1)))
 
 
 ## Objective vs. control
 
 # sad letter
-with(pt[is.na(pt$manger_mean)==FALSE,], t.contrast(manger_mean, groups, c(-1,1,0,0,0,0)))
-with(pt[is.na(pt$msad_mean)==FALSE,], t.contrast(msad_mean, groups, c(-1,1,0,0,0,0)))
+with(pt[is.na(ptdata$manger_mean)==FALSE,], t.contrast(manger_mean, groups, c(-1,1,0,0,0,0)))
+with(pt[is.na(ptdata$msad_mean)==FALSE,], t.contrast(msad_mean, groups, c(-1,1,0,0,0,0)))
 
 # angry letter
-with(pt[is.na(pt$manger_mean)==FALSE,], t.contrast(manger_mean, groups, c(0,0,0,-1,1,0)))
-with(pt[is.na(pt$msad_mean)==FALSE,], t.contrast(msad_mean, groups, c(0,0,0,-1,1,0)))
+with(pt[is.na(ptdata$manger_mean)==FALSE,], t.contrast(manger_mean, groups, c(0,0,0,-1,1,0)))
+with(pt[is.na(ptdata$msad_mean)==FALSE,], t.contrast(msad_mean, groups, c(0,0,0,-1,1,0)))
 
 ## Control vs. PT
 
 # sad letter
-with(pt[is.na(pt$manger_mean)==FALSE,], t.contrast(manger_mean, groups, c(0,-1,1,0,0,0)))
-with(pt[is.na(pt$msad_mean)==FALSE,], t.contrast(msad_mean, groups, c(0,-1,1,0,0,0)))
+with(pt[is.na(ptdata$manger_mean)==FALSE,], t.contrast(manger_mean, groups, c(0,-1,1,0,0,0)))
+with(pt[is.na(ptdata$msad_mean)==FALSE,], t.contrast(msad_mean, groups, c(0,-1,1,0,0,0)))
 
 # angry letter
-with(pt[is.na(pt$manger_mean)==FALSE,], t.contrast(manger_mean, groups, c(0,0,0,0,-1,1)))
-with(pt[is.na(pt$msad_mean)==FALSE,], t.contrast(msad_mean, groups, c(0,0,0,0,-1,1)))
+with(pt[is.na(ptdata$manger_mean)==FALSE,], t.contrast(manger_mean, groups, c(0,0,0,0,-1,1)))
+with(pt[is.na(ptdata$msad_mean)==FALSE,], t.contrast(msad_mean, groups, c(0,0,0,0,-1,1)))
 
 
 ##### Appraisals 
@@ -975,9 +872,9 @@ fa.parallel(pt[,c('pleas','immoral','targag','targpow','otherag','othpow','sitag
 fa(pt[,c('pleas','immoral','targag','targpow','otherag','othpow','sitag','sitcont','mixag','noonepow')], fm='ml', nfactors=4, rotate='promax')
 fa(pt[,c('pleas','immoral','targag','targpow','otherag','othpow','sitag','sitcont','mixag','noonepow')], fm='ml', nfactors=3, rotate='promax')
 
-pt$targ <- rowMeans(pt[,c('targag','targpow')])
-pt$other <- rowMeans(pt[,c('otherag','othpow')])
-pt$sit <- rowMeans(pt[,c('sitcont','noonepow')])
+ptdata$targ <- rowMeans(pt[,c('targag','targpow')])
+ptdata$other <- rowMeans(pt[,c('otherag','othpow')])
+ptdata$sit <- rowMeans(pt[,c('sitcont','noonepow')])
 
 boxplot(targ ~ ptfactor*emotfactor, data=pt)
 boxplot(other ~ ptfactor*emotfactor, data=pt)
@@ -989,36 +886,36 @@ with(pt, mean.plot(sit, emotfactor, ptfactor, ylim=c(0,5)))
 ## Objective vs. PT
 
 # sad letter
-with(pt[is.na(pt$targ)==FALSE,], t.contrast(targ, groups, c(-1,0,1,0,0,0)))
-with(pt[is.na(pt$other)==FALSE,], t.contrast(other, groups, c(-1,0,1,0,0,0)))
-with(pt[is.na(pt$sit)==FALSE,], t.contrast(sit, groups, c(-1,0,1,0,0,0)))
+with(pt[is.na(ptdata$targ)==FALSE,], t.contrast(targ, groups, c(-1,0,1,0,0,0)))
+with(pt[is.na(ptdata$other)==FALSE,], t.contrast(other, groups, c(-1,0,1,0,0,0)))
+with(pt[is.na(ptdata$sit)==FALSE,], t.contrast(sit, groups, c(-1,0,1,0,0,0)))
 
 # angry letter
-with(pt[is.na(pt$targ)==FALSE,], t.contrast(targ, groups, c(0,0,0,-1,0,1)))
-with(pt[is.na(pt$other)==FALSE,], t.contrast(other, groups, c(0,0,0,-1,0,1)))
-with(pt[is.na(pt$sit)==FALSE,], t.contrast(sit, groups, c(0,0,0,-1,0,1)))
+with(pt[is.na(ptdata$targ)==FALSE,], t.contrast(targ, groups, c(0,0,0,-1,0,1)))
+with(pt[is.na(ptdata$other)==FALSE,], t.contrast(other, groups, c(0,0,0,-1,0,1)))
+with(pt[is.na(ptdata$sit)==FALSE,], t.contrast(sit, groups, c(0,0,0,-1,0,1)))
 
 
 ## Objective vs. control
 
 # sad letter
-with(pt[is.na(pt$targ)==FALSE,], t.contrast(targ, groups, c(-1,1,0,0,0,0)))
-with(pt[is.na(pt$other)==FALSE,], t.contrast(other, groups, c(-1,1,0,0,0,0)))
-with(pt[is.na(pt$sit)==FALSE,], t.contrast(sit, groups, c(-1,1,0,0,0,0)))
+with(pt[is.na(ptdata$targ)==FALSE,], t.contrast(targ, groups, c(-1,1,0,0,0,0)))
+with(pt[is.na(ptdata$other)==FALSE,], t.contrast(other, groups, c(-1,1,0,0,0,0)))
+with(pt[is.na(ptdata$sit)==FALSE,], t.contrast(sit, groups, c(-1,1,0,0,0,0)))
 
 # angry letter
-with(pt[is.na(pt$targ)==FALSE,], t.contrast(targ, groups, c(0,0,0,-1,1,0)))
-with(pt[is.na(pt$other)==FALSE,], t.contrast(other, groups, c(0,0,0,-1,1,0)))
-with(pt[is.na(pt$sit)==FALSE,], t.contrast(sit, groups, c(0,0,0,-1,1,0)))
+with(pt[is.na(ptdata$targ)==FALSE,], t.contrast(targ, groups, c(0,0,0,-1,1,0)))
+with(pt[is.na(ptdata$other)==FALSE,], t.contrast(other, groups, c(0,0,0,-1,1,0)))
+with(pt[is.na(ptdata$sit)==FALSE,], t.contrast(sit, groups, c(0,0,0,-1,1,0)))
 
 ## Control vs. PT
 
 # sad letter
-with(pt[is.na(pt$targ)==FALSE,], t.contrast(targ, groups, c(0,-1,1,0,0,0)))
-with(pt[is.na(pt$other)==FALSE,], t.contrast(other, groups, c(0,-1,1,0,0,0)))
-with(pt[is.na(pt$sit)==FALSE,], t.contrast(sit, groups, c(0,-1,1,0,0,0)))
+with(pt[is.na(ptdata$targ)==FALSE,], t.contrast(targ, groups, c(0,-1,1,0,0,0)))
+with(pt[is.na(ptdata$other)==FALSE,], t.contrast(other, groups, c(0,-1,1,0,0,0)))
+with(pt[is.na(ptdata$sit)==FALSE,], t.contrast(sit, groups, c(0,-1,1,0,0,0)))
 
 # angry letter
-with(pt[is.na(pt$targ)==FALSE,], t.contrast(targ, groups, c(0,0,0,0,-1,1)))
-with(pt[is.na(pt$other)==FALSE,], t.contrast(other, groups, c(0,0,0,0,-1,1)))
-with(pt[is.na(pt$sit)==FALSE,], t.contrast(sit, groups, c(0,0,0,0,-1,1)))
+with(pt[is.na(ptdata$targ)==FALSE,], t.contrast(targ, groups, c(0,0,0,0,-1,1)))
+with(pt[is.na(ptdata$other)==FALSE,], t.contrast(other, groups, c(0,0,0,0,-1,1)))
+with(pt[is.na(ptdata$sit)==FALSE,], t.contrast(sit, groups, c(0,0,0,0,-1,1)))

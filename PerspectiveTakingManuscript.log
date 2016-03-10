@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  23 FEB 2016 10:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  10 MAR 2016 10:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -466,131 +466,177 @@ Package caption Info: End \AtBeginDocument code.
 
 ]
 [2]
-\openout3 = `PerspectiveTakingManuscript.ttt'.
-
- (PerspectiveTakingManuscript.ttt)
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 2005) has occurred while \output is active []
 
  [3]
-[4] [5]
-Underfull \vbox (badness 7099) has occurred while \output is active []
+[4]
+\openout3 = `PerspectiveTakingManuscript.ttt'.
 
- [6]
+ (PerspectiveTakingManuscript.ttt) [5] [6] [7]
 
-LaTeX Warning: Citation `Wondrasub' undefined on input line 160.
+LaTeX Warning: Citation `Wondrasub' undefined on input line 171.
 
+[8]
 \openout4 = `PerspectiveTakingManuscript.fff'.
 
-(PerspectiveTakingManuscript.fff) [7] [8]
-Underfull \vbox (badness 1859) has occurred while \output is active []
+ (PerspectiveTakingManuscript.fff)
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 205.
 
- [9]
-Underfull \vbox (badness 1859) has occurred while \output is active []
-
- [10]
-(./PerspectiveTakingManuscript.bbl [11])
-
-Class apa6 Warning: \bibliographystyle command ignored on input line 236.
-
-AED endfloat: Processing end Figures and Tables [12
-
-]
-(./PerspectiveTakingManuscript.ttt
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 8.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 8.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 205.
+
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 8.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 205
+.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 8.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 205
+.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 8.
+(Font)              <12> on input line 205.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 8.
+(Font)              <8> on input line 205.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 8.
+(Font)              <6> on input line 205.
+ [9]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
+ [10]
+[11] (./PerspectiveTakingManuscript.bbl [12])
+
+Class apa6 Warning: \bibliographystyle command ignored on input line 585.
+
+AED endfloat: Processing end Figures and Tables [13
+
+]
+(./PerspectiveTakingManuscript.ttt
 Overfull \hbox (47.9429pt too wide) in paragraph at lines 8--32
 [][] 
  []
 
-[13
+[14
 
 
 ]) (./PerspectiveTakingManuscript.fff
 Package color Info: Redefining color shadecolor on input line 5.
 
-<figure/SadPlot-1.pdf, id=47, 505.89pt x 505.89pt>
-File: figure/SadPlot-1.pdf Graphic file (type pdf)
- <use figure/SadPlot-1.pdf>
-Package pdftex.def Info: figure/SadPlot-1.pdf used on input line 6.
+<figure/Figure1Sad-1.pdf, id=53, 505.89pt x 505.89pt>
+File: figure/Figure1Sad-1.pdf Graphic file (type pdf)
+
+<use figure/Figure1Sad-1.pdf>
+Package pdftex.def Info: figure/Figure1Sad-1.pdf used on input line 6.
 (pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
+ [15
 
-[14
 
-
- <./figure/SadPlot-1.pdf>]
+ <./figure/Figure1Sad-1.pdf>]
 Package color Info: Redefining color shadecolor on input line 17.
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 20.
+
+<figure/Figure2Angry-1.pdf, id=63, 505.89pt x 505.89pt>
+File: figure/Figure2Angry-1.pdf Graphic file (type pdf)
+
+<use figure/Figure2Angry-1.pdf>
+Package pdftex.def Info: figure/Figure2Angry-1.pdf used on input line 18.
+(pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
+ [16
+
+ <./figure/Figure2Angry-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 29.
+
+<figure/Figure3Sad-1.pdf, id=73, 505.89pt x 505.89pt>
+File: figure/Figure3Sad-1.pdf Graphic file (type pdf)
+
+<use figure/Figure3Sad-1.pdf>
+Package pdftex.def Info: figure/Figure3Sad-1.pdf used on input line 30.
+(pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
+ [17
+
+ <./figure/Figure3Sad-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 41.
+
+<figure/Figure4Angry-1.pdf, id=83, 505.89pt x 505.89pt>
+File: figure/Figure4Angry-1.pdf Graphic file (type pdf)
+
+<use figure/Figure4Angry-1.pdf>
+Package pdftex.def Info: figure/Figure4Angry-1.pdf used on input line 42.
+(pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
+ [18
+
+ <./figure/Figure4Angry-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 53.
+
+<figure/Figure5CIPlotsObjectiveVSOthers-1.pdf, id=93, 505.89pt x 505.89pt>
+File: figure/Figure5CIPlotsObjectiveVSOthers-1.pdf Graphic file (type pdf)
+
+<use figure/Figure5CIPlotsObjectiveVSOthers-1.pdf>
+Package pdftex.def Info: figure/Figure5CIPlotsObjectiveVSOthers-1.pdf used on i
+nput line 54.
+(pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 55.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<figure/AngerPlot-1.pdf, id=57, 505.89pt x 505.89pt>
-File: figure/AngerPlot-1.pdf Graphic file (type pdf)
+LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 362
+.
 
-<use figure/AngerPlot-1.pdf>
-Package pdftex.def Info: figure/AngerPlot-1.pdf used on input line 21.
-(pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
- [15
+(/usr/local/texlive/2015/texmf-dist/tex/latex/lm/ts1lmtt.fd
+File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Overfull \hbox (3.98233pt too wide) in paragraph at lines 362--362
+[]\T1/lmtt/m/n/12 ## glm(formula = open_anger ~ sad.angry + OvC.sad + PvOC.sad 
++ OvC.angry +[] 
+ []
 
- <./figure/AngerPlot-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 32.
 
-<figure/SympPlot-1.pdf, id=68, 505.89pt x 505.89pt>
-File: figure/SympPlot-1.pdf Graphic file (type pdf)
+Overfull \hbox (3.98233pt too wide) in paragraph at lines 362--362
+[]\T1/lmtt/m/n/12 ## glm(formula = open_anger ~ sad.angry + OvP.sad + CvOP.sad 
++ OvP.angry +[] 
+ []
 
-<use figure/SympPlot-1.pdf>
-Package pdftex.def Info: figure/SympPlot-1.pdf used on input line 36.
-(pdftex.def)             Requested size: 452.9679pt x 452.97328pt.
- [16
 
- <./figure/SympPlot-1.pdf>])
+LaTeX Warning: Float too large for page by 7625.75787pt on input line 366.
+
+[19 <./figure/Figure5CIPlotsObjectiveVSOthers-1.pdf>])
 (./PerspectiveTakingManuscript.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 5257 strings out of 493089
- 78572 string characters out of 6134842
- 144820 words of memory out of 5000000
- 8622 multiletter control sequences out of 15000+600000
- 40094 words of font info for 40 fonts, out of 8000000 for 9000
+ 5303 strings out of 493089
+ 79600 string characters out of 6134842
+ 179820 words of memory out of 5000000
+ 8662 multiletter control sequences out of 15000+600000
+ 40400 words of font info for 41 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,12n,47p,1720b,383s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</usr/local/
-texlive/2015/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/20
-15/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2015/texmf-di
-st/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2015/texmf-dist/fonts/t
-ype1/public/lm/lmtt12.pfb>
-Output written on PerspectiveTakingManuscript.pdf (16 pages, 142529 bytes).
+ 43i,12n,47p,1720b,511s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local
+/texlive/2015/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2015/
+texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2015/texmf-dist
+/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvi
+ps/lm/lm-mathsy.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/lm/l
+mbx12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/lm/lmmi12.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local
+/texlive/2015/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2
+015/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2015/texmf-
+dist/fonts/type1/public/lm/lmtt12.pfb>
+Output written on PerspectiveTakingManuscript.pdf (19 pages, 165010 bytes).
 PDF statistics:
- 94 PDF objects out of 1000 (max. 8388607)
- 65 compressed objects within 1 object stream
+ 133 PDF objects out of 1000 (max. 8388607)
+ 95 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

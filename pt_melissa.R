@@ -363,11 +363,12 @@ ci.plot.data <- rbind(OvC.sad, OvC.anger, OvP.sad, OvP.anger)
 ci.plot.data$emotions <- factor(ci.plot.data$emotions, levels=c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'))
 
 ggplot(test, aes(y=point.est, x=emotions, ymin=lb, ymax=ub)) +
-    geom_pointrange(stat='identity',position='dodge',aes(color=emotions)) +
+    geom_pointrange(stat='identity',position='dodge') +
     facet_wrap(~letter*ptcond) + 
     coord_flip() +
     theme_classic() +
-    geom_hline(y=0, color='grey')
+    geom_hline(y=0, color='grey') +
+    labs(x="Subjects' Emotions", y="95% Confidence Intervals for the Difference in Emotions by Condition")
 
 
 

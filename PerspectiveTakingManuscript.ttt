@@ -1,35 +1,27 @@
 \begin{table*}[hbt]
 \ifnextchar[{\eatarg}{}
 
-  Table 1
+Table 1
 
-  \textit{Subjects' Parents' Education as an Indicator of Socioeconomic Status}
+\textit{Subjects' open-ended reports of their own emotions.}
 
-  \begin{tabular}{l c c}
-     \hline
-     & Mother's Education & Father's Education \\
-     \hline
-     Less than high school &
-        6 (1\%) &
-        7 (2\%) \\
-     High school diploma/GED &
-        29 (7\%) &
-        29 (7\%) \\
-     Some college &
-        34 (8\%) &
-        32 (8\%) \\
-     Associate's degree &
-        29 (7\%) &
-        11 (3\%) \\
-     Bachelor's degree &
-        166 (41\%) &
-        126 (31\%) \\
-     Postgraduate degree (e.g., Master's, PhD, JD, MD) &
-        137 (34\%) &
-        196 (49\%) \\
-     \hline
-  \end{tabular}
-
+\begin{tabular}{l c}
+    \hline
+    Emotion Group & Emotion Words \\
+    \hline
+    Sadness & defeat, depressed, depression, despair, disappointed, disappointing, \\
+    & disappointment, disheartened, down, heartbroken, helpless, helplessness, \\
+    & hopeless, let down, melancholy, sad, saddened, sadness, \\
+    & solemn, sorrow, want to cry \\
+    & \\
+    Anger & aggravation, agitated, anger, angry, annoyance, annoyed, \\
+    & bitter, furious, indignance, irritation, mad, outraged, pissed \\
+    & \\
+    Sympathy & apologetic, caring, compassion, compassionate, concern, concerned, \\
+    & consoling, empathetic, empathic, empathy, pity, sorriness, \\
+    & sorry, sympathetic, sympathy, wish I could help \\
+    \hline
+\end{tabular}
 \end{table*}
 \efloatseparator
  

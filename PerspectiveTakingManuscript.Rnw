@@ -1,16 +1,14 @@
 \documentclass[man,a4paper,noextraspace,apacite]{apa6}
 \usepackage{apacite}
-\title{What Does Perspective Taking Do for Vicarious Emotions?}
+\title{What Does Perspective Taking Do for Empathy?}
 \shorttitle{Perspective Taking}
-\author{Joshua D. Wondra and Phoebe C. Ellsworth}
+\author{Joshua D. Wondra}
 \affiliation{University of Michigan}
 
 \abstract{Abstract TBD}
 \keywords{empathy, vicarious emotions, perspective taking}
 
 \authornote{Joshua D. Wondra, Department of Psychology, University of Michigan.
-
-Phoebe C. Ellsworth, Department of Psychology, University of Michigan.
 
 Correspondence concerning this article should be addressed to Josh Wondra, Department of Psychology, University of Michigan, 530 Church St., Ann Arbor, MI 48109-1043.dh
 
@@ -20,14 +18,21 @@ Contact: jdwondra@umich.edu}
 
 \maketitle
 
-When someone is experiencing an emotional event, people are often told that they should take that person's perspective. The hope is that taking the other's perspective will make them understand and feel how the other person feels; it will make them empathize. And indeed, many studies have used perspective taking as a way to induce empathy (CITATIONS). But does perspective taking make people empathize with specific emotions, so that they feel whatever the other person feels?
+When someone is going through an emotional experience, people are often advised to take that person's perspective so that they will understand and feel how that person feels. Psychologists, too, believe in this power of perspective taking---many experiments use it to get subjects to empathize \cite<e.g., >{Batson1997, Lamm2007}. But does perspective taking make people feel the specific emotions that another person feels?
 
-Existing research on perspective taking is surprisingly limited when it comes to answering this question. There are two reasons for this. First, the target of perspective taking typically feels sad, distressed, or anxious, all of which involve appraisals that bad circumstances are to blame for a misfortune or that the situation is out of anyone's control (CITE ATTRIBUTION AND APPRAISAL LITERATURE, POSSIBLY TIE ATTRIBUTION LIT TO SYMPATHY). This leaves open the possiblity that perspective taking has a unique effect on emotions that are felt in uncontrollable circumstances. Specifically, perspective taking might decrease actor-observer bias, which involves the tendency to make more dispositional attributions for others and situational attributions for oneself (CITATIONS). In this case, perspective taking might increase empathy with emotions that involve appraisals that impersonal circumstances are in control, such as sadness, but not empathy with emotions that involve appraisals that some human agent caused a misfortune, such as anger.
+When it comes to answering this question, existing research is surprisingly limited. There are two reasons for this. First, in most studies the target of perspective taking feels sad, distressed, or anxious, all of which involve appraisals that the situation is or might be out of one's control \cite{Smith1985, Ellsworth1988}. This means that perspective taking might uniquely affect emotions that are felt in uncontrollable circumstances. Specifically, perspective taking decreases actor-observer bias, which involves the tendency to make more dispositional attributions for others and situational attributions for oneself \cite{Galper1976, Storms1973}. Perhaps perspective taking increases empathy with emotions that involve appraisals that situational factors are in control, such as sadness, but not empathy with emotions that involve appraisals that some human agent is in control, such as anger.
 
-The second limit of existing research is the comparison condition to perspective taking. The most common control condition in research that uses perspective taking to induce empathy is to tell subjects to remain objective while they are exposed to a target's emotional experience. The problem is that these instructions are not a neutral control condition (CITATIONS). Instead, they instruct subject to down-regulate their vicarious emotions, which calls into question whether the observed effects are due to increased empathy from perspective taking, decreased empathy from remaining objective, or both.
+The second limit of existing research is the comparison condition to perspective taking, which is most commonly to tell subjects to remain objective and detached \cite{McAuliffe2016}. The problem is that these instructions are not a neutral control condition. Instead, they tell subjects to down-regulate their vicarious emotions, which makes it unclear if the observed effects are due to increased empathy from perspective taking, decreased empathy from remaining objective, or both.
 
-In this study, I addressed the limitations of existing research by first, exposing subjects to someone who felt either sad or angry about a misfortune, and second, adding a neutral control condition as well as the typical perspective taking and objective conditions. I tested three hypotheses. First, I tested whether perspective taking would increase empathy with specific emotions, meaning that subjects who take a target's perspective should feel sadder when the target is sad and angrier when the target is angry. Second, I tested whether perspective taking would increase empathy only with emotions that involve appraisals of situational control, meaning that it should make subjects feel sadder when the target is sad, but not angrier when the target is angry. Third, I tested whether remaining objective decreased empathic emotions compared to the control condition. 
+In this study, I addressed the first limitation of existing research by exposing subjects to someone who felt either sad or angry about a misfortune, and the second limitation by including a neutral control condition. I tested three hypotheses.
 
+\begin{enumerate}
+  \item Perspective taking increases empathy with specific emotions. If so, then subjects who are instructed to take a target's perspective should feel sadder when the target is sad and angrier when the target is angry compared to subjects who received no instructions. 
+  \item Perspective taking only increase empathy with emotions that involve appraisals that situational factors are in control. If so, then subjects who are instructed to take a target's perspective should feel sadder when the target is sad when they are instructed to take her perspective compared to subjects who received no instructions. There should be no effect of perspective taking on subjects' emotions when the target is angry.
+  \item Remaining objective decreases empathy. If so, then subjects who are instructed to remain objective should feel less sad and angry compared to subjects who receive no instructions.
+\end{enumerate}
+
+I also tested the effects of perspective taking and remaining objective on sympathy.
 
 \section{Method}
 
@@ -100,7 +105,7 @@ ptdata$open_sympathy <- with(ptdata, group.emot(o_apologetic, o_caring, o_compas
 
 \subsection{Overview}
 
-    Subjects read a bogus letter from another person who described an emotional experience that made her feel sad or angry. Subjects were told that while reading the letter they should take the other person's perspective, remain objective, or they received no specific instructions as a control condition. Thus, the study had a 2 (Target's Emotion: sad, angry) x 3 (Instructions: perspective taking, objective, control) between-subjects factorial design. Initially we only ran subjects in the perspective taking and objective conditions, but we decided to add the control condition to clarify what differences could be attributed to perspective taking and what differences could be attributed to regulating one's emotions by remaining objective. Then subjects reported their own emotions, their perceptions of the letter writer's emotions, their appraisals of the letter writer's situation, and their perceptions of the letter writer's appraisals of the situation.
+    Subjects read a bogus letter from someone else who described an experience that made her feel sad or angry. Subjects were instructed to take the other person's perspective, to remain objective, or they received no instructions. The study had a 2 (Emotion: sad, angry) x 3 (Instructions: perspective taking, objective, control) between-subjects factorial design. Subjects reported their own emotions and appraisals of the letter writer's situation and their perceptions of the letter writer's emotions and appraisals.
     
 \subsection{Subjects}
 <<demographics, echo=FALSE>>=
@@ -143,48 +148,16 @@ dadad <- as.numeric(DadEd[4])
 dadbd <- as.numeric(DadEd[5])
 dadpgd <- as.numeric(DadEd[6])
 @
-    Subjects were \Sexpr{usedN} (\Sexpr{fem} women, \Sexpr{mal} men, \Sexpr{trans} transgender, \Sexpr{gend.na} did not report gender) undergraduate students and community members who participated for course credit or \$5. Data from an additional \Sexpr{exclusions} subjects were excluded; \Sexpr{suspicious} subjects suspected that the letter they read was not real, \Sexpr{inattention} were inattentive, four were non-native English speakers, one reported that he had a concussion, and one learned which experimental condition he was in due to experimenter error. Subjects' ages ranged from \Sexpr{minage} to \Sexpr{maxage} (Median = \Sexpr{medage}). There were \Sexpr{nwhite} who identified as European American or White, \Sexpr{nasian} who identified as Asian or Asian American, \Sexpr{nblack} who identified as African American or Black, \Sexpr{nmideast} who identified as Middle Eastern, \Sexpr{nlatino} who identified as Latino or Hispanic, \Sexpr{nnatam} who identified as Native American or Alaska Native, \Sexpr{npacisl} who identified as Native Hawaiian or Other Pacific Islander, and \Sexpr{nother} who identified as having another racial or ethnic heritage. To indicate socieconomic status, subjects reported their parents' highest forms of education completed (see Table 1).
-    
-\begin{table}
-  Table 1
-  
-  \textit{Subjects' Parents' Education as an Indicator of Socioeconomic Status}
-
-  \begin{tabular}{l c c}
-     \hline
-     & Mother's Education & Father's Education \\
-     \hline
-     Less than high school & 
-        \Sexpr{momlhs} (\Sexpr{round(momlhs/sum(MomEd)*100, digits=0)}\%) & 
-        \Sexpr{dadlhs} (\Sexpr{round(dadlhs/sum(DadEd)*100, digits=0)}\%) \\
-     High school diploma/GED & 
-        \Sexpr{momhs} (\Sexpr{round(momhs/sum(MomEd)*100, digits=0)}\%) & 
-        \Sexpr{dadhs} (\Sexpr{round(dadhs/sum(DadEd)*100, digits=0)}\%) \\
-     Some college & 
-        \Sexpr{momsc} (\Sexpr{round(momsc/sum(MomEd)*100, digits=0)}\%) & 
-        \Sexpr{dadsc} (\Sexpr{round(dadsc/sum(DadEd)*100, digits=0)}\%) \\
-     Associate's degree & 
-        \Sexpr{momad} (\Sexpr{round(momad/sum(MomEd)*100, digits=0)}\%) & 
-        \Sexpr{dadad} (\Sexpr{round(dadad/sum(DadEd)*100, digits=0)}\%) \\
-     Bachelor's degree & 
-        \Sexpr{mombd} (\Sexpr{round(mombd/sum(MomEd)*100, digits=0)}\%) & 
-        \Sexpr{dadbd} (\Sexpr{round(dadbd/sum(DadEd)*100, digits=0)}\%) \\
-     Postgraduate degree (e.g., Master's, PhD, JD, MD) & 
-        \Sexpr{mompgd} (\Sexpr{round(mompgd/sum(MomEd)*100, digits=0)}\%) & 
-        \Sexpr{dadpgd} (\Sexpr{round(dadpgd/sum(DadEd)*100, digits=0)}\%) \\
-     \hline
-  \end{tabular}
-
-\end{table}
+    Subjects were \Sexpr{usedN} (\Sexpr{fem} women, \Sexpr{mal} men, \Sexpr{trans} transgender, \Sexpr{gend.na} did not report gender) undergraduate students and community members who participated for course credit or \$5. Data from an additional \Sexpr{exclusions} subjects were excluded; \Sexpr{suspicious} subjects suspected that the letter they read was not real, \Sexpr{inattention} were inattentive, four were non-native English speakers, one reported that he had a concussion, and one learned which experimental condition he was in due to experimenter error. Subjects' ages ranged from \Sexpr{minage} to \Sexpr{maxage} (Median = \Sexpr{medage}).
 
 \subsection{Procedure}
-Each subject participated in the study individually and was seated at a computer. They were told that the study was about how people communicate about personal experiences and react to others' personal experiences. They were told that they would begin the study by writing about a personal experience to a future participant and then they would read about the personal experience of someone else who participated in the study earlier in the semester.
+Subjects participated individually. They were told that the researchers were studying how people communicate about personal experiences and react to others' personal experiences. They were told that they would begin by writing about a personal experience to a future participant and then they would read about the personal experience of someone else who participated in the study earlier in the semester. The letter exchange and perspective taking instructions in this study are similar to the procedure used by Batson and colleagues \cite<e.g., >{Batson2002, Batson2007a, Batson2007b}, except that subjects also wrote a letter to better sell the cover story.
 
-Next, subjects received a pen, a piece of paper, and an envelope. They were told to write a letter to a future participant about a personal experience, and that they could write a paragraph about something interesting that happened to them recently. Then they could put their letter in the envelope when they finished writing. 
+Subjects received a pen, a piece of paper, and an envelope. They were told to write a letter to a future participant and then put their letter in the envelope. They were asked to write one or two paragraphs about something interesting that happened to them recently. 
 
-Next, the participant told the subject that they would read a randomly selected letter from somoene who participated earlier in the semester. Then the subject would complete a questionnaire on the computer about their reactions to the letter. Subjects in the perspective taking and objective conditions were told the researchers found that the way they read the letter was important. Those in the perspective taking condition were told to "try to imagine how the other person feels about what is described. Try to imagine how it has affected her life and how she feels as a result," whereas those in the objective condition were told to "try not to get caught up in how the other person feels; just remain objective and detached" \cite{Batson2002, Batson2007}.
+Next, the experimenter told subjects that they would read a letter that was randomly selected from someone who participated earlier in the semester. Then they would complete a questionnaire on the computer about their reactions to the letter. Subjects in the perspective taking and objective conditions were told that the way they read the letter was important. Those in the perspective taking condition were told to ``try to imagine how the other person feels about what is described. Try to imagine how it has affected her life and how she feels as a result,'' whereas those in the objective condition were told to ``try not to get caught up in how the other person feels; just remain objective and detached''. Subjects in the control condition received no instructions.
 
-Then the subject read a letter from another participant, Melissa, who was upset about missing her best friend's bachelorette party in New York City due to car problems. Each subject was randomly assigned to read a letter where the car problems were due to bad luck and Melissa felt sad, or where the car problems were her friend's fault and Melissa felt angry. The sad (\textit{angry}) letter read:
+Subjects read the letter from Melissa, who was upset about missing her best friend's bachelorette party in New York City due to car problems. Subjects were randomly assigned to read a letter where the car problems were due to bad circumstances and Melissa felt sad, or where the car problems were her friend's fault and Melissa felt angry. The sad (\textit{angry}) letter read:
 
 \begin{quote}
 Dear future participant,
@@ -197,23 +170,22 @@ Melissa
 
 \end{quote}
 
-Finally, the subject completed a questionnaire on the computer to assess their emotions and appraisals.
+After subjects read the letter, they completed a questionnaire on the computer about their emotions and appraisals.
 
 First, subjects reported their main feelings after reading the letter in an open-ended format.
 
-Second, subjects reported how much they felt each emotion from a list that included two items that were meant to measure anger (angry, mad), two items that were meant to measure sadness (sad, down), two items meant to measure sympathy (compassionate, sympathetic), and several other emotions that were filler items (happy, shocked, hopeful, interested, disgusted, curious, afraid, grateful, proud, surprised, amused, worried, frustrated, embarrassed, guilty, angry at self). They could indicate how strongly they felt each emotion on a 5-point Likert-type scale (1 = Not at all, 5 = Extremely).
+<<EmoCors, echo=FALSE>>=
+anger.cor <- round(cor(ptdata[,c('angry','mad')], use='complete.obs'), digits=2)[1,2]
+sad.cor <- round(cor(ptdata[,c('sad','down')], use='complete.obs'), digits=2)[1,2]
+symp.cor <- round(cor(ptdata[,c('symp','comp')], use='complete.obs'), digits=2)[1,2]
+@
+Second, subjects reported how much they felt several specific emotions that appeared in a randomized order on a 5-point Likert-type scale (1 = Not at all, 5 = Extremely). The items ``sad'' and ``down'' were averaged to measure sadness (\textit{r} = \Sexpr{sad.cor}), ``angry'' and ``mad'' were averaged to measure anger (/textit{r} = \Sexpr{anger.cor}), and ``sympathetic'' and ``compassionate'' were averaged to measure sympathy (\textit{r} = \Sexpr{symp.cor}). The rest of the emotions were filler items.
 
-Third, subjects reported their perceptions of the letter writer's main feelings about what was described in the letter in an open-ended format.
+Third, subjects reported their perceptions of the letter writer's main feelings in open-eneded and closed-ended formats that paralleled the reports of their own emotions, but without the items ``sympathetic'' and ``compassionate''. These were included to explore how perspective taking affected empathy, if there was evidence of an effect.
 
-Fourth, subjects rated their perceptions of how strongly the letter writer felt each emotion from a list that included all of the same items as the report of subjects own emotions except for compassionate and sympathetic.
+Fourth, subjects reported their appraisals of the experience the letter writer described. The questions measured appraisals of pleasantness ("How unpleasant was it?"), self-agency and control ("How much do you feel like you are responsible for what happened?", "How much do you feel like you had the power to do something about the situation?"), the letter writer's agency and control ("How much do you feel that the other participant is responsible for what happened?", "How much do you feel that the other participant had the power to do something about the situation?"), other-agency and control ("How much do you feel that someone aside from the other participant is responsible for what happened?", "How much do you feel that someone aside from the other participant had the power to do something about the situation?"), situational agency and control ("How much do you feel that circumstances beyond anyone's control are responsible for what happened?", "How much do you feel that the situation was caused by a combination of many factors?", "How much do you feel that no one had the power to do anything about the situation?", "How much do you feel that the situation was out of anyone's control?"), and legitimacy ("To what extent was what happened morally wrong?"). Each question had a 5-point Likert-type response scale (1 = Not at all, 5 = Extremely). These were also included to explore how perspective taking affected empathy, if there was evidence of an effect.
 
-Fifth, subjects completed a questionnaire that measured their appraisals of what the letter writer described. The questions measured appraisals of pleasantness ("How unpleasant was it?"), self-agency and control ("How much do you feel like you are responsible for what happened?", "How much do you feel like you had the power to do something about the situation?"), the letter writer's agency and control ("How much do you feel that the other participant is responsible for what happened?", "How much do you feel that the other participant had the power to do something about the situation?"), other-agency ("How much do you feel that someone aside from the other participant is responsible for what happened?", "How much do you feel that someone aside from the other participant had the power to do something about the situation?"), situational agency and control ("How much do you feel that circumstances beyond anyone's control are responsible for what happened?", "How much do you feel that the situation was caused by a combination of many factors?", "How much do you feel that no one had the power to do anything about the situation?", "How much do you feel that the situation was out of anyone's control?"), and legitimacy ("To what extent was what happened morally wrong?"). Each question had a 5-point Likert-type response scale (1 = Not at all, 5 = Extremely).
-
-Sixth, subjects completed a similar questionnaire measuring their perceptions of the letter writer's appraisals, including pleasantness, self-agency and control, other-agency and control, situational agency and control, and legitimacy.
-
-Seventh, subjects completed the Interpersonal Ractivity Index \cite{Davis1980, Davis1983}, a dispositional measure of empathy with four seven-item subscales. Of primary interest in this study were the empathic concern subscale and the perspective taking subscale.
-
-Finally, subjects completed a demographics questionnaire that included measures of subjective social class and political ideology for exploratory reasons. 
+Finally, subjects completed a parallel questionnaire that measured their perceptions of the letter writer's appraisals and they completed the Interpersonal Reactivity Index \cite{Davis1980, Davis1983}. Both of these were included for exploratory purposes and are not discussed further.
 
 After completing the questionnaire, subjects were debriefed and thanked for their participation. 
 
@@ -244,18 +216,40 @@ ptdata$OvC.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=
 ptdata$PvOC.angry <- recode(ptdata$group.numbers, as.factor.result=FALSE, '1=0;2=0;3=0;4=-1;5=-1;6=2')
 @
 
-\subsection{Plan for Data Analysis} We tested X hypotheses...
+\subsubsection{Coding the Open-Ended Emotion Reports} To analyze subjects' open-ended reports of emotions, groups of emotion words were created that seemed to communicate similar feelings. Subjects' experimental conditions were removed from their open-ended responses. All of the words that subjects used in the emotion reports were identified. Then the words that communicated similar feelings were grouped together. Each subject received a score of 1 if they mentioned at least one word in the emotion group and a score of 0 if they did not. For the present study, I only analyzed sadness, anger, and sympathy. Table 1 displays the words that were placed in these groups. 
 
-\subsubsection{Plan for Analysis of Open-Ended Data} To analyze subjects' open-ended reports of their own emotions and their perceptions of Melissa's emotions, we created groups of emotion words that seemed to communicate similar feelings. We followed the following steps to create the emotion groups \cite{Wondrasub}: first, the first author removed subjects' experimental conditions from their open-ended responses, randomized the order of the responses, and identified each emotion word that subjects used. Second, the first author created the first set of emotion groups. Third, the second author looked at the emotoin groups and suggested changes. Fourth, we coded each group for the subjects as 1 if they mentioned at least one word in the group and 0 if they did not. 
+\begin{table}
+Table 1
 
-(This paragraph needs to explain what the emotion groups were) We used logistic regression to find the predicted probability that a subject listed an emotion group. To test the main hypotheses, we used contrasts to compare the three perspective taking conditions within each emotion group. 
+\textit{Subjects' open-ended reports of their own emotions.}
 
-\subsubsection{Plan for Analysis of Closed-Ended Data} Preliminary analyses revealed that the data in some of the experimental groups were not normally distributed, which is an assumption of the commonly used ANOVA and t test approaches to comparing group means. Therefore, we treated the data as ordinal and ran ordered logistic regression to analyze subjects' reports of their own emotions.
+\begin{tabular}{l c}
+    \hline
+    Emotion Group & Emotion Words \\
+    \hline
+    Sadness & defeat, depressed, depression, despair, disappointed, disappointing, \\
+    & disappointment, disheartened, down, heartbroken, helpless, helplessness, \\
+    & hopeless, let down, melancholy, sad, saddened, sadness, \\
+    & solemn, sorrow, want to cry \\
+    & \\
+    Anger & aggravation, agitated, anger, angry, annoyance, annoyed, \\ 
+    & bitter, furious, indignance, irritation, mad, outraged, pissed \\
+    & \\
+    Sympathy & apologetic, caring, compassion, compassionate, concern, concerned, \\
+    & consoling, empathetic, empathic, empathy, pity, sorriness, \\ 
+    & sorry, sympathetic, sympathy, wish I could help \\
+    \hline
+\end{tabular}
+\end{table}
+
+I used logistic regression to find the predicted probability that a subject listed an emotion group. To test the main hypotheses, we used contrasts to compare the three perspective taking conditions within each emotion group. 
+
+\subsubsection{Testing the Hypotheses} The hypotheses about the effects of perspective taking and remaining objective on vicarious emotions were tested using planned contrasts. The contrasts tested for differences in the perspective conditions within each emotion condition separately. To test for differences in the probability that subjects reported feeling sad, angry, or sympathetic in their open-ended responses, I tested separate logistic regression models with one of the planned contrasts entered as a predictor along with the rest of the orthogonal contrasts that were needed to complete the experimental design. 
 
 
-\subsection{Did Perspective Taking Make Subjects More Likely to Feel How Melissa Felt?}
+\subsection{Did Perspective Taking Make Subjects Feel How Melissa Felt, or Did it Only Make Them Feel Sad?}
 
-If perspective taking makes people feel the same emotions that others feel, then when subjects were in the perspective taking condition they should have felt sadder when Melissa felt sad and angrier when Melissa felt angry. If, on the other hand, perspective taking affects vicarious emotions by reducing actor-observer bias, then when subjects were in the perspective taking condition they should have felt sadder when Melissa felt sad, but not angrier when Melissa felt angry.
+If perspective taking makes people feel the same emotions that others feel, then subjects who took Melissa's perspective should have felt sadder when Melissa felt sad and angrier when Melissa felt angry than subjects who were in the control condition. If, on the other hand, perspective taking only makes people feel vicarious emotions that involve appraisals that the situation is uncontrollable, then subjects who took Melissa's perspective should have felt sadder when Melissa felt sad, but not angrier when Melissa felt angry.
 
 \subsubsection{Open-ended data}
 
@@ -330,7 +324,7 @@ PvC.oangry.Mangry.lb <- round(suppressMessages(confint(m.oangry.PvC)['CvP.angry'
 PvC.oangry.Mangry.ub <- round(suppressMessages(confint(m.oangry.PvC)['CvP.angry',2]), digits=2)
 @
 
-Figure 1 displays the probability that subjects reported feeling sad by condition and Figure 2 displays the probability that subjects reported feeling angry by condition. When Melissa was sad, subjects were just as likely to report feeling sad when they took her perspective (\Sexpr{sadprop.pt.Msad}\%) as when they received no instructions (\Sexpr{sadprop.control.Msad}\%), \textit{B} = \Sexpr{PvC.osad.Msad.coef}, \textit{SE} = \Sexpr{PvC.osad.Msad.se}, \textit{Z} = \Sexpr{PvC.osad.Msad.Z}, \textit{p} = \Sexpr{PvC.osad.Msad.p}, 95\% CI [\Sexpr{PvC.osad.Msad.lb}, \Sexpr{PvC.osad.Msad.ub}]. Similarly, when Melissa was angry, subjects were just as likely to report feeling angry when they took her perspective (\Sexpr{angryprop.pt.Mangry}\%) as when they received no instructions (\Sexpr{angryprop.control.Mangry}\%), \textit{B} = \Sexpr{PvC.oangry.Mangry.coef}, \textit{SE} = \Sexpr{PvC.oangry.Mangry.se}, \textit{Z} = \Sexpr{PvC.oangry.Mangry.Z}, \textit{p} = \Sexpr{PvC.oangry.Mangry.p}, 95\% CI [\Sexpr{PvC.oangry.Mangry.lb}, \Sexpr{PvC.oangry.Mangry.ub}]. Overall, there was no evidence that perspective taking made subjects feel how Melissa felt.
+Figure 1 displays the probability that subjects reported feeling sad by condition and Figure 2 displays the probability that subjects reported feeling angry by condition. When Melissa was sad, subjects were just as likely to feel sad when they took her perspective (\Sexpr{sadprop.pt.Msad}\%) as when they received no instructions (\Sexpr{sadprop.control.Msad}\%), \textit{B} = \Sexpr{PvC.osad.Msad.coef}, \textit{SE} = \Sexpr{PvC.osad.Msad.se}, \textit{Z} = \Sexpr{PvC.osad.Msad.Z}, \textit{p} = \Sexpr{PvC.osad.Msad.p}, 95\% CI [\Sexpr{PvC.osad.Msad.lb}, \Sexpr{PvC.osad.Msad.ub}]. Similarly, when Melissa was angry, subjects were just as likely to report feeling angry when they took her perspective (\Sexpr{angryprop.pt.Mangry}\%) as when they received no instructions (\Sexpr{angryprop.control.Mangry}\%), \textit{B} = \Sexpr{PvC.oangry.Mangry.coef}, \textit{SE} = \Sexpr{PvC.oangry.Mangry.se}, \textit{Z} = \Sexpr{PvC.oangry.Mangry.Z}, \textit{p} = \Sexpr{PvC.oangry.Mangry.p}, 95\% CI [\Sexpr{PvC.oangry.Mangry.lb}, \Sexpr{PvC.oangry.Mangry.ub}]. There was no evidence that perspective taking had an effect on subjects' vicarious emotions.
 
 \subsubsection{Closed-ended data}
 
@@ -412,11 +406,11 @@ PvC.cangry.Mangry.lb <- round(suppressMessages(confint(m.angry.PvC)['CvP.angry',
 PvC.cangry.Mangry.ub <- round(suppressMessages(confint(m.angry.PvC)['CvP.angry',2]), digits=2)
 @
 
-Figure 3 displays the average sadness that subjects reported feeling by condition and Figure 4 displays the average anger that subjects reported feeling by condition. When Melissa was sad, subjects felt as sad when they took her perspective (\textit{M} = \Sexpr{sadmean.pt.Msad}, \textit{SD} = \Sexpr{sadsd.pt.Msad}) as when they received no instructions (\textit{M} = \Sexpr{sadmean.control.Msad}, \textit{SD} = \Sexpr{sadsd.control.Msad}), \textit{B} = \Sexpr{PvC.csad.Msad.coef}, \textit{SE} = \Sexpr{PvC.csad.Msad.se}, \textit{t}(\Sexpr{PvC.csad.Msad.df}) = \Sexpr{PvC.csad.Msad.t}, \textit{p} = \Sexpr{PvC.csad.Msad.p}, 95\% CI [\Sexpr{PvC.csad.Msad.lb}, \Sexpr{PvC.csad.Msad.ub}]. When Melissa was angry, there was a non-significant trend for subjects to feel angrier when they took her perspective (\textit{M} = \Sexpr{angrymean.pt.Mangry}, \textit{SD} = \Sexpr{angrysd.pt.Mangry}) than when they received no instructions (\textit{M} = \Sexpr{angrymean.control.Mangry}, \textit{SD} = \Sexpr{angrysd.control.Mangry}), \textit{B} = \Sexpr{PvC.cangry.Mangry.coef}, \textit{SE} = \Sexpr{PvC.cangry.Mangry.se}, \textit{t}(\Sexpr{PvC.cangry.Mangry.df}) = \Sexpr{PvC.cangry.Mangry.t}, \textit{p} = \Sexpr{PvC.cangry.Mangry.p}, 95\% CI [\Sexpr{PvC.cangry.Mangry.lb}, \Sexpr{PvC.cangry.Mangry.ub}]. Once again, there was little evidence that perspective taking made subjects feel how Melissa felt.
+Figure 3 displays subjects' average sadness by condition and Figure 4 displays subjects' average anger by condition. When Melissa was sad, subjects felt as sad when they took her perspective (\textit{M} = \Sexpr{sadmean.pt.Msad}, \textit{SD} = \Sexpr{sadsd.pt.Msad}) as when they received no instructions (\textit{M} = \Sexpr{sadmean.control.Msad}, \textit{SD} = \Sexpr{sadsd.control.Msad}), \textit{t}(\Sexpr{PvC.csad.Msad.df}) = \Sexpr{PvC.csad.Msad.t}, \textit{p} = \Sexpr{PvC.csad.Msad.p}, 95\% CI [\Sexpr{PvC.csad.Msad.lb}, \Sexpr{PvC.csad.Msad.ub}]. When Melissa was angry, there was a non-significant trend for subjects to feel angrier when they took her perspective (\textit{M} = \Sexpr{angrymean.pt.Mangry}, \textit{SD} = \Sexpr{angrysd.pt.Mangry}) than when they received no instructions (\textit{M} = \Sexpr{angrymean.control.Mangry}, \textit{SD} = \Sexpr{angrysd.control.Mangry}), \textit{t}(\Sexpr{PvC.cangry.Mangry.df}) = \Sexpr{PvC.cangry.Mangry.t}, \textit{p} = \Sexpr{PvC.cangry.Mangry.p}, 95\% CI [\Sexpr{PvC.cangry.Mangry.lb}, \Sexpr{PvC.cangry.Mangry.ub}]. Once again, there was little evidence that perspective taking had an appreciable effect on subjects' vicarious emotions.
 
 \subsection{Did Perspective Taking Make Subjects Feel More Sympathetic?}
 
-Aside from feeling how someone else feels, much research has focused on the effects of perspective taking on feeling sympathy, or empathic concern. Although perspective taking didn't seem to make subjects feel what Melissa felt, it might have made them more sympathetic.
+Aside from feeling how someone else feels, much research has focused on the effects of perspective taking on feeling sympathy, or empathic concern. Although perspective taking didn't make subjects feel how Melissa felt, it might have made them more sympathetic.
 
 \subsubsection{Open-ended data}
 <<OpenEndedSympathyPTvC, echo=FALSE>>=
@@ -451,7 +445,7 @@ PvC.osymp.Mangry.ub <- round(suppressMessages(confint(m.osymp.PvC)['CvP.angry',2
 
 @
 
-When Melissa was sad, subjects were just as likely to report feeling sympathetic when they took her perspective (\Sexpr{sympprop.pt.Msad}\%) as when they received no instructions (\Sexpr{sympprop.control.Msad}\%), \textit{B} = \Sexpr{PvC.osymp.Msad.coef}, \textit{SE} = \Sexpr{PvC.osymp.Msad.se}, \textit{Z} = \Sexpr{PvC.osymp.Msad.Z}, \textit{p} = \Sexpr{PvC.osymp.Msad.p}, 95\% CI [\Sexpr{PvC.osymp.Msad.lb}, \Sexpr{PvC.osymp.Msad.ub}]. Similarly, when Melissa was angry, subjects were just as likely to report feeling angry when they took her perspective (\Sexpr{angryprop.pt.Mangry}\%) as when they received no instructions (\Sexpr{angryprop.control.Mangry}\%), \textit{B} = \Sexpr{PvC.osymp.Mangry.coef}, \textit{SE} = \Sexpr{PvC.osymp.Mangry.se}, \textit{Z} = \Sexpr{PvC.osymp.Mangry.Z}, \textit{p} = \Sexpr{PvC.osymp.Mangry.p}, 95\% CI [\Sexpr{PvC.osymp.Mangry.lb}, \Sexpr{PvC.osymp.Mangry.ub}]. Overall, there was no evidence that perspective taking made subjects feel sympathetic for Melissa.
+When Melissa was sad, subjects were just as likely to feel sympathetic when they took her perspective (\Sexpr{sympprop.pt.Msad}\%) as when they received no instructions (\Sexpr{sympprop.control.Msad}\%), \textit{B} = \Sexpr{PvC.osymp.Msad.coef}, \textit{SE} = \Sexpr{PvC.osymp.Msad.se}, \textit{Z} = \Sexpr{PvC.osymp.Msad.Z}, \textit{p} = \Sexpr{PvC.osymp.Msad.p}, 95\% CI [\Sexpr{PvC.osymp.Msad.lb}, \Sexpr{PvC.osymp.Msad.ub}]. Similarly, when Melissa was angry, subjects were just as likely to feel angry when they took her perspective (\Sexpr{angryprop.pt.Mangry}\%) as when they received no instructions (\Sexpr{angryprop.control.Mangry}\%), \textit{B} = \Sexpr{PvC.osymp.Mangry.coef}, \textit{SE} = \Sexpr{PvC.osymp.Mangry.se}, \textit{Z} = \Sexpr{PvC.osymp.Mangry.Z}, \textit{p} = \Sexpr{PvC.osymp.Mangry.p}, 95\% CI [\Sexpr{PvC.osymp.Mangry.lb}, \Sexpr{PvC.osymp.Mangry.ub}]. There was no evidence that perspective taking made subjects feel more sympathy for Melissa.
 
 \subsubsection{Closed-ended data}
 
@@ -496,7 +490,7 @@ PvC.csymp.Mangry.lb <- round(suppressMessages(confint(m.symp.PvC)['CvP.angry',1]
 PvC.csymp.Mangry.ub <- round(suppressMessages(confint(m.symp.PvC)['CvP.angry',2]), digits=2)
 @
 
-When Melissa was sad, subjects felt as sympathetic when they took her perspective (\textit{M} = \Sexpr{sympmean.pt.Msad}, \textit{SD} = \Sexpr{sympsd.pt.Msad}) as when they received no instructions (\textit{M} = \Sexpr{sympmean.control.Msad}, \textit{SD} = \Sexpr{sympsd.control.Msad}), \textit{B} = \Sexpr{PvC.csymp.Msad.coef}, \textit{SE} = \Sexpr{PvC.csymp.Msad.se}, \textit{t}(\Sexpr{PvC.csymp.Msad.df}) = \Sexpr{PvC.csymp.Msad.t}, \textit{p} = \Sexpr{PvC.csymp.Msad.p}, 95\% CI [\Sexpr{PvC.csymp.Msad.lb}, \Sexpr{PvC.csymp.Msad.ub}]. When Melissa was angry, there was a non-significant trend for subjects to feel more sympathetic when they took her perspective (\textit{M} = \Sexpr{sympmean.pt.Mangry}, \textit{SD} = \Sexpr{sympsd.pt.Mangry}) than when they received no instructions (\textit{M} = \Sexpr{sympmean.control.Mangry}, \textit{SD} = \Sexpr{sympsd.control.Mangry}), \textit{B} = \Sexpr{PvC.csymp.Mangry.coef}, \textit{SE} = \Sexpr{PvC.csymp.Mangry.se}, \textit{t}(\Sexpr{PvC.csymp.Mangry.df}) = \Sexpr{PvC.csymp.Mangry.t}, \textit{p} = \Sexpr{PvC.csymp.Mangry.p}, 95\% CI [\Sexpr{PvC.csymp.Mangry.lb}, \Sexpr{PvC.csymp.Mangry.ub}]. Once again, there was little evidence that perspective taking made subjects feel more sympathy for Melissa.
+When Melissa was sad, subjects felt as sympathetic when they took her perspective (\textit{M} = \Sexpr{sympmean.pt.Msad}, \textit{SD} = \Sexpr{sympsd.pt.Msad}) as when they received no instructions (\textit{M} = \Sexpr{sympmean.control.Msad}, \textit{SD} = \Sexpr{sympsd.control.Msad}), \textit{B} = \Sexpr{PvC.csymp.Msad.coef}, \textit{SE} = \Sexpr{PvC.csymp.Msad.se}, \textit{t}(\Sexpr{PvC.csymp.Msad.df}) = \Sexpr{PvC.csymp.Msad.t}, \textit{p} = \Sexpr{PvC.csymp.Msad.p}, 95\% CI [\Sexpr{PvC.csymp.Msad.lb}, \Sexpr{PvC.csymp.Msad.ub}]. When Melissa was angry, there was a non-significant trend for subjects to feel more sympathetic when they took her perspective (\textit{M} = \Sexpr{sympmean.pt.Mangry}, \textit{SD} = \Sexpr{sympsd.pt.Mangry}) than when they received no instructions (\textit{M} = \Sexpr{sympmean.control.Mangry}, \textit{SD} = \Sexpr{sympsd.control.Mangry}), \textit{B} = \Sexpr{PvC.csymp.Mangry.coef}, \textit{SE} = \Sexpr{PvC.csymp.Mangry.se}, \textit{t}(\Sexpr{PvC.csymp.Mangry.df}) = \Sexpr{PvC.csymp.Mangry.t}, \textit{p} = \Sexpr{PvC.csymp.Mangry.p}, 95\% CI [\Sexpr{PvC.csymp.Mangry.lb}, \Sexpr{PvC.csymp.Mangry.ub}]. Once again, there was little evidence that perspective taking had an appreciable effect on subjects' sympathy. 
 
 \subsection{Did Remaining Objective Make Subjects Feel Less Empathy?}
 
@@ -504,6 +498,9 @@ When Melissa was sad, subjects felt as sympathetic when they took her perspectiv
 <<Figure5CIPlotsObjectiveVSOthers, echo=FALSE, fig=TRUE>>=
 
 ## open-ended
+m.osad.CvP <- glm(open_sad ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+m.oanger.CvP <- glm(open_anger ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
+m.osymp.CvP <- glm(open_sympathy ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, family=binomial(link='logit'), data=ptdata)
 m.osad.OvC <- glm(open_sad ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
 m.oanger.OvC <- glm(open_anger ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
 m.osymp.OvC <- glm(open_sympathy ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, family=binomial(link='logit'), data=ptdata)
@@ -512,6 +509,9 @@ m.oanger.OvP <- glm(open_anger ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry
 m.osymp.OvP <- glm(open_sympathy ~ sad.angry+OvP.sad+CvOP.sad+OvP.angry+CvOP.angry, family=binomial(link='logit'), data=ptdata)
 
 ## closed-ended
+m.sad.CvP <- lm(sad_mean ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=ptdata)
+m.angry.CvP <- lm(angry_mean ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=ptdata)
+m.symp.CvP <- lm(symp_mean ~ sad.angry+CvP.sad+OvCP.sad+CvP.angry+OvCP.angry, data=ptdata)
 m.sad.OvC <- lm(sad_mean ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=ptdata)
 m.angry.OvC <- lm(angry_mean ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=ptdata)
 m.symp.OvC <- lm(symp_mean ~ sad.angry+OvC.sad+PvOC.sad+OvC.angry+PvOC.angry, data=ptdata)
@@ -529,56 +529,107 @@ ci.plot <- function(ptcond, emocond, emotions, i, ...){
     result <- data.frame(ptcond=ptcond, letter=emocond, emotions=emotions, point.est=point.est, lb=lb, ub=ub)
     return(result)
 }
-
+CvP.sad <- ci.plot('control vs. perspective taking','sad letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=3, m.osad.CvP, m.sad.CvP, m.oanger.CvP, m.angry.CvP, m.osymp.CvP, m.symp.CvP)
+CvP.anger <- ci.plot('control vs. perspective taking','angry letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=5, m.osad.CvP, m.sad.CvP, m.oanger.CvP, m.angry.CvP, m.osymp.CvP, m.symp.CvP)
 OvC.sad <- ci.plot('objective vs. control','sad letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=3, m.osad.OvC, m.sad.OvC, m.oanger.OvC, m.angry.OvC, m.osymp.OvC, m.symp.OvC)
 OvC.anger <- ci.plot('objective vs. control','angry letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=5, m.osad.OvC, m.sad.OvC, m.oanger.OvC, m.angry.OvC, m.osymp.OvC, m.symp.OvC)
 OvP.sad <- ci.plot('objective vs. perspective taking','sad letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=3, m.osad.OvP, m.sad.OvP, m.oanger.OvP, m.angry.OvP, m.osymp.OvP, m.symp.OvP)
 OvP.anger <- ci.plot('objective vs. perspective taking','angry letter', c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy'), i=5, m.osad.OvP, m.sad.OvP, m.oanger.OvP, m.angry.OvP, m.osymp.OvP, m.symp.OvP)
 
-ci.plot.data <- rbind(OvC.sad, OvC.anger, OvP.sad, OvP.anger)
-ci.plot.data$emotions <- factor(ci.plot.data$emotions, levels=rev(c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy')))
+ci.plot.data <- rbind(CvP.sad, CvP.anger, OvC.sad, OvC.anger, OvP.sad, OvP.anger)
+ci.plot.data$emotions <- factor(ci.plot.data$emotions, levels=(c('open-ended sadness', 'closed-ended sadness', 'open-ended anger', 'closed-ended anger', 'open-ended sympathy', 'closed-ended sympathy')))
 
-ggplot(ci.plot.data, aes(y=point.est, x=emotions, ymin=lb, ymax=ub)) +
+CvP.plot <- ggplot(ci.plot.data[ci.plot.data$ptcond=='control vs. perspective taking',], aes(y=point.est, x=emotions, ymin=lb, ymax=ub)) +
     geom_pointrange(stat='identity',position='dodge') +
-    facet_wrap(~letter*ptcond) + 
-    coord_flip() +
+    facet_wrap(~letter) + 
+    coord_cartesian(ylim=c(-1.1,1.1)) +
     theme_classic() +
+    theme(axis.text.x = element_text(angle=90)) +
     geom_hline(y=0, color='grey') +
-    labs(x="Subjects' Emotions", y=NULL)
+    labs(y="Control vs. Perspective Taking", x=NULL)
 
-summary(m.osad.OvC)
-summary(m.osad.OvP)
-summary(m.sad.OvC)
-summary(m.sad.OvP)
-summary(m.osymp.OvC)
-summary(m.osymp.OvP)
-summary(m.symp.OvC)
-summary(m.symp.OvP)
-summary(m.oanger.OvC)
-summary(m.oanger.OvP)
-summary(m.angry.OvC)
-summary(m.angry.OvP)
+OvC.plot <- ggplot(ci.plot.data[ci.plot.data$ptcond=='objective vs. control',], aes(y=point.est*(-1), x=emotions, ymin=lb*(-1), ymax=ub*(-1))) +
+    geom_pointrange(stat='identity',position='dodge') +
+    facet_wrap(~letter) + 
+    coord_cartesian(ylim=c(-1.1,1.1)) +
+    theme_classic() +
+    theme(axis.text.x = element_text(angle=90)) +
+    geom_hline(y=0, color='grey') +
+    labs(y="Objective vs. Control", x=NULL)
+
+OvP.plot <- ggplot(ci.plot.data[ci.plot.data$ptcond=='objective vs. perspective taking',], aes(y=point.est*(-1), x=emotions, ymin=lb*(-1), ymax=ub*(-1))) +
+    geom_pointrange(stat='identity',position='dodge') +
+    facet_wrap(~letter) + 
+    coord_cartesian(ylim=c(-1.1,1.1)) +
+    theme_classic() +
+    theme(axis.text.x = element_text(angle=90)) +
+    geom_hline(y=0, color='grey') +
+    labs(y="Objective vs. Perspective Taking", x=NULL)
+
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+    
+    library(grid)
+    
+    # Make a list from the ... arguments and plotlist
+    plots <- c(list(...), plotlist)
+    
+    numPlots = length(plots)
+    
+    # If layout is NULL, then use 'cols' to determine layout
+    if (is.null(layout)) {
+        # Make the panel
+        # ncol: Number of columns of plots
+        # nrow: Number of rows needed, calculated from # of cols
+        layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                         ncol = cols, nrow = ceiling(numPlots/cols))
+    }
+    
+    if (numPlots==1) {
+        print(plots[[1]])
+        
+    } else {
+        # Set up the page
+        grid.newpage()
+        pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+        
+        # Make each plot, in the correct location
+        for (i in 1:numPlots) {
+            # Get the i,j matrix positions of the regions that contain this subplot
+            matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+            
+            print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                            layout.pos.col = matchidx$col))
+        }
+    }
+}
+
+multiplot(OvC.plot, OvP.plot)
 @
-\textit{Figure 5. 95\% confidence intervals for the difference in subjects' emotions by condition. Positive values indicate that subjects felt stronger emotions in the control and perspective taking conditions than in the objective condition.}
+\textit{Figure 5. 95\% confidence intervals for the difference in subjects' emotions between the objective condition and each of the other two conditions. Negative values indicate that subjects felt weaker emotions in the objective condition than in the control and perspective taking conditions.}
+\
 \end{figure}
 
-There was little evidence that perspective taking made subjects feel how Melissa felt or made them feel sadder or more sympathetic by reducing actor-observer bias. However, remaining objective might have decreased vicarious emotions. Figure 5 displays 95\% confidence intervals for the difference in subjects' emotions between the objective condition and the control and perspective taking conditions. 
+There was little evidence that perspective taking increased subjects' vicarious emotions. However, remaining objective might have decreased their vicarious emotions. Figure 5 displays 95\% confidence intervals for the difference in subjects' emotions between the objective condition and the control and perspective taking conditions. 
 
-When Melissa was sad, subjects were less likely to report feeling sad in the objective condition than in the control and perspective taking conditions, though the comparison between the objective and control conditions in the open-ended data was marginally significant (\textit{p} = .056). Subjects who remained objective also reported feeling less sympathetic than those in the other two conditions in their closed-ended responses. Although the pattern was in the same direction, there were no significant differences in subjects' open-ended reports of sympathy. 
+When Melissa was sad, subjects who remained objective did not feel as sad as those in the control and perspective taking conditions, though the comparison between the objective and control condition in the open-ended data was marginally significant (\textit{p} = .056). Subjects who remained objective also reported feeling less sympathetic than those in the other two conditions in their closed-ended responses. Although the pattern was in the same direction, there were no significant differences in subjects' open-ended reports of sympathy. 
 
-When Melissa was angry, subjects were less likely to report feeling angry int he objective condition than in the control and perspective taking conditions. They also reported feeling less sympathetic than those in the other two conditions in their closed-ended responses, although once again this pattern was not significant in the open-ended emotion reports. 
+When Melissa was angry, subjects who remained objective did not feel as angry as those in the control and perspective taking conditions. They also reported feeling less sympathetic than those in the other two conditions in their closed-ended responses, although once again this pattern was not significant in the open-ended emotion reports. 
 
-Although there was some variability in the magnitude of the differences, Figure 5 shows that with only one exception, subjects felt weaker vicarious emotions when they remained objective than in the other two conditions. In contrast there was little evidence that subjects felt stronger vicarious emotions when they took Melissa's perspective than when they received no instructions. 
-
-
+In summary, there was strong evidence that remaining objective decrease subjects' vicarious emotions, and little evidence that perspective taking increased their vicarious emotions.
 
 
 \section{Discussion}
+What does perspective taking do for empathy? In the present study, it did little. Perspective taking did not increase empathy with specific emotions, nor did it increase vicarious emotions that involve appraisals that the situation is uncontrollable. Instead, when subjects were asked to remain objective they down-regulated their natural empathic reactions. These results raise two important points---one methodological, and one theoretical.
 
-In this study, remaining objective is what was effortful. It wasn't a neutral control, but active down-regulation. Informally, many subjects described what sounds like common emotion regulation strategies. One said he tried to imagine it was a novel he didn't care about (reappraisal). Another said she imagined looking down from above (self-distancing). Several said it was hard to remain objective, meaning that empathizing required little active effort, but what did require active effort was down-regulating that empathic response. 
+On the methodological point, researchers have used perspective taking to change prejudice and how people use stereotypes \cite{Ku2010}, perceptions of oneness and negative affect \cite{Maner2002} and, of course, empathy \cite<e.g.,>{Hawk2011, Smith1989, Toi1982}. In many studies, the alternative to perspective taking is to tell subjects to remain objective. When the research question is how empathy affects some other outcome, such as how empathy affects altruism \cite{Maner2002, Batson2002, Batson1997}, then using these two conditions as a manipulation of empathy might not be a problem. However, when the research question is how perspective taking affects some outcome, it becomes unclear whether any observed differences should be attributed to perspective taking, to remaining objective, or to both. In the present study, perspective takers felt sadder, angrier, and more sympathetic than those who remained objective. If there had been no control condition, some researchers might have thought this meant that perspective taking increases empathy, but that inference would have been dead wrong.
 
-Perspective taking is emotional up-regulation and it's only likely to matter when empathizing is hard.
+On the theoretical point, perspective taking should be viewed as a form of emotion regulation, but it involves the up-regulation of vicarious emotions rather than down-regulation. Consequently, effortful perspective taking only matters when the default reaction is a lack of empathy. 
 
+In the present study, the default was to empathize, and what was effortful was to remain objective. During debriefing, the experimenters asked subjects how they tried to remain objective. Their responses sounded like the same strategies that are used in other research on emotion down-regulation \cite{Gross2015, Kross2011}. Some subjects distracted themselves from Melissa's emotions by focusing on the facts. Some subjects reappraised the letter by imagining they were reading from a novel. Others self-distanced by reminding themselves that they didn't know the person or by trying to look at the situation from an outside perspective. But regardless of the strategy, many of them also reported that it was difficult to remain objective.
+
+Outside of the present study, sometimes the default is to feel relatively unemotional, such as when it's hard to understand the other person's emotional experience, you're motivated not to empathize \cite{Zaki2014}, or you initially appraise the other person's emotional situation as relatively neutral \cite{Wondra2015}. In these cases, remaining objective will do little because there is nothing to down-regulate. Instead, effortful perspective taking might up-regulate empathy by making you redirect attention, reprioritize your goals, or reappraise the other person's situation. 
+
+The results of the present study suggest that learning about others' emotional experiences might be like reading a good novel or watching a good movie. If you're paying attention and you understand what's happening, you can easily get drawn in and feel for the other person. No extra effort is required, through perspective taking or otherwise.
 
 \bibliography{ptreferences}
 \bibliographystyle{apacite}

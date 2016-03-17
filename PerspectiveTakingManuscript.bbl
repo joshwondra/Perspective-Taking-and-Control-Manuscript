@@ -43,12 +43,13 @@ Batson%
 \BCBL {}\ \BBA {} Ortiz%
 }{%
 Batson%
-\ \protect \BOthers {.}}{%
+, Eklun%
+\BCBL {}\ \protect \BOthers {.}}{%
 {\protect \APACyear {2007}}%
 }]{%
-Batson2007}
+Batson2007a}
 \APACinsertmetastar {%
-Batson2007}%
+Batson2007a}%
 \begin{APACrefauthors}%
 Batson, C\BPBI D.%
 , Eklun, J\BPBI H.%
@@ -68,6 +69,72 @@ Batson, C\BPBI D.%
   Psychology}{93}{}{65--74}.
 \newblock
 \begin{APACrefDOI} \doi{http://dx.doi.org/10.1037/0022-3514.93.1.65}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Batson%
+, Kennedy%
+\BCBL {}\ \protect \BOthers {.}}{%
+Batson%
+, Kennedy%
+\BCBL {}\ \protect \BOthers {.}}{%
+{\protect \APACyear {2007}}%
+}]{%
+Batson2007b}
+\APACinsertmetastar {%
+Batson2007b}%
+\begin{APACrefauthors}%
+Batson, C\BPBI D.%
+, Kennedy, C\BPBI L.%
+, Nord, L\BHBI A.%
+, Stocks, E\BPBI L.%
+, Fleming, D\BPBI A.%
+, Marzette, C\BPBI M.%
+\BDBL {}Zerger, T.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2007}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Anger at unfairness: Is it moral outrage?} {Anger at
+  unfairness: Is it moral outrage?}{\BBCQ}
+\newblock
+\APACjournalVolNumPages{European Journal of Social
+  Psychology}{37}{}{1272--1285}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1002/ejsp.434} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Batson%
+\ \protect \BOthers {.}}{%
+Batson%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {1997}}%
+}]{%
+Batson1997}
+\APACinsertmetastar {%
+Batson1997}%
+\begin{APACrefauthors}%
+Batson, C\BPBI D.%
+, Sager, K.%
+, Garst, E.%
+, Kang, M.%
+, Rubchinsky, K.%
+\BCBL {}\ \BBA {} Dawson, K.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1997}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Is empathy-induced helping due to self-other merging}
+  {Is empathy-induced helping due to self-other merging}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Personality and Social
+  Psychology}{73}{}{495--509}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1037//0022-3514.73.3.495}
   \end{APACrefDOI}
 \PrintBackRefs{\CurrentBib}
 
@@ -124,6 +191,451 @@ Davis, M\BPBI H.%
 \newblock
 \begin{APACrefDOI} \doi{http://dx.doi.org/10.1037/0022-3514.44.1.113}
   \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Ellsworth%
+\ \BBA {} Smith%
+}{%
+Ellsworth%
+\ \BBA {} Smith%
+}{%
+{\protect \APACyear {1988}}%
+}]{%
+Ellsworth1988}
+\APACinsertmetastar {%
+Ellsworth1988}%
+\begin{APACrefauthors}%
+Ellsworth, P\BPBI C.%
+\BCBT {}\ \BBA {} Smith, C\BPBI A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1988}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {From appraisal to emotion: Differences among unpleasant
+  feelings} {From appraisal to emotion: Differences among unpleasant
+  feelings}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Motivation and Emotion}{12}{}{271--302}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1007/BF00993115} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Galper%
+}{%
+Galper%
+}{%
+{\protect \APACyear {1976}}%
+}]{%
+Galper1976}
+\APACinsertmetastar {%
+Galper1976}%
+\begin{APACrefauthors}%
+Galper, R\BPBI E.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1976}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Turning observers into actors: Differential causal
+  attributions as a function of "empathy"} {Turning observers into actors:
+  Differential causal attributions as a function of "empathy"}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Research in Personality}{10}{}{328--335}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1016/0092-6566(76)90022-2}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Gross%
+}{%
+Gross%
+}{%
+{\protect \APACyear {2015}}%
+}]{%
+Gross2015}
+\APACinsertmetastar {%
+Gross2015}%
+\begin{APACrefauthors}%
+Gross, J\BPBI J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2015}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Emotion regulation: Current status and future prospects}
+  {Emotion regulation: Current status and future prospects}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Psychological Inquiry}{11}{}{1-26}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1080/1047840X.2014.940781}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Hawk%
+, Fischer%
+\BCBL {}\ \BBA {} van Kleef%
+}{%
+Hawk%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2011}}%
+}]{%
+Hawk2011}
+\APACinsertmetastar {%
+Hawk2011}%
+\begin{APACrefauthors}%
+Hawk, S\BPBI T.%
+, Fischer, A\BPBI H.%
+\BCBL {}\ \BBA {} van Kleef, G\BPBI A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2011}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Taking your place or matching your face: Two paths to
+  empathic embarrassment} {Taking your place or matching your face: Two paths
+  to empathic embarrassment}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Emotion}{11}{}{502-513}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1037/a0022762} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Kross%
+\ \BBA {} Ayduk%
+}{%
+Kross%
+\ \BBA {} Ayduk%
+}{%
+{\protect \APACyear {2011}}%
+}]{%
+Kross2011}
+\APACinsertmetastar {%
+Kross2011}%
+\begin{APACrefauthors}%
+Kross, E.%
+\BCBT {}\ \BBA {} Ayduk, O.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2011}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Making meaning out of negative experiences by
+  self-distancing} {Making meaning out of negative experiences by
+  self-distancing}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Current Directions in Psychological
+  Science}{20}{}{187-191}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1177/0963721411408883}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Ku%
+, Wang%
+\BCBL {}\ \BBA {} Galinsky%
+}{%
+Ku%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2010}}%
+}]{%
+Ku2010}
+\APACinsertmetastar {%
+Ku2010}%
+\begin{APACrefauthors}%
+Ku, G.%
+, Wang, C\BPBI S.%
+\BCBL {}\ \BBA {} Galinsky, A\BPBI D.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2010}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Perception through a perspective-taking lens:
+  Differential effects on judgment and behavior} {Perception through a
+  perspective-taking lens: Differential effects on judgment and
+  behavior}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Experimental Social
+  Psychology}{46}{}{792-798}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1016/j.jesp.2010.04.001}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Lamm%
+, Batson%
+\BCBL {}\ \BBA {} Decety%
+}{%
+Lamm%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2007}}%
+}]{%
+Lamm2007}
+\APACinsertmetastar {%
+Lamm2007}%
+\begin{APACrefauthors}%
+Lamm, C.%
+, Batson, C\BPBI D.%
+\BCBL {}\ \BBA {} Decety, J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2007}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {The neural substrate of human empathy: Effects of
+  perspective-taking and cognitive appraisal} {The neural substrate of human
+  empathy: Effects of perspective-taking and cognitive appraisal}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Cognitive Neuroscience}{19}{}{42-58}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1162/jocn.2007.19.1.42}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Maner%
+\ \protect \BOthers {.}}{%
+Maner%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2002}}%
+}]{%
+Maner2002}
+\APACinsertmetastar {%
+Maner2002}%
+\begin{APACrefauthors}%
+Maner, J\BPBI K.%
+, Luce, C\BPBI L.%
+, Neuberg, S\BPBI L.%
+, Cialdini, R\BPBI B.%
+, Brown, S.%
+\BCBL {}\ \BBA {} Sagarin, B\BPBI J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2002}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {The effects of perspective taking on motivations for
+  helping: Still no evidence for altruism} {The effects of perspective taking
+  on motivations for helping: Still no evidence for altruism}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Personality and Social Psychology
+  Bulletin}{28}{}{1601-1610}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1177/014616702237586}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+McAuliffe%
+, Snihur%
+\BCBL {}\ \BBA {} McCullough%
+}{%
+McAuliffe%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2016}}%
+}]{%
+McAuliffe2016}
+\APACinsertmetastar {%
+McAuliffe2016}%
+\begin{APACrefauthors}%
+McAuliffe, W\BPBI H\BPBI B.%
+, Snihur, A\BPBI C.%
+\BCBL {}\ \BBA {} McCullough, M\BPBI E.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2016}{January}{}.
+\newblock
+{\BBOQ}\APACrefatitle {\emph{A meta-analytic evaluation of the relationship
+  between perspective-taking and empathy}} {\emph{A meta-analytic evaluation of
+  the relationship between perspective-taking and empathy}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{\upshape{Poster presented at the meeting of the Society
+  for Personality and Social Psychology, San Diego, CA}}{}{}{}.
+\newblock
+\begin{APACrefURL} \url{http://osf.io/w82v4/} \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+C\BPBI A.~Smith%
+\ \BBA {} Ellsworth%
+}{%
+C\BPBI A.~Smith%
+\ \BBA {} Ellsworth%
+}{%
+{\protect \APACyear {1985}}%
+}]{%
+Smith1985}
+\APACinsertmetastar {%
+Smith1985}%
+\begin{APACrefauthors}%
+Smith, C\BPBI A.%
+\BCBT {}\ \BBA {} Ellsworth, P\BPBI C.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1985}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Patterns of cognitive appraisal in emotion} {Patterns of
+  cognitive appraisal in emotion}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Personality and Social
+  Psychology}{48}{}{813--838}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1037/0022-3514.48.4.813}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+K\BPBI D.~Smith%
+, Keating%
+\BCBL {}\ \BBA {} Stotland%
+}{%
+K\BPBI D.~Smith%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {1989}}%
+}]{%
+Smith1989}
+\APACinsertmetastar {%
+Smith1989}%
+\begin{APACrefauthors}%
+Smith, K\BPBI D.%
+, Keating, J\BPBI P.%
+\BCBL {}\ \BBA {} Stotland, E.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1989}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Altruism reconsidered: The effect of denying feedback on
+  a victim's status to empathic witnesses} {Altruism reconsidered: The effect
+  of denying feedback on a victim's status to empathic witnesses}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Personality and Social
+  Psychology}{57}{}{641-650}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1037/0022-3514.57.4.641}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Storms%
+}{%
+Storms%
+}{%
+{\protect \APACyear {1973}}%
+}]{%
+Storms1973}
+\APACinsertmetastar {%
+Storms1973}%
+\begin{APACrefauthors}%
+Storms, M\BPBI D.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1973}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Videotape and the attribution process: Reversing actors'
+  and observers' points of view} {Videotape and the attribution process:
+  Reversing actors' and observers' points of view}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Personality and Social
+  Psychology}{27}{}{165--175}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1037/h0034782} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Toi%
+\ \BBA {} Batson%
+}{%
+Toi%
+\ \BBA {} Batson%
+}{%
+{\protect \APACyear {1982}}%
+}]{%
+Toi1982}
+\APACinsertmetastar {%
+Toi1982}%
+\begin{APACrefauthors}%
+Toi, M.%
+\BCBT {}\ \BBA {} Batson, C\BPBI D.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1982}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {More evidence that empathy is a source of altruistic
+  motivation} {More evidence that empathy is a source of altruistic
+  motivation}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Personality and Social
+  Psychology}{43}{}{281-292}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1037/0022-3514.43.2.281}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Wondra%
+\ \BBA {} Ellsworth%
+}{%
+Wondra%
+\ \BBA {} Ellsworth%
+}{%
+{\protect \APACyear {2015}}%
+}]{%
+Wondra2015}
+\APACinsertmetastar {%
+Wondra2015}%
+\begin{APACrefauthors}%
+Wondra, J\BPBI D.%
+\BCBT {}\ \BBA {} Ellsworth, P\BPBI C.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2015}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {An appraisal theory of empathy and other vicarious
+  emotional experiences} {An appraisal theory of empathy and other vicarious
+  emotional experiences}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Psychological Review}{122}{}{411-428}.
+\newblock
+\begin{APACrefDOI} \doi{10.1037/a0039252} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Zaki%
+}{%
+Zaki%
+}{%
+{\protect \APACyear {2003}}%
+}]{%
+Zaki2014}
+\APACinsertmetastar {%
+Zaki2014}%
+\begin{APACrefauthors}%
+Zaki, J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2003}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Empathy: A motivated account} {Empathy: A motivated
+  account}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Psychological Bulletin}{33}{}{455-472}.
+\newblock
+\begin{APACrefDOI} \doi{http://dx.doi.org/10.1037/a0037679} \end{APACrefDOI}
 \PrintBackRefs{\CurrentBib}
 
 \end{thebibliography}
